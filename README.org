@@ -1,0 +1,2 @@
+* Kaminalapp
+  Aplicación de registro de pagos
