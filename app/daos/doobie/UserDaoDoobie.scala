@@ -22,7 +22,8 @@ class UserDaoDoobie @Inject() (
   def byId(id: Long): Option[User] =
     userIdQuery(id).option.transact(xa()).unsafePerformIO
 
-  def byLogin(login: String): Option[User] = ???
+  def byLogin(login: String): Option[User] =
+    userLoginQuery(login).option.transact(xa()).unsafePerformIO
 
   def updateConnected(login: String): Boolean = ???
 }
@@ -34,4 +35,9 @@ object UserDaoDoobie {
     sql"""Select id, login, password, salt, role_id, connected, last_activity
         from users where id=$id
      """.query[User]
+
+  def userLoginQuery(login: String): Query0[User] =
+    sql"""Select id, login, password, salt, role_id, connected, last_activity
+          from users where login=$login
+       """.query[User]
 }
