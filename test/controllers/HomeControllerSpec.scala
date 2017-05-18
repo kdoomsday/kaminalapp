@@ -1,6 +1,8 @@
 package controllers
 
+import org.joda.time.Instant
 import org.scalatestplus.play._
+import org.specs2._
 import play.api.test._
 import play.api.test.Helpers._
 import testutil.TestUtil.injector
@@ -12,35 +14,59 @@ import testutil.TestUtil.injector
  * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
  */
 class HomeControllerSpec extends PlaySpec with OneAppPerSuite {
+  import testutil.TestDao
+
+  val dao = injector.instanceOf[TestDao]
+  def connectedUser() = dao.testUser.copy(lastActivity = Some(Instant.now()), connected = true)
+
+  // After context para que se limpie un usuario al final de la prueba
+  def cleanUser(login: String) = new mutable.After {
+    def after = dao.eliminarUsuario(login)
+  }
 
   "HomeController GET" should {
 
-    "render the index page from a new instance of controller" in {
+    "render the index page from a new instance of controller" in cleanUser(dao.testUser.login) {
       val controller = injector.instanceOf[HomeController]
-      val home = controller.index().apply(FakeRequest().withSession("login" → "admin"))
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include("Welcome to Play")
+      val user = dao.crearUsuario(connectedUser())
+
+      val home = controller.index().apply(
+        FakeRequest().withSession(
+          "login" → user.login
+        )
+      )
+
+      status(home) == OK &&
+        contentType(home) == Some("text/html") &&
+        contentAsString(home).contains("Welcome to Play")
     }
 
-    "render the index page from the application" in {
+    "render the index page from the application" in cleanUser(dao.testUser.login) {
       val controller = app.injector.instanceOf[HomeController]
-      val home = controller.index().apply(FakeRequest())
+      val user = dao.crearUsuario(connectedUser())
+      val home = controller.index().apply(
+        FakeRequest().withSession("login" → user.login)
+      )
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include("Welcome to Play")
+      status(home) == OK &&
+        contentType(home) == Some("text/html") &&
+        contentAsString(home).contains("Welcome to Play")
     }
 
-    "render the index page from the router" in {
+    "render the index page from the router" in cleanUser(dao.testUser.login) {
+      val user = dao.crearUsuario(connectedUser())
       // Need to specify Host header to get through AllowedHostsFilter
-      val request = FakeRequest(GET, "/").withHeaders("Host" → "localhost")
+      val request =
+        FakeRequest(GET, "/").
+          withHeaders("Host" → "localhost").
+          withSession("login" → user.login)
+
       val home = route(app, request).get
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include("Welcome to Play")
+      status(home) == OK &&
+        contentType(home) == Some("text/html") &&
+        contentAsString(home).contains("Welcome to Play")
     }
   }
 }

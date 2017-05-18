@@ -15,7 +15,6 @@ trait UserDao {
 
   /**
    * Update the user's last connected time (also marks it connected)
-   * @return If the operation was successful
    */
-  def updateConnected(login: String): Boolean
+  def updateConnected(login: String): Unit
 }

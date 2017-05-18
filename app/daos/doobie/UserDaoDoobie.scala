@@ -25,7 +25,8 @@ class UserDaoDoobie @Inject() (
   def byLogin(login: String): Option[User] =
     userLoginQuery(login).option.transact(xa()).unsafePerformIO
 
-  def updateConnected(login: String): Boolean = ???
+  def updateConnected(login: String): Unit =
+    setConnected(login).run.transact(xa())
 }
 
 /** Los queries, para poder chequearlos */
@@ -40,4 +41,8 @@ object UserDaoDoobie {
     sql"""Select id, login, password, salt, role_id, connected, last_activity
           from users where login=$login
        """.query[User]
+
+  def setConnected(login: String): Update0 =
+    sql"""update users set connected=true, last_activity=now()
+          where login = $login""".update
 }
