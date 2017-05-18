@@ -32,7 +32,7 @@ object SubjectDaoDoobie {
 
   def subjectQuery(login: String): Query0[(String, Boolean, Option[Instant], Int, String)] =
     sql"""
-      Select u.login, u.connected, u.lastActivity, r.id, r.name
+      Select u.login, u.connected, u.last_activity, r.id, r.name
       from users u join roles r on u.role_id = r.id
       where u.login = $login""".query[(String, Boolean, Option[Instant], Int, String)]
 }
