@@ -27,7 +27,7 @@ class MyDeadboltHandler @Inject() (
     request.subject match {
       case s @ Some(_) ⇒ Future(s)
       case None ⇒ request.session.get("login") match {
-        case Some(userId) ⇒ subjectDao.subjectByIdentifier(userId)
+        case Some(userId) ⇒ Future(subjectDao.subjectByIdentifier(userId))
         case None         ⇒ Future(None)
       }
     }

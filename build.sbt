@@ -12,15 +12,17 @@ scalaVersion := "2.11.11"
 libraryDependencies += filters
 libraryDependencies += evolutions
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
+libraryDependencies += "org.specs2" %% "specs2-junit" % "3.6.3" % "test"
 
 libraryDependencies ++= Seq(
+  jdbc,
   "org.scalatest"  %% "scalatest"        % "2.2.6"  % "test",
   "org.scalacheck" %% "scalacheck"       % "1.12.5" % "test",
 
   "org.tpolecat" %% "doobie-core-cats"       % doobieVersion,
   "org.tpolecat" %% "doobie-postgres-cats"   % doobieVersion,
   "org.tpolecat" %% "doobie-specs2-cats"     % doobieVersion,
-  "postgresql"      % "postgresql"       % "9.1-901.jdbc4",
+  "postgresql"    % "postgresql"             % "9.1-901.jdbc4",
 
   "com.github.nscala-time" %% "nscala-time"           % "2.14.0",
 
@@ -66,3 +68,8 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
 
 // Adds additional packages into conf/routes
 // play.sbt.routes.RoutesKeys.routesImport += "com.ebarrientos.binders._"
+// testOptions in Test +=
+//   Tests.Argument(TestFrameworks.Specs2, "junitxml", "console")
+
+// testOptions in Test +=
+//   Tests.Argument(TestFrameworks.JUnit, "--ignore-runners=org.specs2.runner.JUnitRunner")

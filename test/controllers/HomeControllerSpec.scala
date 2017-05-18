@@ -1,10 +1,9 @@
 package controllers
 
 import org.scalatestplus.play._
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test._
 import play.api.test.Helpers._
-import scala.reflect.ClassTag
+import testutil.TestUtil.injector
 
 /**
  * Add your spec here.
@@ -12,13 +11,13 @@ import scala.reflect.ClassTag
  *
  * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
  */
-class HomeControllerSpec extends PlaySpec with OneAppPerTest {
+class HomeControllerSpec extends PlaySpec with OneAppPerSuite {
 
   "HomeController GET" should {
 
     "render the index page from a new instance of controller" in {
       val controller = injector.instanceOf[HomeController]
-      val home = controller.index().apply(FakeRequest())
+      val home = controller.index().apply(FakeRequest().withSession("login" → "admin"))
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
@@ -44,6 +43,4 @@ class HomeControllerSpec extends PlaySpec with OneAppPerTest {
       contentAsString(home) must include("Welcome to Play")
     }
   }
-
-  private[this] lazy val injector = new GuiceApplicationBuilder().injector()
 }
