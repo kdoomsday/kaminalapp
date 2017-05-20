@@ -6,7 +6,7 @@ bin/
 /logs/
 /modules
 /project/target
-/target
+*target*
 tmp/
 test-result
 server.pid
@@ -15,4 +15,4 @@ server.pid
 .cache
 
 .ensime*
-notes.org
+notes.org*
