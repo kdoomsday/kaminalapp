@@ -21,12 +21,11 @@ class Actions @Inject() (
   val timeout = 5.minutes
 
   /** Add session timeout checking to an action */
-  def timedAction[A](parser: BodyParser[A] = parse.default)(block: AuthenticatedRequest[A] ⇒ Future[Result]): Action[A] =
-    {
-      deadbolt.SubjectPresent()(parser) { authRequest ⇒
-        timeCheck(authRequest, block)
-      }
+  def timedAction[A](parser: BodyParser[A] = parse.default)(block: AuthenticatedRequest[A] ⇒ Future[Result]): Action[A] = {
+    deadbolt.SubjectPresent()(parser) { authRequest ⇒
+      timeCheck(authRequest, block)
     }
+  }
 
   def timedAction(block: AuthenticatedRequest[_] ⇒ Future[Result]): Action[AnyContent] =
     timedAction(parse.default)(block)

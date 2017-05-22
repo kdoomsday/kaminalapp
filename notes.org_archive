@@ -13,3 +13,18 @@ Archived entries from file /home/doomsday/code/kaminalapp/notes.org
   :ARCHIVE_CATEGORY: notes
   :ARCHIVE_TODO: DONE
   :END:
+
+* TODO Implementaciones doobie de los daos
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2017-05-22 Mon 15:53
+  :ARCHIVE_FILE: ~/code/kaminalapp/notes.org
+  :ARCHIVE_OLPATH: Kaminalapp/Tasks kaminalapp
+  :ARCHIVE_CATEGORY: notes
+  :ARCHIVE_TODO: TODO
+  :END:
+  Tengo problemas con la impl porque me da un error de IncompatibleClassChangeError.
+Originalmente no daba, pero comenzó no estoy seguro cuándo. Posiblemente me funcione
+cambiar de doobie-specs2 a doobie-scalatest, pero no estoy seguro.
+  Para clarificar, el problema es con los unit tests, no con la impl específicamente.
+Terminé las impls básicas, pero no tienen tests por este error. Más tarde a lo mejor
+busco como resolver esto.
