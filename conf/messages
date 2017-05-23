@@ -5,3 +5,8 @@ login.password.label = Clave
 login.submit.label   = Ingresar
 
 LoginController.login.info = Logging in...
+
+
+# Pantalla principal
+index.title = Kaminalapp
+index.header = Kaminalapp

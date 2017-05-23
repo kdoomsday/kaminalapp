@@ -2,6 +2,6 @@
 
 @()(implicit messages: Messages, req: AuthenticatedRequest[_])
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+@main(messages("index.title")) {
+  <h1>@messages("index.header")</h1>
 }
