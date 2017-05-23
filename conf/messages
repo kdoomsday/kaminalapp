@@ -8,5 +8,8 @@ LoginController.login.info = Logging in...
 
 
 # Pantalla principal
-index.title = Kaminalapp
+index.title  = Kaminalapp
 index.header = Kaminalapp
+
+navbar.index  = Inicio
+navbar.logout = Salir
