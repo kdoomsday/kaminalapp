@@ -12,7 +12,7 @@ scalaVersion := "2.11.11"
 libraryDependencies += filters
 libraryDependencies += evolutions
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
-libraryDependencies += "org.specs2" %% "specs2-junit" % "3.6.3" % "test"
+libraryDependencies += "org.specs2" %% "specs2-junit" % "3.8.9" % "test"
 
 libraryDependencies ++= Seq(
   jdbc,

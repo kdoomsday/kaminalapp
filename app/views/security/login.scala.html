@@ -1,7 +1,8 @@
 @(form: Form[(String, String)], redirectUri: String = "")(
     implicit
     notifications: Seq[Notification] = Nil,
-    messages     : Messages
+    messages     : Messages,
+    reqHeader    : RequestHeader
 )
 
 <head>
@@ -18,6 +19,7 @@
 
     <div class="jumbotron">
       <form action="/login" method="post" role="form">
+          @helper.CSRF.formField
           <div class="row">
               <div class="input-group col-md-5 col-md-offset-1 col-sm-12">
                   <label for="login">@messages("login.login.label")</label>
