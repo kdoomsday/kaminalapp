@@ -12,7 +12,7 @@ class EventDaoDoobie @Inject() (db: Database) extends EventDao {
 
   def write(description: String): Unit = {
     Logger.debug(description)
-    qWrite(description).run.transact(transactor(db))
+    qWrite(description).run.transact(transactor(db)).unsafePerformIO
   }
 }
 

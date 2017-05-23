@@ -26,7 +26,7 @@ class UserDaoDoobie @Inject() (
     userLoginQuery(login).option.transact(xa()).unsafePerformIO
 
   def updateConnected(login: String): Unit =
-    setConnected(login).run.transact(xa())
+    setConnected(login).run.transact(xa()).unsafePerformIO
 }
 
 /** Los queries, para poder chequearlos */
