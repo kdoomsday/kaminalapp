@@ -3,7 +3,6 @@ package daos.doobie
 import daos.UserDao
 import javax.inject.Inject
 import models.User
-import cats._, cats.data._, cats.implicits._
 import doobie.imports._
 import play.api.db.Database
 import daos.doobie.DoobieImports._
@@ -17,7 +16,8 @@ class UserDaoDoobie @Inject() (
    * Crea un transactor (por llamado). En teoria db deberia usar hikari,
    * de manera que deberia funcionar bien
    */
-  private[this] implicit def xa() = DataSourceTransactor[IOLite](db.dataSource)
+  // private[this] implicit def xa() = DataSourceTransactor[IOLite](db.dataSource)
+  private[this] implicit def xa() = DoobieTransactor.transactor(db)
 
   def byId(id: Long): Option[User] =
     userIdQuery(id).option.transact(xa()).unsafePerformIO

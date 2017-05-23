@@ -58,6 +58,7 @@ class LoginController @Inject() (
 
       userData ⇒ {
         val (login, pwd) = userData
+
         authenticate(login, pwd) flatMap (valid ⇒
           if (valid) {
             eventDao.write(messagesApi("LoginController.login.aud.success", login))
