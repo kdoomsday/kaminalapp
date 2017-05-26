@@ -1,0 +1,17 @@
+@** Utilitario para crear forms
+  * @param action - Accion a llamar al momento de submit
+  * @param clazz  - Clases css a agregar al form si se quiere
+  *@
+
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(action: String, clazz: Option[String] = None)(block: Html)(
+  implicit
+  messages     : Messages,
+  req          : AuthenticatedRequest[_],
+  notifications: Seq[Notification] = Nil
+)
+<form method="post" role="form" action="@action" @clazz.map(c => { s"""class="$c" """ }).getOrElse("")>
+    @helper.CSRF.formField
+    @block
+</form>
