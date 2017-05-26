@@ -25,7 +25,7 @@ CREATE TABLE events (
 
 CREATE TABLE clientes (
        id           bigserial NOT NULL PRIMARY KEY,
-       nombre       varchar   NOT NULL
+       nombre       varchar   NOT NULL UNIQUE
 );
 
 CREATE TABLE item (

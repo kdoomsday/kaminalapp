@@ -1,0 +1,18 @@
+@** Vista para agregar nuevos clientes *@
+
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[String])(implicit messages: Messages, req: AuthenticatedRequest[_])
+@main(messages("addCliente.title")) {
+    <h1>@messages("addCliente.header")</h1>
+
+    @show.form(routes.ItemController.addCliente.toString, clazz=Some("top5")) {
+        <div class="input-group col-sm-12">
+            <label for="nombre">@messages("addCliente.nombre.label")</label>
+            <input type="text" name="nombre" id="nombre"
+                   class="form-control validate"
+                   autofocus
+            >
+        </div>
+    }
+}

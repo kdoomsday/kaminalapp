@@ -19,3 +19,7 @@ navbar.logout = Salir
 # Items
 addItem.title  = Agregar item
 addItem.header = Agregar item
+
+addCliente.title  = Agregar cliente
+addCliente.header = Agregar cliente
+addCliente.nombre.label = Nombre
