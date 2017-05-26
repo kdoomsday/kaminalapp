@@ -3,7 +3,8 @@ organization := "com.ebarrientos"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+                   .enablePlugins(PlayScala)
 
 lazy val doobieVersion = "0.4.0"
 
@@ -37,7 +38,7 @@ scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
   "-explaintypes",
-  "-Ywarn-unused-import",
+  // "-Ywarn-unused-import",
   "-encoding", "UTF-8",
   "-feature",
   "-Xlog-reflective-calls",

@@ -23,6 +23,18 @@ CREATE TABLE events (
        moment       timestamp NOT NULL
 );
 
+CREATE TABLE clientes (
+       id           bigserial NOT NULL PRIMARY KEY,
+       nombre       varchar   NOT NULL
+);
+
+CREATE TABLE item (
+       id           bigserial NOT NULL PRIMARY KEY,
+       id_cliente   bigint    NOT NULL references clientes(id),
+       monto        numeric(16, 2) NOT NULL,
+       fecha        timestamp NOT NULL default(now())
+);
+
 insert into roles(name) values ('interno');
 insert into roles(name) values ('usuario');
 
@@ -35,3 +47,7 @@ drop table users;
 drop table roles;
 
 drop table events;
+
+drop table item;
+
+drop table clientes;
