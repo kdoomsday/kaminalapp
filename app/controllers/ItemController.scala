@@ -2,6 +2,7 @@ package controllers
 
 import controllers.actions.Actions
 import javax.inject.Inject
+import models.Notification
 import play.api.data.Form
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.api.mvc.Controller
@@ -24,7 +25,17 @@ class ItemController @Inject() (
     Future.successful(Ok(views.html.addCliente(clienteForm)))
   }
 
-  def addCliente = TODO
+  def addCliente = actions.roleAction("interno") { implicit req ⇒
+    val result = clienteForm.bindFromRequest.fold(
+      formWithErrors ⇒ BadRequest(views.html.addCliente(formWithErrors)),
+      nombre ⇒ {
+        implicit val notifications = Notification.success(s"Added $nombre")
+        Ok(views.html.addCliente(clienteForm))
+      }
+    )
+
+    Future.successful(result)
+  }
 }
 
 object ItemController {

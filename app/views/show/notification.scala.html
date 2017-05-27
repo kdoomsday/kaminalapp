@@ -3,4 +3,4 @@
   * @param level Type of notification. Must be one of 'success', 'error' or 'warning'
   *@
 @(text: String, level: String = "")
-<script type="text/javascript">alertify.notify('@text', '@level', 0);</script>
+<input type="hidden" class="notification" data-text="@text" data-level="@level"/>

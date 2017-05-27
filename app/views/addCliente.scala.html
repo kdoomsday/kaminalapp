@@ -2,7 +2,7 @@
 
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[String])(implicit messages: Messages, req: AuthenticatedRequest[_])
+@(form: Form[String])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
 @main(messages("addCliente.title")) {
     <h1>@messages("addCliente.header")</h1>
 
