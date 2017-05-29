@@ -4,7 +4,7 @@ import audits.{ EventDao, EventDaoDoobie }
 import com.google.inject.AbstractModule
 import crypto.{ HashService, MessageDigestHashService }
 import daos._
-import daos.doobie.{ SubjectDaoDoobie, UserDaoDoobie }
+import daos.doobie.{ ItemDaoDoobie, SubjectDaoDoobie, UserDaoDoobie }
 // import audits.EventDao
 
 /**
@@ -18,6 +18,7 @@ class DefaultBindings extends AbstractModule {
     bind(classOf[UserDao]) to classOf[UserDaoDoobie]
     bind(classOf[SubjectDao]) to classOf[SubjectDaoDoobie]
     bind(classOf[EventDao]) to classOf[EventDaoDoobie]
+    bind(classOf[ItemDao]) to classOf[ItemDaoDoobie]
 
     bind(classOf[HashService]) toInstance MessageDigestHashService.Sha256HashService
   }

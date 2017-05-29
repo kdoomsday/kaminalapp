@@ -1,10 +1,11 @@
 package controllers
 
 import controllers.actions.Actions
+import daos.ItemDao
 import javax.inject.Inject
 import models.Notification
 import play.api.data.Form
-import play.api.i18n.{ I18nSupport, MessagesApi }
+import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
 import play.api.mvc.Controller
 import scala.concurrent.Future
 import play.api.data.Forms._
@@ -12,6 +13,7 @@ import play.api.data.Forms._
 /** Controlador para las acciones relacionadas con items */
 class ItemController @Inject() (
     actions: Actions,
+    itemDao: ItemDao,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
 
@@ -29,7 +31,8 @@ class ItemController @Inject() (
     val result = clienteForm.bindFromRequest.fold(
       formWithErrors ⇒ BadRequest(views.html.addCliente(formWithErrors)),
       nombre ⇒ {
-        implicit val notifications = Notification.success(s"Added $nombre")
+        itemDao.addCliente(nombre)
+        implicit val notifications = Notification.success(Messages("ItemController.addCliente.success", nombre))
         Ok(views.html.addCliente(clienteForm))
       }
     )

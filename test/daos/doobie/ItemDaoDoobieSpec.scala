@@ -9,4 +9,5 @@ object ItemDaoDoobieSpec extends Specification with AnalysisSpec {
   val transactor = TestUtil.transactor()
 
   check(DaoItemDoobie.qAdd(0L, BigDecimal(0)))
+  check(DaoItemDoobie.qAddCliente(""))
 }
