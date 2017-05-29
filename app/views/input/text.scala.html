@@ -1,0 +1,12 @@
+@(id: String, label: String, placeholder: String = "", tipo: String = "text")
+<div class="form-group">
+    <label for="@id" class="col-sm-2 control-label" >@label </label>
+    <div class="col-sm-10">
+        <input type="@tipo"
+               class="form-control"
+               id="@id"
+               name="@id"
+               placeholder ="@placeholder"
+        >
+    </div>
+</div>

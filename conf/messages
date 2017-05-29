@@ -4,8 +4,10 @@ login.login.label    = Usuario
 login.password.label = Clave
 login.submit.label   = Ingresar
 
-LoginController.login.info = Logging in...
+LoginController.login.info        = Logging in...
 LoginController.login.aud.success = Login exitoso para el usuario {0}
+LoginController.logout.aud        = Usuario {0} salió del sistema
+
 
 
 # Pantalla principal
@@ -14,13 +16,17 @@ index.header = Kaminalapp
 
 navbar.index      = Inicio
 navbar.logout     = Salir
+navbar.addItem    = Agregar ítem
 navbar.clientes   = Clientes
 navbar.addCliente = Agregar cliente
 
 
 # Items
-addItem.title  = Agregar item
-addItem.header = Agregar item
+addItem.title         = Agregar item
+addItem.header        = Agregar item
+addItem.cliente.label = Cliente
+addItem.monto.label   = Monto
+addItem.monto.ph      = Monto a agregar
 
 addCliente.title  = Agregar cliente
 addCliente.header = Agregar cliente

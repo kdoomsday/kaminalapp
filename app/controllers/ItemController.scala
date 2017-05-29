@@ -20,7 +20,7 @@ class ItemController @Inject() (
   import ItemController._
 
   def addItemView = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.items.addItem()))
+    Future.successful(Ok(views.html.items.addItem(itemDao.clientes())))
   }
 
   def addClienteView = actions.roleAction("interno") { implicit req ⇒

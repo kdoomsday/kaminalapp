@@ -1,7 +1,17 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@()(implicit messages: Messages, req: AuthenticatedRequest[_])
+@(clientes: List[Cliente])(implicit messages: Messages, req: AuthenticatedRequest[_])
 
 @main(messages("addItem.title")) {
-    <h1>messages("addItem.header")</h1>
+    <h1>@messages("addItem.header")</h1>
+
+    @show.form(action="#") {
+        @input.dropdown(id     = "cliente",
+                        things = clientes.map(c => (c.id.toString, c.nombre)),
+                        label  = Some(messages("addItem.cliente.label"))
+        )
+        @input.text(id = "monto",
+                    label = messages("addItem.monto.label"),
+                    placeholder = messages("addItem.monto.ph"))
+    }
 }

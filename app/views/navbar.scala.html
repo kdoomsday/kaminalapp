@@ -19,6 +19,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="@routes.HomeController.index">@messages("navbar.index")</a></li>
                     @restrict(roles = List(Array("interno"))) {
+                        <li><a href="@routes.ItemController.addItemView" >@messages("navbar.addItem")</a></li>
                         <li><a href="@routes.ItemController.clientes" >@messages("navbar.clientes")</a></li>
                         <li><a href="@routes.ItemController.addCliente" >@messages("navbar.addCliente")</a></li>
                     }

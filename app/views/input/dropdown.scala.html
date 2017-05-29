@@ -1,0 +1,19 @@
+@(id: String, things: List[(String, String)], label: Option[String] = None)
+<div class="form-group" >
+    @for(l <- label) {
+        <label for="@id" class="col-sm-2">@l </label>
+    }
+
+    @for(_ <- label) {
+        <div class="col-sm-10">
+    }
+    <select class="form-control " >
+        @for(thing <- things) {
+            <option value="@thing._1" >@thing._2</option>
+            }
+    </select>
+    @for(_ <- label) {
+        </div>
+    }
+
+</div>
