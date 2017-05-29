@@ -12,9 +12,10 @@ LoginController.login.aud.success = Login exitoso para el usuario {0}
 index.title  = Kaminalapp
 index.header = Kaminalapp
 
-navbar.index    = Inicio
-navbar.logout   = Salir
-navbar.clientes = Clientes
+navbar.index      = Inicio
+navbar.logout     = Salir
+navbar.clientes   = Clientes
+navbar.addCliente = Agregar cliente
 
 
 # Items
