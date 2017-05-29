@@ -27,6 +27,10 @@ class ItemController @Inject() (
     Future.successful(Ok(views.html.addCliente(clienteForm)))
   }
 
+  def clientes = actions.roleAction("interno") { implicit req ⇒
+    Future.successful(Ok(views.html.clientes(itemDao.clientes())))
+  }
+
   def addCliente = actions.roleAction("interno") { implicit req ⇒
     val result = clienteForm.bindFromRequest.fold(
       formWithErrors ⇒ BadRequest(views.html.addCliente(formWithErrors)),

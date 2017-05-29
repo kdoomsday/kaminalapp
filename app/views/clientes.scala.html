@@ -1,0 +1,19 @@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+@(clientes: List[models.Cliente])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@main(messages("clientes.title")) {
+    <h1>@messages("clientes.header")</h1>
+    <table class="top5 table">
+        <thead>
+            <tr>
+                <th>@messages("clientes.t.nombre")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(c <- clientes) {
+                <tr>
+                    <td>@c.nombre </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -7,6 +7,7 @@ import play.api.db.Database
 import play.api.Logger
 import scala.math.BigDecimal
 import daos.ItemDao
+import models.Cliente
 
 /**
  * Implementacion de DaoItem que utiliza Doobie
@@ -26,6 +27,11 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
     val up = qAddCliente(nombre).run.transact(transactor).unsafePerformIO
     Logger.debug(s"Nuevo cliente: $nombre, updated = $up")
   }
+
+  def clientes(): List[Cliente] = {
+    Logger.debug("Consulta de listado de clientes")
+    qClientes().list.transact(transactor).unsafePerformIO
+  }
 }
 
 object DaoItemDoobie {
@@ -35,4 +41,6 @@ object DaoItemDoobie {
 
   def qAddCliente(nombre: String) =
     sql"""Insert into clientes(nombre) values($nombre)""".update
+
+  def qClientes() = sql"select id, nombre from clientes".query[Cliente]
 }

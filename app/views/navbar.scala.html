@@ -1,4 +1,5 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
+@import be.objectify.deadbolt.scala.views.html.restrict
 
 @()(implicit messages: Messages, req: AuthenticatedRequest[Any])
 <nav>
@@ -17,6 +18,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="@routes.HomeController.index">@messages("navbar.index")</a></li>
+                    @restrict(roles = List(Array("interno"))) {
+                        <li><a href="@routes.ItemController.clientes" >@messages("navbar.clientes")</a></li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>

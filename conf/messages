@@ -12,8 +12,9 @@ LoginController.login.aud.success = Login exitoso para el usuario {0}
 index.title  = Kaminalapp
 index.header = Kaminalapp
 
-navbar.index  = Inicio
-navbar.logout = Salir
+navbar.index    = Inicio
+navbar.logout   = Salir
+navbar.clientes = Clientes
 
 
 # Items
@@ -23,5 +24,9 @@ addItem.header = Agregar item
 addCliente.title  = Agregar cliente
 addCliente.header = Agregar cliente
 addCliente.nombre.label = Nombre
+
+clientes.title  = Clientes
+clientes.header = Clientes
+clientes.t.nombre = Nombre
 
 ItemController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
