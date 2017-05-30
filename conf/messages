@@ -25,8 +25,10 @@ navbar.addCliente = Agregar cliente
 addItem.title         = Agregar item
 addItem.header        = Agregar item
 addItem.cliente.label = Cliente
+addItem.cliente.ph    = Cliente al que se agrega el cargo
 addItem.monto.label   = Monto
 addItem.monto.ph      = Monto a agregar
+addItem.submit        = Agregar
 
 addCliente.title  = Agregar cliente
 addCliente.header = Agregar cliente
@@ -36,4 +38,5 @@ clientes.title  = Clientes
 clientes.header = Clientes
 clientes.t.nombre = Nombre
 
+ItemController.addItem.success    = Item agregado exitosamente
 ItemController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente

@@ -13,6 +13,7 @@ GET     /logout               controllers.LoginController.logout
 
 # Items
 GET     /add                  controllers.ItemController.addItemView
+POST    /add                  controllers.ItemController.addItem
 GET     /addCliente           controllers.ItemController.addClienteView
 POST    /addCliente           controllers.ItemController.addCliente
 GET     /clientes             controllers.ItemController.clientes

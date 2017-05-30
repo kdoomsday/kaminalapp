@@ -1,5 +1,11 @@
-@(id: String, things: List[(String, String)], label: Option[String] = None)
-<div class="form-group" >
+@(
+  id:          String,
+  things:      List[(String, String)],
+  label:       Option[String] = None,
+  placeholder: Option[String] = None,
+  field:       Option[Field]  = None
+)
+<div class="form-group @for(f <- field if f.hasErrors){ has-error }" >
     @for(l <- label) {
         <label for="@id" class="col-sm-2">@l </label>
     }
@@ -7,10 +13,11 @@
     @for(_ <- label) {
         <div class="col-sm-10">
     }
-    <select class="form-control " >
+    <select class="form-control " name="@id">
+        @for(ph <- placeholder){ <option selected disabled hidden>@ph</option> }
         @for(thing <- things) {
-            <option value="@thing._1" >@thing._2</option>
-            }
+            <option value="@thing._1" @{field.map(v => if(v == thing._1) "selected" else "")}>@thing._2</option>
+        }
     </select>
     @for(_ <- label) {
         </div>
