@@ -37,6 +37,7 @@ addCliente.nombre.label = Nombre
 clientes.title  = Clientes
 clientes.header = Clientes
 clientes.t.nombre = Nombre
+clientes.t.saldo  = Saldo
 
 ItemController.addItem.success    = Item agregado exitosamente
 ItemController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente

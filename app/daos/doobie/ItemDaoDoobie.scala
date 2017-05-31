@@ -32,6 +32,11 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
     Logger.debug("Consulta de listado de clientes")
     qClientes().list.transact(transactor).unsafePerformIO
   }
+
+  def clientesSaldo(): List[(String, BigDecimal)] = {
+    Logger.debug("Consulta de saldo de los clientes")
+    qClientesSaldo().list.transact(transactor).unsafePerformIO
+  }
 }
 
 object DaoItemDoobie {
@@ -43,4 +48,8 @@ object DaoItemDoobie {
     sql"""Insert into clientes(nombre) values($nombre)""".update
 
   def qClientes() = sql"select id, nombre from clientes".query[Cliente]
+
+  def qClientesSaldo() = sql"""select c.nombre, sum(i.monto)
+                               from item i join clientes c on i.id_cliente = c.id
+                               group by c.nombre""".query[(String, BigDecimal)]
 }

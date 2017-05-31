@@ -52,7 +52,7 @@ class ItemController @Inject() (
 
   // Vista del listado de los clientes
   def clientes = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.clientes(itemDao.clientes())))
+    Future.successful(Ok(views.html.clientes(itemDao.clientesSaldo())))
   }
 
   // Vista de agregar un cliente
