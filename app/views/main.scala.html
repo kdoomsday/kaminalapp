@@ -1,6 +1,6 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(title: String, scripts: Seq[String] = Nil, styles: Seq[String] = Nil)(
+@(titleKey: String, scripts: Seq[String] = Nil, styles: Seq[String] = Nil)(
     content: Html
 )(
     implicit
@@ -26,7 +26,7 @@
 
 <html>
     <head>
-        <title>@title</title>
+        <title>@messages(titleKey)</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")"  media="screen,projection"/>

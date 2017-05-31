@@ -6,7 +6,7 @@
     req: AuthenticatedRequest[_],
     notifications: Seq[Notification] = Nil)
 
-@main(messages("addItem.title")) {
+@main("addItem.title") {
     <h1>@messages("addItem.header")</h1>
 
     @show.form(action=routes.ItemController.addItem.toString) {

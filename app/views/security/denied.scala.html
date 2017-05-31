@@ -7,7 +7,7 @@
     request: AuthenticatedRequest[Any]
 )
 
-@main(messages("denied.title")) {
+@main("denied.title") {
   @maybeSubject.fold(
     show.errorCard(Seq(messages("denied.noUser")))
   )(

@@ -1,4 +1,5 @@
 # https://www.playframework.com/documentation/latest/ScalaI18N
+login.title          = Login
 login.header         = Inicio de sesión
 login.login.label    = Usuario
 login.password.label = Clave
