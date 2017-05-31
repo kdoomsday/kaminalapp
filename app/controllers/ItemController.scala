@@ -34,8 +34,8 @@ class ItemController @Inject() (
       },
 
       item ⇒ {
-        val (id, monto) = item
-        itemDao.add(id, monto)
+        val (id, monto, descripcion) = item
+        itemDao.add(id, monto, descripcion)
         Logger.debug(s"Agregado item para cliente $id con  monto $monto")
         implicit val nots = Notification.success(Messages("ItemController.addItem.success"))
         Ok(views.html.items.addItem(itemForm, itemDao.clientes()))
@@ -75,10 +75,11 @@ object ItemController {
     single("nombre" → nonEmptyText)
   )
 
-  val itemForm: Form[(Long, BigDecimal)] = Form(
+  val itemForm: Form[(Long, BigDecimal, String)] = Form(
     tuple(
       "cliente" → longNumber,
-      "monto" → bigDecimal(16, 2)
+      "monto" → bigDecimal(16, 2),
+      "descripcion" → text
     )
   )
 }

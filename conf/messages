@@ -29,6 +29,8 @@ addItem.cliente.ph    = Cliente al que se agrega el cargo
 addItem.monto.label   = Monto
 addItem.monto.ph      = Monto a agregar
 addItem.submit        = Agregar
+addItem.desc.label    = Descripción
+addItem.desc.ph       = Descripción
 
 addCliente.title  = Agregar cliente
 addCliente.header = Agregar cliente

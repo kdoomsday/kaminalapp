@@ -29,10 +29,11 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE item (
-       id           bigserial NOT NULL PRIMARY KEY,
-       id_cliente   bigint    NOT NULL references clientes(id),
+       id           bigserial      NOT NULL PRIMARY KEY,
+       id_cliente   bigint         NOT NULL references clientes(id),
        monto        numeric(16, 2) NOT NULL,
-       fecha        timestamp NOT NULL default(now())
+       descripcion  varchar,
+       fecha        timestamp      NOT NULL default(now())
 );
 
 insert into roles(name) values ('interno');

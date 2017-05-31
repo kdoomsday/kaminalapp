@@ -18,8 +18,8 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
 
   val transactor = DataSourceTransactor[IOLite](db.dataSource)
 
-  def add(idCliente: Long, monto: BigDecimal): Unit = {
-    val updated = qAdd(idCliente, monto).run.transact(transactor).unsafePerformIO
+  def add(idCliente: Long, monto: BigDecimal, descripcion: String): Unit = {
+    val updated = qAdd(idCliente, monto, descripcion).run.transact(transactor).unsafePerformIO
     Logger.debug(s"Item($idCliente, $monto), updated = $updated")
   }
 
@@ -40,9 +40,9 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
 }
 
 object DaoItemDoobie {
-  def qAdd(idCliente: Long, monto: BigDecimal) =
-    sql"""Insert into item(id_cliente, monto)
-          values ($idCliente, $monto)""".update
+  def qAdd(idCliente: Long, monto: BigDecimal, descripcion: String) =
+    sql"""Insert into item(id_cliente, monto, descripcion)
+          values ($idCliente, $monto, $descripcion)""".update
 
   def qAddCliente(nombre: String) =
     sql"""Insert into clientes(nombre) values($nombre)""".update

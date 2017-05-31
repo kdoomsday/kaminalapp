@@ -1,6 +1,6 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[(Long, BigDecimal)], clientes: List[Cliente])(
+@(form: Form[(Long, BigDecimal, String)], clientes: List[Cliente])(
     implicit
     messages: Messages,
     req: AuthenticatedRequest[_],
@@ -14,13 +14,17 @@
                         things      = clientes.map(c => (c.id.toString, c.nombre)),
                         label       = Some(messages("addItem.cliente.label")),
                         placeholder = Some(messages("addItem.cliente.ph")),
-                        field       = Some(form("cliente"))
-        )
+                        field       = Some(form("cliente")))
+
         @input.text(id          = "monto",
                     label       = messages("addItem.monto.label"),
                     placeholder = messages("addItem.monto.ph"),
-                    field       = Some(form("monto"))
-        )
+                    field       = Some(form("monto")))
+
+        @input.text(id          = "descripcion",
+                    label       = messages("addItem.desc.label"),
+                    placeholder = messages("addItem.desc.ph"),
+                    field       = Some(form("descripcion")))
         @input.submit("addItem.submit")
     }
 }

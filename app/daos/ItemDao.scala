@@ -7,7 +7,7 @@ import models.Cliente
 trait ItemDao {
 
   /** Agregar un item */
-  def add(idCliente: Long, monto: BigDecimal): Unit
+  def add(idCliente: Long, monto: BigDecimal, descripcion: String): Unit
 
   /** Agregar un nuevo cliente */
   def addCliente(nombre: String): Unit
