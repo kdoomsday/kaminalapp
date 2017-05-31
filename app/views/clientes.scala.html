@@ -6,14 +6,14 @@
         <thead>
             <tr>
                 <th>@messages("clientes.t.nombre")</th>
-                <th>@messages("clientes.t.saldo")</th>
+                <th class="text-right">@messages("clientes.t.saldo")</th>
             </tr>
         </thead>
         <tbody>
             @for((nombre, saldo) <- clientes) {
                 <tr>
                     <td>@nombre </td>
-                    <td>BsF. @saldo </td>
+                    <td class="text-right">@saldo </td>
                 </tr>
             }
         </tbody>

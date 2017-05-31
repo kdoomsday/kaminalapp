@@ -32,14 +32,15 @@ addItem.submit        = Agregar
 addItem.desc.label    = Descripción
 addItem.desc.ph       = Descripción
 
-addCliente.title  = Agregar cliente
-addCliente.header = Agregar cliente
+addCliente.title        = Agregar cliente
+addCliente.header       = Agregar cliente
 addCliente.nombre.label = Nombre
+addCliente.submit       = Crear cliente
 
 clientes.title  = Clientes
 clientes.header = Clientes
 clientes.t.nombre = Nombre
-clientes.t.saldo  = Saldo
+clientes.t.saldo  = Saldo (BsF.)
 
 ItemController.addItem.success    = Item agregado exitosamente
 ItemController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente

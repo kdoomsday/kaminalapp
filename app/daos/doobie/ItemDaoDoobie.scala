@@ -49,7 +49,7 @@ object DaoItemDoobie {
 
   def qClientes() = sql"select id, nombre from clientes".query[Cliente]
 
-  def qClientesSaldo() = sql"""select c.nombre, sum(i.monto)
-                               from item i join clientes c on i.id_cliente = c.id
+  def qClientesSaldo() = sql"""select c.nombre, coalesce(sum(i.monto), 0) as saldo
+                               from item i right outer join clientes c on i.id_cliente = c.id
                                group by c.nombre""".query[(String, BigDecimal)]
 }
