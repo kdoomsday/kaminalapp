@@ -2,20 +2,21 @@ package controllers
 
 import audits.EventDao
 import controllers.actions.Actions
-import daos.ItemDao
+import daos.{ ItemDao, ClienteDao }
 import javax.inject.Inject
 import models.Notification
 import play.api.Logger
 import play.api.data.Form
+import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
 import play.api.mvc.Controller
 import scala.concurrent.Future
-import play.api.data.Forms._
 
 /** Controlador para las acciones relacionadas con items */
 class ItemController @Inject() (
     actions: Actions,
     itemDao: ItemDao,
+    clienteDao: ClienteDao,
     eventDao: EventDao,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
@@ -24,7 +25,7 @@ class ItemController @Inject() (
 
   // Vista de agregar un item
   def addItemView = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.items.addItem(itemForm, itemDao.clientes())))
+    Future.successful(Ok(views.html.items.addItem(itemForm, clienteDao.clientes())))
   }
 
   // Accion de agregar un item
@@ -32,7 +33,7 @@ class ItemController @Inject() (
     val res = itemForm.bindFromRequest.fold(
       formWithErrors ⇒ {
         Logger.debug("Error de datos agregando item")
-        BadRequest(views.html.items.addItem(formWithErrors, itemDao.clientes()))
+        BadRequest(views.html.items.addItem(formWithErrors, clienteDao.clientes()))
       },
 
       item ⇒ {
@@ -40,43 +41,15 @@ class ItemController @Inject() (
         itemDao.add(id, monto, descripcion)
         eventDao.write(s"Agregado item para cliente $id con  monto $monto")
         implicit val nots = Notification.success(Messages("ItemController.addItem.success"))
-        Ok(views.html.items.addItem(itemForm, itemDao.clientes()))
+        Ok(views.html.items.addItem(itemForm, clienteDao.clientes()))
       }
     )
 
     Future.successful(res)
   }
-
-  // Vista de agregar un cliente
-  def addClienteView = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.addCliente(clienteForm)))
-  }
-
-  // Vista del listado de los clientes
-  def clientes = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.clientes(itemDao.clientesSaldo())))
-  }
-
-  // Vista de agregar un cliente
-  def addCliente = actions.roleAction("interno") { implicit req ⇒
-    val result = clienteForm.bindFromRequest.fold(
-      formWithErrors ⇒ BadRequest(views.html.addCliente(formWithErrors)),
-      nombre ⇒ {
-        itemDao.addCliente(nombre)
-        eventDao.write(s"Cliente $nombre agregado")
-        implicit val notifications = Notification.success(Messages("ItemController.addCliente.success", nombre))
-        Ok(views.html.addCliente(clienteForm))
-      }
-    )
-
-    Future.successful(result)
-  }
 }
 
 object ItemController {
-  val clienteForm: Form[String] = Form(
-    single("nombre" → nonEmptyText)
-  )
 
   val itemForm: Form[(Long, BigDecimal, String)] = Form(
     tuple(

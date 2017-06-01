@@ -43,5 +43,8 @@ clientes.header = Clientes
 clientes.t.nombre = Nombre
 clientes.t.saldo  = Saldo (BsF.)
 
+cliente.title  = Detalles del cliente
+cliente.header = Detalles del cliente {0}
+
 ItemController.addItem.success    = Item agregado exitosamente
 ItemController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente

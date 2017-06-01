@@ -8,8 +8,5 @@ import scala.math.BigDecimal
 object ItemDaoDoobieSpec extends Specification with AnalysisSpec {
   val transactor = TestUtil.transactor()
 
-  check(DaoItemDoobie.qAdd(0L, BigDecimal(0)))
-  check(DaoItemDoobie.qAddCliente(""))
-  check(DaoItemDoobie.qClientes())
-  check(DaoItemDoobie.qClientesSaldo())
+  check(DaoItemDoobie.qAdd(0L, BigDecimal(0), ""))
 }

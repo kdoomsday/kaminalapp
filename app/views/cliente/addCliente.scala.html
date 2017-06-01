@@ -6,7 +6,7 @@
 @main("addCliente.title") {
     <h1>@messages("addCliente.header")</h1>
 
-    @show.form(routes.ItemController.addCliente.toString, clazz=Some("top5")) {
+    @show.form(routes.ClienteController.addCliente.toString, clazz=Some("top5")) {
         <div class="input-group col-sm-12">
             <label for="nombre">@messages("addCliente.nombre.label")</label>
             <input type="text" name="nombre" id="nombre"

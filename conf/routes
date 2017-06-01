@@ -14,9 +14,10 @@ GET     /logout               controllers.LoginController.logout
 # Items
 GET     /add                  controllers.ItemController.addItemView
 POST    /add                  controllers.ItemController.addItem
-GET     /addCliente           controllers.ItemController.addClienteView
-POST    /addCliente           controllers.ItemController.addCliente
-GET     /clientes             controllers.ItemController.clientes
+GET     /addCliente           controllers.ClienteController.addClienteView
+POST    /addCliente           controllers.ClienteController.addCliente
+GET     /clientes             controllers.ClienteController.clientes
+GET     /cliente/:id          controllers.ClienteController.cliente(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

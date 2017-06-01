@@ -1,0 +1,6 @@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(c: Cliente)(implicit messages: Messages, req: AuthenticatedRequest[_])
+@main("cliente.title") {
+    <h1>@messages("cliente.header", c.nombre)</h1>
+}
