@@ -1,5 +1,6 @@
 package controllers
 
+import audits.EventDao
 import controllers.actions.Actions
 import daos.ItemDao
 import javax.inject.Inject
@@ -15,6 +16,7 @@ import play.api.data.Forms._
 class ItemController @Inject() (
     actions: Actions,
     itemDao: ItemDao,
+    eventDao: EventDao,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
 
@@ -36,7 +38,7 @@ class ItemController @Inject() (
       item ⇒ {
         val (id, monto, descripcion) = item
         itemDao.add(id, monto, descripcion)
-        Logger.debug(s"Agregado item para cliente $id con  monto $monto")
+        eventDao.write(s"Agregado item para cliente $id con  monto $monto")
         implicit val nots = Notification.success(Messages("ItemController.addItem.success"))
         Ok(views.html.items.addItem(itemForm, itemDao.clientes()))
       }
@@ -61,6 +63,7 @@ class ItemController @Inject() (
       formWithErrors ⇒ BadRequest(views.html.addCliente(formWithErrors)),
       nombre ⇒ {
         itemDao.addCliente(nombre)
+        eventDao.write(s"Cliente $nombre agregado")
         implicit val notifications = Notification.success(Messages("ItemController.addCliente.success", nombre))
         Ok(views.html.addCliente(clienteForm))
       }
