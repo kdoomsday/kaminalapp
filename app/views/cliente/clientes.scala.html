@@ -5,8 +5,9 @@
     <table class="top5 table">
         <thead>
             <tr>
-                <th>@messages("clientes.t.nombre")</th>
-                <th class="text-right">@messages("clientes.t.saldo")</th>
+                <th class="col-sm-9">@messages("clientes.t.nombre")</th>
+                <th class="col-sm-2 text-right">@messages("clientes.t.saldo")</th>
+                <th class="col-sm-1 text-center">@messages("clientes.t.ver")</th>
             </tr>
         </thead>
         <tbody>
@@ -14,6 +15,7 @@
                 <tr>
                     <td>@nombre </td>
                     <td class="text-right">@saldo </td>
+                    <td class="text-center"><a href="#">@gi("search")</a></td>
                 </tr>
             }
         </tbody>

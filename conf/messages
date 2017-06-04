@@ -42,9 +42,17 @@ clientes.title  = Clientes
 clientes.header = Clientes
 clientes.t.nombre = Nombre
 clientes.t.saldo  = Saldo (BsF.)
+clientes.t.ver    = Detalle
 
-cliente.title  = Detalles del cliente
-cliente.header = Detalles del cliente {0}
+cliente.title      = Detalles del cliente
+cliente.header     = {0}
+cliente.saldo      = Saldo = {0}
+cliente.items      = Registro
+cliente.item.desc  = Descripción
+cliente.item.monto = Monto
+cliente.item.fecha = Fecha
 
 ItemController.addItem.success    = Item agregado exitosamente
-ItemController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
+
+ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
+ClienteController.cliente.noExiste   = No existe el cliente especificado

@@ -2,9 +2,9 @@ package controllers
 
 import audits.EventDao
 import controllers.actions.Actions
-import daos.ClienteDao
+import daos.{ ClienteDao, ItemDao }
 import javax.inject.Inject
-import models.Notification
+import models.{ Item, Notification }
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
@@ -15,6 +15,7 @@ import scala.concurrent.Future
 class ClienteController @Inject() (
     actions: Actions,
     clienteDao: ClienteDao,
+    itemDao: ItemDao,
     eventDao: EventDao,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
@@ -32,7 +33,7 @@ class ClienteController @Inject() (
       nombre ⇒ {
         clienteDao.addCliente(nombre)
         eventDao.write(s"Cliente $nombre agregado")
-        implicit val notifications = Notification.success(Messages("ItemController.addCliente.success", nombre))
+        implicit val notifications = Notification.success(Messages("ClienteController.addCliente.success", nombre))
         Ok(views.html.cliente.addCliente(clienteForm))
       }
     )
@@ -47,7 +48,17 @@ class ClienteController @Inject() (
 
   // Detalles de un cliente segun su id, como deben ser vistos por un usuario interno
   def cliente(id: Long) = actions.roleAction("interno") { implicit req ⇒
-    ???
+    val oDatos = itemDao.datosCliente(id)
+    Future.successful(
+      oDatos.fold {
+        implicit val nots = Notification.warn(Messages("ClienteController.cliente.noExiste"))
+        (Ok(views.html.index()))
+      } { datos: (String, List[Item]) ⇒
+        val (nombre, items) = datos
+        val saldo = items.foldLeft(BigDecimal(0))((acc, i) ⇒ acc + i.monto)
+        Ok(views.html.cliente.cliente(nombre, saldo, items))
+      }
+    )
   }
 }
 

@@ -1,6 +1,33 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(c: Cliente)(implicit messages: Messages, req: AuthenticatedRequest[_])
+@(nombreCliente: String, saldo: BigDecimal, items: List[Item])(implicit messages: Messages, req: AuthenticatedRequest[_])
 @main("cliente.title") {
-    <h1>@messages("cliente.header", c.nombre)</h1>
+    <h1>@messages("cliente.header", nombreCliente)</h1>
+
+    <div class="row" >
+        <p>@messages("cliente.saldo", saldo)</p>
+    </div>
+
+    <div class="row" >
+        <h2>@messages("cliente.items")</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@messages("cliente.item.desc") </th>
+                    <th>@messages("cliente.item.monto") </th>
+                    <th>@messages("cliente.item.fecha") </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(i ← items){
+                    <tr>
+                        <td>@i.descripcion </td>
+                        <td>@i.monto </td>
+                        <td>@i.fecha </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
