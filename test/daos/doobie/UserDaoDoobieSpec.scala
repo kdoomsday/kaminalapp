@@ -11,4 +11,6 @@ object UserDaoDoobieSpec extends Specification with AnalysisSpec {
   check(UserDaoDoobie.userIdQuery(0L))
   check(UserDaoDoobie.userLoginQuery(""))
   check(UserDaoDoobie.setConnected(""))
+
+  check(UserDaoDoobie.qUsersByRole(""))
 }

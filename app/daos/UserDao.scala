@@ -17,4 +17,7 @@ trait UserDao {
    * Update the user's last connected time (also marks it connected)
    */
   def updateConnected(login: String): Unit
+
+  /** Todos los usuarios internos del sistema */
+  def usuariosInternos(): List[User]
 }

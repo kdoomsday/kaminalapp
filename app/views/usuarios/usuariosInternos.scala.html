@@ -1,0 +1,23 @@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(usuarios: List[User])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@main("usuariosInternos.title") {
+    <h1>@messages("usuariosInternos.header")</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-sm-9">@messages("usuariosInternos.t.login") </th>
+                <th class="col-sm-3">@messages("usuariosInternos.t.ultimaAct") </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(u <- usuarios) {
+                <tr>
+                    <td>@u.login </td>
+                    <td>@{u.lastActivity.map(_.toString).getOrElse("---")}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -15,14 +15,15 @@ LoginController.logout.aud        = Usuario {0} salió del sistema
 index.title  = Kaminalapp
 index.header = Kaminalapp
 
-navbar.index      = Inicio
-navbar.logout     = Salir
-navbar.addItem    = Agregar ítem
-navbar.clientes   = Clientes
-navbar.addCliente = Agregar cliente
+navbar.index            = Inicio
+navbar.logout           = Salir
+navbar.addItem          = Agregar ítem
+navbar.clientes         = Clientes
+navbar.addCliente       = Agregar cliente
+navbar.usuariosInternos = Usuarios internos
 
 
-# Items
+# Items + clientes
 addItem.title         = Agregar item
 addItem.header        = Agregar item
 addItem.cliente.label = Cliente
@@ -56,3 +57,11 @@ ItemController.addItem.success    = Item agregado exitosamente
 
 ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
 ClienteController.cliente.noExiste   = No existe el cliente especificado
+
+
+# Usuarios
+#   Internos
+usuariosInternos.title       = Usuarios internos
+usuariosInternos.header      = Usuarios internos
+usuariosInternos.t.login     = Login
+usuariosInternos.t.ultimaAct = Última actividad
