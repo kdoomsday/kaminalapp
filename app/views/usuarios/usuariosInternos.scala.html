@@ -4,20 +4,31 @@
 @main("usuariosInternos.title") {
     <h1>@messages("usuariosInternos.header")</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="col-sm-9">@messages("usuariosInternos.t.login") </th>
-                <th class="col-sm-3">@messages("usuariosInternos.t.ultimaAct") </th>
-            </tr>
-        </thead>
-        <tbody>
-            @for(u <- usuarios) {
+    <div class="row">
+        <a href="@controllers.usuarios.routes.UsuariosInternosController.crearUsuarioInternoView()"
+           class="btn btn-primary col-sm-2 col-sm-offset-5"
+        >
+            @messages("usuariosInternos.add")
+            @gi("plus")
+        </a>
+    </div>
+
+    <div class="row">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@u.login </td>
-                    <td>@{u.lastActivity.map(_.toString).getOrElse("---")}</td>
+                    <th class="col-sm-9">@messages("usuariosInternos.t.login") </th>
+                    <th class="col-sm-3">@messages("usuariosInternos.t.ultimaAct") </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @for(u <- usuarios) {
+                    <tr>
+                        <td>@u.login </td>
+                        <td>@{u.lastActivity.map(_.toString).getOrElse("---")}</td>
+                    </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+    }

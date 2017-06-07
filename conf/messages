@@ -65,3 +65,14 @@ usuariosInternos.title       = Usuarios internos
 usuariosInternos.header      = Usuarios internos
 usuariosInternos.t.login     = Login
 usuariosInternos.t.ultimaAct = Última actividad
+usuariosInternos.add         = Nuevo
+
+crearUsuarios.title       = Crear Usuario
+crearUsuarios.header      = Crear Usuario {0}
+crearUsuarios.login.label = Login
+crearUsuarios.clave.label = Clave
+crearUsuarios.submit      = Crear
+
+
+UsuariosInternosController.crear.error   = Error creando el usuario
+UsuariosInternosController.crear.success = Usuario {0} creado exitosamente

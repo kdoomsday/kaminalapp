@@ -1,6 +1,7 @@
 package daos
 
 import models.User
+import scala.util.Try
 
 /**
  * Dao for user-related queries
@@ -20,4 +21,12 @@ trait UserDao {
 
   /** Todos los usuarios internos del sistema */
   def usuariosInternos(): List[User]
+
+  /**
+   * Crear un nuevo usuario interno.
+   * @param  login Login del usuario
+   * @param  clave Clave del usuario ya procesada con salt y demas.
+   * @param  salt  Salt utilizado para la clave
+   */
+  def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit
 }

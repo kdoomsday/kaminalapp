@@ -7,6 +7,7 @@ import doobie.imports._
 import play.api.db.Database
 import play.api.Logger
 import daos.doobie.DoobieImports._
+import scala.util.Try
 
 class UserDaoDoobie @Inject() (
     db: Database
@@ -40,6 +41,10 @@ class UserDaoDoobie @Inject() (
     Logger.debug(s"Consulta de usuarios internos: ${usuarios.size} usuarios")
     usuarios
   }
+
+  def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit = {
+    qCrearUsuarioInterno(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
+  }
 }
 
 /** Los queries, para poder chequearlos */
@@ -62,4 +67,13 @@ object UserDaoDoobie {
   def qUsersByRole(rolename: String) = sql"""select u.*
                                              from users u join roles r on u.role_id = r.id
                                              where r.name = $rolename""".query[User]
+
+  def qCrearUsuarioInterno(
+    login: String,
+    clave: String,
+    salt: Int,
+    rolename: String
+  ) =
+    sql"""INSERT INTO users(login, password, role_id, salt)
+          VALUES($login, $clave, (select id from roles where "name" = $rolename), $salt);""".update
 }

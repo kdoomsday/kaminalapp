@@ -1,0 +1,22 @@
+@** Interfaz para crear usuarios
+  * form - Formulario de login y clave para los datos del usuario
+  * roleName - nombre del rol que se asignara al usuario.
+  *@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[(String, String)], roleName: String)(
+  implicit
+  messages     : Messages,
+  req          : AuthenticatedRequest[_],
+  notifications: Seq[Notification] = Nil
+)
+@main("crearUsuarios.title") {
+    <h1>@messages("crearUsuarios.header", roleName)</h1>
+
+    @show.form(controllers.usuarios.routes.UsuariosInternosController.crearUsuarioInterno().toString) {
+        @input.text("login", messages("crearUsuarios.login.label"))
+        @input.text("clave", messages("crearUsuarios.clave.label"), tipo="password")
+
+        @input.submit("crearUsuarios.submit")
+    }
+}

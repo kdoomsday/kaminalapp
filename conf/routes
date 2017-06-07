@@ -22,6 +22,8 @@ GET     /cliente/:id          controllers.ClienteController.cliente(id: Long)
 # Usuarios
 #   Internos
 GET     /usuariosInternos     controllers.usuarios.UsuariosInternosController.usuariosInternos()
+GET     /usuariosInternos/add controllers.usuarios.UsuariosInternosController.crearUsuarioInternoView()
+POST    /usuariosInternos/add controllers.usuarios.UsuariosInternosController.crearUsuarioInterno()
 
 
 # Map static resources from the /public folder to the /assets URL path

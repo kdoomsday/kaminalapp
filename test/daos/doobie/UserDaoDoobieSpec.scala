@@ -13,4 +13,5 @@ object UserDaoDoobieSpec extends Specification with AnalysisSpec {
   check(UserDaoDoobie.setConnected(""))
 
   check(UserDaoDoobie.qUsersByRole(""))
+  check(UserDaoDoobie.qCrearUsuarioInterno("", "", 0, ""))
 }
