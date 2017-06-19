@@ -1,4 +1,12 @@
-@(id: String, label: String, field: Option[Field] = None, placeholder: String = "", tipo: String = "text")
+@(
+  id: String,
+  label: String,
+  field: Option[Field] = None,
+  placeholder: String = "",
+  tipo: String = "text",
+  autofocus: Boolean = false
+)
+
 <div class="form-group @for(f <- field if f.hasErrors){ has-error }" >
     <label for="@id" class="col-sm-2 control-label" >@label </label>
     <div class="col-sm-10">
@@ -7,6 +15,7 @@
                id="@id"
                name="@id"
                placeholder ="@placeholder"
+               @if(autofocus) { autofocus }
                @for(f <- field; v <- f.value){ value="@v" }
         >
     </div>
