@@ -2,17 +2,38 @@
 
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[String])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@(form: Form[models.Cliente])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
 @main("addCliente.title") {
     <h1>@messages("addCliente.header")</h1>
 
     @show.form(routes.ClienteController.addCliente.toString, clazz=Some("top5")) {
         <div class="input-group col-sm-12">
-            <label for="nombre">@messages("addCliente.nombre.label")</label>
-            <input type="text" name="nombre" id="nombre"
-                   class="form-control validate"
-                   autofocus
-            >
+            @input.text(
+                "nombre",
+                messages("addCliente.nombre.lbl"),
+                Some(form("nombre")),
+                messages("addCliente.nombre.ph"),
+                autofocus = true
+            )
+
+            @input.text(
+                "apellido",
+                messages("addCliente.apellido.lbl"),
+                Some(form("apellido")),
+                messages("addCliente.apellido.ph"))
+
+            @input.text(
+                "direccion",
+                messages("addCliente.direccion.lbl"),
+                Some(form("direccion")),
+                messages("addCliente.direccion.ph"))
+
+            @input.text(
+                "email",
+                messages("addCliente.email.lbl"),
+                Some(form("email")),
+                messages("addCliente.email.ph"))
+
             @input.submit("addCliente.submit")
         </div>
     }

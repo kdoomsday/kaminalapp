@@ -28,7 +28,7 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
     if (data.isEmpty) {
       None
     } else {
-      Some(data(0)._1, data.map { case (_, i) ⇒ i })
+      Some((data(0)._1, data.map { case (_, i) ⇒ i }))
     }
   }
 }

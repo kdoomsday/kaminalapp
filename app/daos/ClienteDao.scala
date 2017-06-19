@@ -4,7 +4,7 @@ import models.Cliente
 
 trait ClienteDao {
   /** Agregar un nuevo cliente */
-  def addCliente(nombre: String): Unit
+  def addCliente(cliente: Cliente): Unit
 
   /** Todos los clientes */
   def clientes(): List[Cliente]

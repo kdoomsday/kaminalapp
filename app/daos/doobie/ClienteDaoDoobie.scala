@@ -13,9 +13,12 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
 
   val transactor = DataSourceTransactor[IOLite](db.dataSource)
 
-  def addCliente(nombre: String): Unit = {
-    val up = qAddCliente(nombre).run.transact(transactor).unsafePerformIO
-    Logger.debug(s"Nuevo cliente: $nombre, updated = $up")
+  def addCliente(c: Cliente): Unit = {
+    val up = qAddCliente(c.nombre, c.apellido, c.direccion, c.email)
+      .run
+      .transact(transactor)
+      .unsafePerformIO
+    Logger.debug(s"Nuevo cliente: ${c.nombre} ${c.apellido}, updated = $up")
   }
 
   def clientes(): List[Cliente] = {
@@ -30,10 +33,16 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
 }
 
 object ClienteDaoDoobie {
-  def qAddCliente(nombre: String) =
-    sql"""Insert into clientes(nombre) values($nombre)""".update
+  def qAddCliente(
+    nombre: String,
+    apellido: String,
+    direccion: Option[String],
+    email: Option[String]
+  ) =
+    sql"""Insert into clientes(nombre, apellido, direccion, email)
+          values($nombre, $apellido, $direccion, $email)""".update
 
-  def qClientes() = sql"select id, nombre from clientes".query[Cliente]
+  def qClientes() = sql"select id, nombre, apellido, direccion, email from clientes".query[Cliente]
 
   def qClientesSaldo() = sql"""select c.id, c.nombre, coalesce(sum(i.monto), 0) as saldo
                                from item i right outer join clientes c on i.id_cliente = c.id

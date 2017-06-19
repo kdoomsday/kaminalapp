@@ -34,10 +34,17 @@ addItem.submit        = Agregar
 addItem.desc.label    = Descripción
 addItem.desc.ph       = Descripción
 
-addCliente.title        = Agregar cliente
-addCliente.header       = Agregar cliente
-addCliente.nombre.label = Nombre
-addCliente.submit       = Crear cliente
+addCliente.title         = Agregar cliente
+addCliente.header        = Agregar cliente
+addCliente.nombre.lbl    = Nombre
+addCliente.nombre.ph     = Nombre
+addCliente.apellido.lbl  = Apellido
+addCliente.apellido.ph   = Apellido del cliente
+addCliente.direccion.lbl = Dirección
+addCliente.direccion.ph  = Dirección del cliente
+addCliente.email.lbl     = Email
+addCliente.email.ph      = Email del cliente
+addCliente.submit        = Crear cliente
 
 clientes.title  = Clientes
 clientes.header = Clientes

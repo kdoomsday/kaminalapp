@@ -4,7 +4,7 @@ import audits.EventDao
 import controllers.actions.Actions
 import daos.{ ClienteDao, ItemDao }
 import javax.inject.Inject
-import models.{ Item, Notification }
+import models.{ Cliente, Item, Notification }
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
@@ -30,10 +30,10 @@ class ClienteController @Inject() (
   def addCliente = actions.roleAction("interno") { implicit req ⇒
     val result = clienteForm.bindFromRequest.fold(
       formWithErrors ⇒ BadRequest(views.html.cliente.addCliente(formWithErrors)),
-      nombre ⇒ {
-        clienteDao.addCliente(nombre)
-        eventDao.write(s"Cliente $nombre agregado")
-        implicit val notifications = Notification.success(Messages("ClienteController.addCliente.success", nombre))
+      cliente ⇒ {
+        clienteDao.addCliente(cliente)
+        eventDao.write(s"Cliente ${cliente.nombre} ${cliente.apellido} agregado")
+        implicit val notifications = Notification.success(Messages("ClienteController.addCliente.success", s"${cliente.nombre} ${cliente.apellido}"))
         Ok(views.html.cliente.addCliente(clienteForm))
       }
     )
@@ -63,7 +63,16 @@ class ClienteController @Inject() (
 }
 
 object ClienteController {
-  val clienteForm: Form[String] = Form(
-    single("nombre" → nonEmptyText)
+  // val clienteForm: Form[String] = Form(
+  //   single("nombre" → nonEmptyText)
+  // )
+  val clienteForm: Form[Cliente] = Form(
+    mapping(
+      "id" → ignored(0L),
+      "nombre" → nonEmptyText,
+      "apellido" → nonEmptyText,
+      "direccion" → optional(text),
+      "email" → optional(email)
+    )(Cliente.apply)(Cliente.unapply)
   )
 }
