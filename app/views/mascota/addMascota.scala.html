@@ -1,0 +1,36 @@
+@** Plantilla para agregar mascotas *@
+
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[Mascota], c: Cliente)(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@main("addMascota.title") {
+    <h1>@messages("addMascota.header")</h1>
+
+    @show.form("accion") {
+        @input.text(
+            "nombre",
+            messages("addMascota.nombre.lbl"),
+            Some(form("nombre")),
+            messages("addMascota.nombre.ph"),
+            autofocus = true
+        )
+
+        @input.text(
+            "raza",
+            messages("addMascota.raza.lbl"),
+            Some(form("raza")),
+            messages("addMascota.raza.ph"),
+            autofocus = true
+        )
+
+        @input.text(
+            "edad",
+            messages("addMascota.edad.lbl"),
+            Some(form("edad")),
+            messages("addMascota.edad.ph"),
+            autofocus = true,
+            tipo = "number",
+            extra = "min='0'"
+        )
+    }
+}

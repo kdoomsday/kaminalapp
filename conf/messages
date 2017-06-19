@@ -46,6 +46,14 @@ addCliente.email.lbl     = Email
 addCliente.email.ph      = Email del cliente
 addCliente.submit        = Crear cliente
 
+addMascota.title      = Agregar mascota
+addMascota.header     = Agregar mascota para el cliente {0}
+addMascota.nombre.lbl = Nombre
+addMascota.nombre.ph  = Nombre
+addMascota.raza.lbl   = Raza
+addMascota.raza.ph    = Raza
+addMascota.
+
 clientes.title  = Clientes
 clientes.header = Clientes
 clientes.t.nombre = Nombre

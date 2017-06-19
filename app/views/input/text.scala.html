@@ -4,7 +4,8 @@
   field: Option[Field] = None,
   placeholder: String = "",
   tipo: String = "text",
-  autofocus: Boolean = false
+  autofocus: Boolean = false,
+  extra: String = ""
 )
 
 <div class="form-group @for(f <- field if f.hasErrors){ has-error }" >
@@ -17,6 +18,7 @@
                placeholder ="@placeholder"
                @if(autofocus) { autofocus }
                @for(f <- field; v <- f.value){ value="@v" }
+               @extra
         >
     </div>
 </div>
