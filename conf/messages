@@ -67,6 +67,7 @@ cliente.mascota.nombre      = Nombre
 cliente.mascota.raza        = Raza
 cliente.mascota.edad        = Edad (años)
 cliente.mascota.fechaInicio = Fecha de inicio
+cliente.mascota.add         = Registrar
 
 ItemController.addItem.success    = Item agregado exitosamente
 

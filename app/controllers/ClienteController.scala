@@ -60,7 +60,7 @@ class ClienteController @Inject() (
       } { datos: (String, List[Mascota], List[Item]) ⇒
         val (nombre, mascotas, items) = datos
         val saldo = items.foldLeft(BigDecimal(0))((acc, i) ⇒ acc + i.monto)
-        Ok(views.html.cliente.cliente(nombre, mascotas, saldo, items))
+        Ok(views.html.cliente.cliente(id, nombre, mascotas, saldo, items))
       }
     )
   }

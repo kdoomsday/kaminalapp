@@ -4,14 +4,8 @@
 @main("usuariosInternos.title") {
     <h1>@messages("usuariosInternos.header")</h1>
 
-    <div class="row">
-        <a href="@controllers.usuarios.routes.UsuariosInternosController.crearUsuarioInternoView()"
-           class="btn btn-primary col-sm-2 col-sm-offset-5"
-        >
-            @messages("usuariosInternos.add")
-            @gi("plus")
-        </a>
-    </div>
+    @show.addButton(controllers.usuarios.routes.UsuariosInternosController.crearUsuarioInternoView().toString,
+                    messages("usuariosInternos.add"))
 
     <div class="row">
         <table class="table">
