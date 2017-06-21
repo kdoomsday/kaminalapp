@@ -4,7 +4,7 @@
 
 @(form: Form[Mascota], c: Cliente)(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
 @main("addMascota.title") {
-    <h1>@messages("addMascota.header")</h1>
+    <h1>@messages("addMascota.header", s"${c.nombre} ${c.apellido}")</h1>
 
     @show.form("accion") {
         @input.text(
@@ -19,8 +19,7 @@
             "raza",
             messages("addMascota.raza.lbl"),
             Some(form("raza")),
-            messages("addMascota.raza.ph"),
-            autofocus = true
+            messages("addMascota.raza.ph")
         )
 
         @input.text(
@@ -28,9 +27,17 @@
             messages("addMascota.edad.lbl"),
             Some(form("edad")),
             messages("addMascota.edad.ph"),
-            autofocus = true,
             tipo = "number",
             extra = "min='0'"
         )
+
+        @input.text(
+            "fechaInicio",
+            messages("addMascota.fechaInicio.lbl"),
+            Some(form("fechaInicio")),
+            messages("addMascota.fechaInicio.ph")
+        )
+
+        @input.submit("addMascota.submit")
     }
 }

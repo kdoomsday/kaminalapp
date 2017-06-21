@@ -1,13 +1,12 @@
 package models
 
-import org.joda.time.Instant
-
+import org.joda.time.DateTime
 
 /** Una mascota de un cliente */
 case class Mascota(
   id: Long,
   nombre: String,
-  raza: String,
-  edad: Int,
-  fechaInicio: Option[Instant]
+  raza: Option[String],
+  edad: Option[Int],
+  fechaInicio: Option[DateTime]
 )

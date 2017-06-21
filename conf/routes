@@ -19,6 +19,9 @@ POST    /addCliente           controllers.ClienteController.addCliente
 GET     /clientes             controllers.ClienteController.clientes
 GET     /cliente/:id          controllers.ClienteController.cliente(id: Long)
 
+# Mascotas
+GET     /mascota/add/:id      controllers.MascotaController.addMascotaView(id: Long)
+
 # Usuarios
 #   Internos
 GET     /usuariosInternos     controllers.usuarios.UsuariosInternosController.usuariosInternos()

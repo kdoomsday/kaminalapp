@@ -46,13 +46,6 @@ addCliente.email.lbl     = Email
 addCliente.email.ph      = Email del cliente
 addCliente.submit        = Crear cliente
 
-addMascota.title      = Agregar mascota
-addMascota.header     = Agregar mascota para el cliente {0}
-addMascota.nombre.lbl = Nombre
-addMascota.nombre.ph  = Nombre
-addMascota.raza.lbl   = Raza
-addMascota.raza.ph    = Raza
-addMascota.
 
 clientes.title  = Clientes
 clientes.header = Clientes
@@ -73,6 +66,21 @@ ItemController.addItem.success    = Item agregado exitosamente
 ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
 ClienteController.cliente.noExiste   = No existe el cliente especificado
 
+
+# Mascotas
+addMascota.title           = Agregar mascota
+addMascota.header          = Agregar mascota a {0}
+addMascota.nombre.lbl      = Nombre
+addMascota.nombre.ph       = Nombre
+addMascota.raza.lbl        = Raza
+addMascota.raza.ph         = Raza
+addMascota.edad.lbl        = Edad
+addMascota.edad.ph         = Edad de la mascota
+addMascota.fechaInicio.lbl = Fecha de inicio
+addMascota.fechaInicio.ph  = Fecha en que empezó
+addMascota.submit          = Registrar
+
+MascotaController.addMascotaView.clienteNoExiste = El cliente especificado no existe
 
 # Usuarios
 #   Internos
