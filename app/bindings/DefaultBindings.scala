@@ -20,6 +20,7 @@ class DefaultBindings extends AbstractModule {
     bind(classOf[EventDao]) to classOf[EventDaoDoobie]
     bind(classOf[ItemDao]) to classOf[ItemDaoDoobie]
     bind(classOf[ClienteDao]) to classOf[ClienteDaoDoobie]
+    bind(classOf[MascotaDao]) to classOf[MascotaDaoDoobie]
 
     bind(classOf[HashService]) toInstance MessageDigestHashService.Sha256HashService
   }

@@ -77,10 +77,11 @@ addMascota.raza.ph         = Raza
 addMascota.edad.lbl        = Edad
 addMascota.edad.ph         = Edad de la mascota
 addMascota.fechaInicio.lbl = Fecha de inicio
-addMascota.fechaInicio.ph  = Fecha en que empezó
+addMascota.fechaInicio.ph  = Fecha en que empezó (aaaa-mm-dd)
 addMascota.submit          = Registrar
 
 MascotaController.addMascotaView.clienteNoExiste = El cliente especificado no existe
+MascotaController.addMascota.exito = Se registró exitosamente a {0}
 
 # Usuarios
 #   Internos

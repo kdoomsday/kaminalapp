@@ -34,24 +34,24 @@ class MascotaController @Inject() (
     Future.successful(res)
   }
 
-
-  /** Registrar una mascota en el sistema para el cliente especificado.
-    * Solo funciona si los datos del formulario son correctos y el cliente existe
-    */
-  def addMascota(idCliente: Long) = actions.roleAction("interno") { implicit req =>
+  /**
+   * Registrar una mascota en el sistema para el cliente especificado.
+   * Solo funciona si los datos del formulario son correctos y el cliente existe
+   */
+  def addMascota(idCliente: Long) = actions.roleAction("interno") { implicit req ⇒
     val response = clienteDao.byId(idCliente) match {
-      case Some(c) => {
+      case Some(c) ⇒ {
         mascotaForm.bindFromRequest.fold(
-          formWithErrors => BadRequest(views.html.mascota.addMascota(formWithErrors, c)),
-          mascota => {
-            mascotaDao.guardar(mascota, idCliente)
+          formWithErrors ⇒ BadRequest(views.html.mascota.addMascota(formWithErrors, c)),
+          mascota ⇒ {
+            mascotaDao.guardar(mascota)
             eventos.write(s"Mascota ${mascota.nombre} (${mascota.id}) registrada para ${c.nombreCompleto} ($idCliente)")
-            // regresar al detalle del cliente
+            implicit val nots = Notification.success(messagesApi("MascotaController.addMascota.exito", mascota.nombre))
             Redirect(routes.ClienteController.cliente(idCliente))
           }
         )
       }
-      case None => {
+      case None ⇒ {
         implicit val nots = Notification.warn(messagesApi("MascotaController.addMascotaView.clienteNoExiste"))
         Redirect(routes.HomeController.index())
       }
@@ -68,7 +68,8 @@ object MascotaController {
       "nombre" → nonEmptyText,
       "raza" → optional(nonEmptyText),
       "edad" → optional(number(min = 0)),
-      "fechaInicio" → optional(jodaDate(pattern = "yyyy-MM-dd"))
+      "fechaInicio" → optional(jodaDate(pattern = "yyyy-MM-dd")),
+      "idCliente" → longNumber
     )(Mascota.apply)(Mascota.unapply)
   )
 }

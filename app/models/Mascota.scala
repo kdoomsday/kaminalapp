@@ -8,5 +8,6 @@ case class Mascota(
   nombre: String,
   raza: Option[String],
   edad: Option[Int],
-  fechaInicio: Option[DateTime]
+  fechaInicio: Option[DateTime],
+  idCliente: Long
 )

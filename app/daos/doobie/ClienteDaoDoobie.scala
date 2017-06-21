@@ -38,7 +38,7 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   }
 
   def unsafeById(id: Long): Cliente = {
-    qById(id).single.transact(transactor).unsafePerformIO
+    qById(id).unique.transact(transactor).unsafePerformIO
   }
 }
 
