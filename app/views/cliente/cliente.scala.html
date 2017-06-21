@@ -1,6 +1,10 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(nombreCliente: String, saldo: BigDecimal, items: List[Item])(implicit messages: Messages, req: AuthenticatedRequest[_])
+@(nombreCliente: String, mascotas: List[Mascota], saldo: BigDecimal, items: List[Item])(
+    implicit
+    formatter: _root_.format.DateFormatter,
+    messages: Messages,
+    req: AuthenticatedRequest[_])
 @main("cliente.title") {
     <h1>@messages("cliente.header", nombreCliente)</h1>
 
@@ -9,25 +13,51 @@
     </div>
 
     <div class="row" >
-        <h2>@messages("cliente.items")</h2>
+        <div class="col-sm-12 col-md-6">
+            <h2>@messages("cliente.mascotas")</h2>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>@messages("cliente.item.desc") </th>
-                    <th>@messages("cliente.item.monto") </th>
-                    <th>@messages("cliente.item.fecha") </th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(i ← items){
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@i.descripcion </td>
-                        <td>@i.monto </td>
-                        <td>@i.fecha </td>
+                        <th class="">@messages("cliente.mascota.nombre") </th>
+                        <th class="">@messages("cliente.mascota.raza") </th>
+                        <th class="">@messages("cliente.mascota.edad") </th>
+                        <th class="">@messages("cliente.mascota.fechaInicio") </th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for(m <- mascotas) {
+                        <tr>
+                            <td>@m.nombre </td>
+                            <td>@m.raza </td>
+                            <td>@m.edad </td>
+                            <td>@formatter.short(m.fechaInicio) </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <h2>@messages("cliente.items")</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@messages("cliente.item.desc") </th>
+                        <th>@messages("cliente.item.monto") </th>
+                        <th>@messages("cliente.item.fecha") </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(i ← items){
+                        <tr>
+                            <td>@i.descripcion </td>
+                            <td>@i.monto </td>
+                            <td>@formatter.long(i.fecha) </td>
+                        </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
     </div>
 }

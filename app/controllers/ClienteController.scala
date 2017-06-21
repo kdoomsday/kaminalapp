@@ -3,8 +3,9 @@ package controllers
 import audits.EventDao
 import controllers.actions.Actions
 import daos.{ ClienteDao, ItemDao }
+import format.DateFormatter
 import javax.inject.Inject
-import models.{ Cliente, Item, Notification }
+import models.{ Cliente, Item, Mascota, Notification }
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
@@ -17,9 +18,12 @@ class ClienteController @Inject() (
     clienteDao: ClienteDao,
     itemDao: ItemDao,
     eventDao: EventDao,
+    dateFormatter: DateFormatter,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
   import ClienteController.clienteForm
+
+  implicit val dFmt = dateFormatter
 
   // Vista del listado de los clientes
   def clientes = actions.roleAction("interno") { implicit req ⇒
@@ -53,10 +57,10 @@ class ClienteController @Inject() (
       oDatos.fold {
         implicit val nots = Notification.warn(Messages("ClienteController.cliente.noExiste"))
         (Ok(views.html.index()))
-      } { datos: (String, List[Item]) ⇒
-        val (nombre, items) = datos
+      } { datos: (String, List[Mascota], List[Item]) ⇒
+        val (nombre, mascotas, items) = datos
         val saldo = items.foldLeft(BigDecimal(0))((acc, i) ⇒ acc + i.monto)
-        Ok(views.html.cliente.cliente(nombre, saldo, items))
+        Ok(views.html.cliente.cliente(nombre, mascotas, saldo, items))
       }
     )
   }

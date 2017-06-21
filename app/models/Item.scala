@@ -1,6 +1,6 @@
 package models
 
-import java.sql.Timestamp
+import org.joda.time.DateTime
 
 /** Un Item en el sistema */
 case class Item(
@@ -8,5 +8,5 @@ case class Item(
   idCliente: Long,
   monto: BigDecimal,
   descripcion: Option[String],
-  fecha: Timestamp
+  fecha: DateTime
 )

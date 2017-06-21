@@ -47,19 +47,26 @@ addCliente.email.ph      = Email del cliente
 addCliente.submit        = Crear cliente
 
 
+# Listado de clientes
 clientes.title  = Clientes
 clientes.header = Clientes
 clientes.t.nombre = Nombre
 clientes.t.saldo  = Saldo (BsF.)
 clientes.t.ver    = Detalle
 
-cliente.title      = Detalles del cliente
-cliente.header     = {0}
-cliente.saldo      = Saldo = {0}
+# Detalle de un cliente
+cliente.title  = Detalles del cliente
+cliente.header = {0}
+cliente.saldo  = Saldo = {0}
 cliente.items      = Registro
 cliente.item.desc  = Descripción
 cliente.item.monto = Monto
 cliente.item.fecha = Fecha
+cliente.mascotas            = Mascotas
+cliente.mascota.nombre      = Nombre
+cliente.mascota.raza        = Raza
+cliente.mascota.edad        = Edad (años)
+cliente.mascota.fechaInicio = Fecha de inicio
 
 ItemController.addItem.success    = Item agregado exitosamente
 
