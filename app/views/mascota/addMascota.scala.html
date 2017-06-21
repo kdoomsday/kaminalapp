@@ -6,7 +6,7 @@
 @main("addMascota.title") {
     <h1>@messages("addMascota.header", s"${c.nombre} ${c.apellido}")</h1>
 
-    @show.form("accion") {
+    @show.form("@routes.MascotaController.addMascota(c.id)") {
         @input.text(
             "nombre",
             messages("addMascota.nombre.lbl"),
