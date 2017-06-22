@@ -57,10 +57,10 @@ class ClienteController @Inject() (
       oDatos.fold {
         implicit val nots = Notification.warn(Messages("ClienteController.cliente.noExiste"))
         (Ok(views.html.index()))
-      } { datos: (String, List[Mascota], List[Item]) ⇒
-        val (nombre, mascotas, items) = datos
+      } { datos: (Cliente, List[Mascota], List[Item]) ⇒
+        val (cliente, mascotas, items) = datos
         val saldo = items.foldLeft(BigDecimal(0))((acc, i) ⇒ acc + i.monto)
-        Ok(views.html.cliente.cliente(id, nombre, mascotas, saldo, items))
+        Ok(views.html.cliente.cliente(cliente, mascotas, saldo, items))
       }
     )
   }

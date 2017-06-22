@@ -25,19 +25,20 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
     Logger.debug(s"Item($idCliente, $monto), updated = $updated")
   }
 
-  def datosCliente(idCliente: Long): Option[(String, List[Mascota], List[Item])] = {
-    val q: (List[(String, Item)], List[Mascota]) = (for {
-      datos ← qDatosCliente(idCliente).list.transact(transactor)
-      mascotas ← qMascotas(idCliente).list.transact(transactor)
-    } yield (datos, mascotas)).unsafePerformIO
+  def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Item])] = {
+    // val q: (List[(Cliente, Item)], List[Mascota]) = (for {
+    //   datos ← qDatosCliente(idCliente).list.transact(transactor)
+    //   mascotas ← qMascotas(idCliente).list.transact(transactor)
+    // } yield (datos, mascotas)).unsafePerformIO
+    val q: ConnectionIO[(Option[Cliente], List[Item], List[Mascota])] = for {
+      c ← qCliente(idCliente).option
+      datos ← qDatosCliente(idCliente).list
+      mascotas ← qMascotas(idCliente).list
+    } yield (c, datos, mascotas)
 
-    val (data, mascotas) = q
+    val (cliente, data, mascotas) = q.transact(transactor).unsafePerformIO
 
-    if (data.isEmpty) {
-      None
-    } else {
-      Some((data(0)._1, mascotas, data.map { case (_, i) ⇒ i }))
-    }
+    cliente.map(c ⇒ (c, mascotas, data))
   }
 }
 
@@ -46,10 +47,12 @@ object DaoItemDoobie {
     sql"""Insert into item(id_cliente, monto, descripcion)
           values ($idCliente, $monto, $descripcion)""".update
 
+  def qCliente(id: Long) = sql"select * from clientes where id = $id".query[Cliente]
+
   def qDatosCliente(id: Long) =
-    sql"""select c.nombre, i.*
-          from item i join clientes c on i.id_cliente = c.id
-          where c.id = $id""".query[(String, Item)]
+    sql"""select *
+          from item
+          where id_cliente = $id""".query[Item]
 
   def qMascotas(idcliente: Long) =
     sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente

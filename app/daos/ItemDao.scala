@@ -11,8 +11,8 @@ trait ItemDao {
 
   /**
    * Obtener todos los datos de un cliente seg&uacute;n su id
-   * @return El nombre del cliente, todas las mascotas y todos los items del cliente
+   * @return El cliente, todas las mascotas y todos los items del cliente
    * especificado, si el cliente existe
    */
-  def datosCliente(idCliente: Long): Option[(String, List[Mascota], List[Item])]
+  def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Item])]
 }
