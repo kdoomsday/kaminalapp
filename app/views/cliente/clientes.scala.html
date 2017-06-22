@@ -1,5 +1,5 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
-@(clientes: List[(Long, String, BigDecimal)])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@(clientes: List[(Cliente, BigDecimal)])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
 @main("clientes.title") {
     <h1>@messages("clientes.header")</h1>
     <table class="top5 table">
@@ -11,11 +11,11 @@
             </tr>
         </thead>
         <tbody>
-            @for((id, nombre, saldo) <- clientes) {
+            @for((cliente, saldo) <- clientes) {
                 <tr>
-                    <td>@nombre </td>
+                    <td>@{cliente.nombreCompleto} </td>
                     <td class="text-right">@saldo </td>
-                    <td class="text-center"><a href="@routes.ClienteController.cliente(id)">@gi("search")</a></td>
+                    <td class="text-center"><a href="@routes.ClienteController.cliente(cliente.id)">@gi("search")</a></td>
                 </tr>
             }
         </tbody>

@@ -10,7 +10,7 @@ trait ClienteDao {
   def clientes(): List[Cliente]
 
   /** Por cada cliente su id, nombre y saldo */
-  def clientesSaldo(): List[(Long, String, BigDecimal)]
+  def clientesSaldo(): List[(Cliente, BigDecimal)]
 
   /** Obtener un cliente por su ID */
   def byId(id: Long): Option[Cliente]

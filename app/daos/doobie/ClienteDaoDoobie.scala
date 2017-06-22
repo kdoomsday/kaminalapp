@@ -27,7 +27,7 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
     qClientes().list.transact(transactor).unsafePerformIO
   }
 
-  def clientesSaldo(): List[(Long, String, BigDecimal)] = {
+  def clientesSaldo(): List[(Cliente, BigDecimal)] = {
     Logger.debug("Consulta de saldo de los clientes")
     qClientesSaldo().list.transact(transactor).unsafePerformIO
   }
@@ -52,9 +52,9 @@ object ClienteDaoDoobie {
     sql"""Insert into clientes(nombre, apellido, direccion, email)
           values($nombre, $apellido, $direccion, $email)""".update
 
-  def qClientesSaldo() = sql"""select c.id, c.nombre, coalesce(sum(i.monto), 0) as saldo
+  def qClientesSaldo() = sql"""select c.*, coalesce(sum(i.monto), 0) as saldo
                                from item i right outer join clientes c on i.id_cliente = c.id
-                               group by c.id, c.nombre""".query[(Long, String, BigDecimal)]
+                               group by c.id""".query[(Cliente, BigDecimal)]
 
   private[this] val clientesFrag = sql"select id, nombre, apellido, direccion, email from clientes "
   def qClientes() = clientesFrag.query[Cliente]
