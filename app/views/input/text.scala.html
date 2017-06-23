@@ -6,7 +6,7 @@
   tipo: String = "text",
   autofocus: Boolean = false,
   extra: String = ""
-)
+)(implicit messages: Messages)
 
 <div class="form-group @for(f <- field if f.hasErrors){ has-error }" >
     <label for="@id" class="col-sm-2 control-label" >@label </label>
@@ -20,5 +20,10 @@
                @for(f <- field; v <- f.value){ value="@v" }
                @extra
         >
+        @for(f <- field) {
+            @for(e <- f.errors) {
+                <span class="help-inline">@messages(e.message)</span>
+            }
+        }
     </div>
 </div>

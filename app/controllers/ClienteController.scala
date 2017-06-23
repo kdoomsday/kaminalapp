@@ -12,6 +12,8 @@ import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
 import play.api.mvc.Controller
 import scala.concurrent.Future
 
+import forms.FormFormatters.cuenta
+
 /** Controlador para acciones que tienen que ver con clientes */
 class ClienteController @Inject() (
     actions: Actions,
@@ -76,7 +78,8 @@ object ClienteController {
       "nombre" → nonEmptyText,
       "apellido" → nonEmptyText,
       "direccion" → optional(text),
-      "email" → optional(email)
+      "email" → optional(email),
+      "cuenta" → optional(cuenta)
     )(Cliente.apply)(Cliente.unapply)
   )
 }

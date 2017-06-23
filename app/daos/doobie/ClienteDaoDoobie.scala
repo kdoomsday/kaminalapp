@@ -56,7 +56,7 @@ object ClienteDaoDoobie {
                                from item i right outer join clientes c on i.id_cliente = c.id
                                group by c.id""".query[(Cliente, BigDecimal)]
 
-  private[this] val clientesFrag = sql"select id, nombre, apellido, direccion, email from clientes "
+  private[this] val clientesFrag = sql"select id, nombre, apellido, direccion, email, cuenta from clientes "
   def qClientes() = clientesFrag.query[Cliente]
   def qById(id: Long) = (clientesFrag ++ fr"where id = $id").query[Cliente]
 }

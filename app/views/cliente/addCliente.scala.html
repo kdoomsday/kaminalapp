@@ -34,6 +34,12 @@
                 Some(form("email")),
                 messages("addCliente.email.ph"))
 
+            @input.text(
+                "cuenta",
+                messages("addCliente.cuenta.lbl"),
+                Some(form("cuenta")),
+                messages("addCliente.cuenta.ph"))
+
             @input.submit("addCliente.submit")
         </div>
     }

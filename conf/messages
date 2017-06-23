@@ -44,6 +44,8 @@ addCliente.direccion.lbl = Dirección
 addCliente.direccion.ph  = Dirección del cliente
 addCliente.email.lbl     = Email
 addCliente.email.ph      = Email del cliente
+addCliente.cuenta.lbl    = Cuenta
+addCliente.cuenta.ph     = Cuenta del cliente
 addCliente.submit        = Crear cliente
 
 
@@ -108,3 +110,7 @@ crearUsuarios.submit      = Crear
 
 UsuariosInternosController.crear.error   = Error creando el usuario
 UsuariosInternosController.crear.success = Usuario {0} creado exitosamente
+
+# Para usar con las validaciones
+error.required = Campo obligatorio
+error.cuentaInvalida = La cuenta deben ser 20 dígitos
