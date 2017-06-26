@@ -1,7 +1,7 @@
 name := """kaminalapp"""
 organization := "com.ebarrientos"
 
-version := "1.1"
+version := "1.2"
 
 lazy val root = (project in file("."))
                    .enablePlugins(PlayScala)
