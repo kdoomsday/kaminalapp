@@ -120,6 +120,9 @@ crearUsuarios.submit      = Crear
 UsuariosInternosController.crear.error   = Error creando el usuario
 UsuariosInternosController.crear.success = Usuario {0} creado exitosamente
 
+# Error Handler
+ErrorHandler.error = Ocurrió un error. Por favor consultar la bitácora.
+
 # Para usar con las validaciones
 error.required = Campo obligatorio
 error.cuentaInvalida = La cuenta deben ser 20 dígitos
