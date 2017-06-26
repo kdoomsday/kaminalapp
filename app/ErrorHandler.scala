@@ -21,10 +21,9 @@ class ErrorHandler @Inject() (
   config: Configuration,
   sourceMapper: OptionalSourceMapper,
   router: Provider[Router],
-  val messages: MessagesApi
+  val messagesApi: MessagesApi
 )
     extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with I18nSupport {
-
 
   def onProdServerError(request: RequestHeader, exception: Throwable) = {
     Logger.error("Error no manejado", exception)
@@ -32,7 +31,7 @@ class ErrorHandler @Inject() (
     val subject = subjectDao.subjectByIdentifier(request.session("login"))
 
     implicit val authReq: AuthenticatedRequest[_] = AuthenticatedRequest(req, subject)
-    implicit val nots = Notification.error(messages("ErrorHandler.error"))
+    implicit val nots = Notification.error(messagesApi("ErrorHandler.error"))
     Future.successful(
       Ok(views.html.index())
     )
