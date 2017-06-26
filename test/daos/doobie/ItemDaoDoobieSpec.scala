@@ -14,4 +14,5 @@ object ItemDaoDoobieSpec extends Specification with AnalysisSpec {
   check(qDatosCliente(0L))
   check(qMascotas(0L))
   check(qCliente(0L))
+  check(qTelefonos(0L))
 }

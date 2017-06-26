@@ -9,7 +9,7 @@ import play.api.Logger
 import scala.math.BigDecimal
 import daos.ItemDao
 import daos.doobie.DoobieImports._
-import models.{ Cliente, Item }
+import models.{ Cliente, Item, Telefono }
 
 /**
  * Implementacion de DaoItem que utiliza Doobie
@@ -25,20 +25,17 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
     Logger.debug(s"Item($idCliente, $monto), updated = $updated")
   }
 
-  def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Item])] = {
-    // val q: (List[(Cliente, Item)], List[Mascota]) = (for {
-    //   datos ← qDatosCliente(idCliente).list.transact(transactor)
-    //   mascotas ← qMascotas(idCliente).list.transact(transactor)
-    // } yield (datos, mascotas)).unsafePerformIO
-    val q: ConnectionIO[(Option[Cliente], List[Item], List[Mascota])] = for {
+  def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Telefono], List[Item])] = {
+    val q: ConnectionIO[(Option[Cliente], List[Item], List[Mascota], List[Telefono])] = for {
       c ← qCliente(idCliente).option
       datos ← qDatosCliente(idCliente).list
       mascotas ← qMascotas(idCliente).list
-    } yield (c, datos, mascotas)
+      telefonos ← qTelefonos(idCliente).list
+    } yield (c, datos, mascotas, telefonos)
 
-    val (cliente, data, mascotas) = q.transact(transactor).unsafePerformIO
+    val (cliente, data, mascotas, telefonos) = q.transact(transactor).unsafePerformIO
 
-    cliente.map(c ⇒ (c, mascotas, data))
+    cliente.map(c ⇒ (c, mascotas, telefonos, data))
   }
 }
 
@@ -58,4 +55,9 @@ object DaoItemDoobie {
     sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente
           from mascotas
           where id_cliente = $idcliente""".query[Mascota]
+
+  def qTelefonos(idCliente: Long) =
+    sql"""select numero, id_cliente
+          from telefonos
+          where id_cliente = $idCliente""".query[Telefono]
 }
