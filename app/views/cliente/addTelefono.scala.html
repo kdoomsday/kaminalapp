@@ -1,0 +1,24 @@
+@** Agregar telefono a un cliente
+   * @param c El cliente al que se le agrega el telefono
+  *@
+
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[Telefono], c: Cliente)(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@main("addTelefono.title") {
+    <h1>@messages("addTelefono.header", c.nombreCompleto)</h1>
+
+    @show.form(action = "#"){
+        @input.text(
+            "numero",
+            messages("addTelefono.numero.lbl"),
+            Some(form("numero")),
+            messages("addTelefono.numero.ph"),
+            autofocus = true
+        )
+
+        <input type="hidden" name="idCliente" value="@{c.id}">
+
+        @input.submit("addTelefono.submit")
+    }
+}

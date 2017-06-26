@@ -1,6 +1,6 @@
 package daos
 
-import models.Cliente
+import models.{ Cliente, Telefono }
 
 trait ClienteDao {
   /** Agregar un nuevo cliente */
@@ -17,4 +17,7 @@ trait ClienteDao {
 
   /** Cliente por ID, asumiendo que 100% seguro existe */
   def unsafeById(id: Long): Cliente
+
+  /** Agregar un telefono. El telefono contiene el id del cliente */
+  def addTelf(t: Telefono): Unit
 }

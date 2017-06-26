@@ -4,7 +4,7 @@ import daos.ClienteDao
 import javax.inject.Inject
 import play.api.db.Database
 import doobie.imports._
-import models.Cliente
+import models.{ Cliente, Telefono }
 import play.api.Logger
 import daos.doobie.DoobieImports._
 
@@ -40,6 +40,10 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   def unsafeById(id: Long): Cliente = {
     qById(id).unique.transact(transactor).unsafePerformIO
   }
+
+  def addTelf(t: Telefono): Unit = {
+    qAddTelefono(t.numero, t.idCliente).run.transact(transactor).unsafePerformIO
+  }
 }
 
 object ClienteDaoDoobie {
@@ -60,4 +64,8 @@ object ClienteDaoDoobie {
   private[this] val clientesFrag = sql"select id, nombre, apellido, direccion, email, cuenta from clientes "
   def qClientes() = clientesFrag.query[Cliente]
   def qById(id: Long) = (clientesFrag ++ fr"where id = $id").query[Cliente]
+
+  def qAddTelefono(numero: String, idCliente: Long) =
+    sql"""insert into telefonos(numero, id_cliente)
+          values($numero, $idCliente)""".update
 }

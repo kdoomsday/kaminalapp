@@ -71,10 +71,17 @@ cliente.mascota.edad        = Edad (años)
 cliente.mascota.fechaInicio = Fecha de inicio
 cliente.mascota.add         = Registrar
 
+addTelefono.title      = Agregar telf.
+addTelefono.header     = Agregar teléfono a {0}
+addTelefono.numero.lbl = Número
+addTelefono.numero.ph  = Número
+addTelefono.submit     = Registrar
+
 ItemController.addItem.success    = Item agregado exitosamente
 
 ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
 ClienteController.cliente.noExiste   = No existe el cliente especificado
+ClienteController.addTelf.exito      = Teléfono agregado
 
 
 # Mascotas

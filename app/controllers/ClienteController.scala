@@ -5,7 +5,7 @@ import controllers.actions.Actions
 import daos.{ ClienteDao, ItemDao }
 import format.DateFormatter
 import javax.inject.Inject
-import models.{ Cliente, Item, Mascota, Notification }
+import models._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
@@ -23,7 +23,7 @@ class ClienteController @Inject() (
     dateFormatter: DateFormatter,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
-  import ClienteController.clienteForm
+  import ClienteController._
 
   implicit val dFmt = dateFormatter
 
@@ -57,8 +57,9 @@ class ClienteController @Inject() (
     val oDatos = itemDao.datosCliente(id)
     Future.successful(
       oDatos.fold {
-        implicit val nots = Notification.warn(Messages("ClienteController.cliente.noExiste"))
-        (Ok(views.html.index()))
+        implicit val nots =
+          Notification.warn(Messages("ClienteController.cliente.noExiste"))
+        Ok(views.html.index())
       } { datos: (Cliente, List[Mascota], List[Item]) ⇒
         val (cliente, mascotas, items) = datos
         val saldo = items.foldLeft(BigDecimal(0))((acc, i) ⇒ acc + i.monto)
@@ -66,12 +67,40 @@ class ClienteController @Inject() (
       }
     )
   }
+
+  def addTelfView(idCliente: Long) = actions.roleAction("interno") { implicit req ⇒
+    val res = clienteDao.byId(idCliente).fold {
+      implicit val nots =
+        Notification.warn(Messages("ClienteController.cliente.noExiste"))
+      Redirect(routes.ClienteController.clientes())
+    } { cliente ⇒
+      Ok(views.html.cliente.addTelefono(telefonoForm, cliente))
+    }
+
+    Future.successful(res)
+  }
+
+  def addTelefono(idCliente: Long) = actions.roleAction("interno") { implicit req ⇒
+    val res = telefonoForm.bindFromRequest.fold(
+      formWithErrors ⇒ {
+        val cliente = clienteDao.unsafeById(idCliente)
+        BadRequest(views.html.cliente.addTelefono(formWithErrors, cliente))
+      },
+      telefono ⇒ {
+        clienteDao.addTelf(telefono)
+        eventDao.write(s"Telefono agregado al usuario ${telefono.idCliente}")
+        implicit val nots =
+          Notification.warn(Messages("ClienteController.addTelf.exito"))
+        Redirect(routes.ClienteController.cliente(telefono.idCliente))
+      }
+    )
+
+    Future.successful(res)
+  }
 }
 
 object ClienteController {
-  // val clienteForm: Form[String] = Form(
-  //   single("nombre" → nonEmptyText)
-  // )
+  // Formulario para la informacion de un cliente
   val clienteForm: Form[Cliente] = Form(
     mapping(
       "id" → ignored(0L),
@@ -81,5 +110,13 @@ object ClienteController {
       "email" → optional(email),
       "cuenta" → optional(cuenta)
     )(Cliente.apply)(Cliente.unapply)
+  )
+
+  // Formulario para registrar telefonos a un cliente
+  val telefonoForm: Form[Telefono] = Form(
+    mapping(
+      "numero" → nonEmptyText,
+      "idCliente" → longNumber
+    )(Telefono.apply)(Telefono.unapply)
   )
 }
