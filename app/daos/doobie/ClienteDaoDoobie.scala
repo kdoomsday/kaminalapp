@@ -15,11 +15,11 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   val transactor = DataSourceTransactor[IOLite](db.dataSource)
 
   def addCliente(c: Cliente): Unit = {
-    val up = qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta)
+    Logger.debug(s"Agregar nuevo cliente: ${c.nombre} ${c.apellido}")
+    qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta)
       .run
       .transact(transactor)
       .unsafePerformIO
-    Logger.debug(s"Nuevo cliente: ${c.nombre} ${c.apellido}, updated = $up")
   }
 
   def clientes(): List[Cliente] = {

@@ -1,0 +1,13 @@
+@(
+  id: String,
+  label: String,
+  field: Option[Field] = None
+)
+<div class="form-group">
+    <label for="@id" class="col-sm-2 control-label" >@label </label>
+    <div class="col-sm-10">
+        <input type="checkbox" name="@id" id="@id" autocomplete="off" value="true"
+               @for(f <- field if f.value.getOrElse("") == "checked"){checked}
+        />
+    </div>
+</div>

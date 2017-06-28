@@ -24,6 +24,7 @@ class DefaultBindings extends AbstractModule {
     bind(classOf[ClienteDao]) to classOf[ClienteDaoDoobie]
     bind(classOf[MascotaDao]) to classOf[MascotaDaoDoobie]
     bind(classOf[DateFormatter]) to classOf[YMDFormatter]
+    bind(classOf[ServicioDao]) to classOf[ServicioDaoDoobie]
 
     bind(classOf[HashService]) toInstance MessageDigestHashService.Sha256HashService
   }

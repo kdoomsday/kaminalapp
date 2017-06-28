@@ -21,6 +21,10 @@ POST    /clientes/addTelf/:id  controllers.ClienteController.addTelefono(id: Lon
 GET     /mascota/add/:idCliente  controllers.MascotaController.addMascotaView(idCliente: Long)
 POST    /mascota/add/:idCliente  controllers.MascotaController.addMascota(idCliente: Long)
 
+# Servicios
+GET     /sercicio/add    controllers.ServicioController.addServicioView
+POST    /sercicio/add    controllers.ServicioController.addServicio
+
 # Usuarios
 #   Internos
 GET     /usuariosInternos     controllers.usuarios.UsuariosInternosController.usuariosInternos()

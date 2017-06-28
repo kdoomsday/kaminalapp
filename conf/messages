@@ -20,6 +20,7 @@ navbar.logout           = Salir
 navbar.addItem          = Agregar ítem
 navbar.clientes         = Clientes
 navbar.addCliente       = Agregar cliente
+navbar.addServicio      = Agregar servicio
 navbar.usuariosInternos = Usuarios internos
 
 
@@ -102,6 +103,18 @@ addMascota.submit          = Registrar
 MascotaController.addMascotaView.clienteNoExiste = El cliente especificado no existe
 MascotaController.addMascota.exito = Se registró exitosamente a {0}
 
+# Servicios
+addServicio.title       = Agregar servicio
+addServicio.header      = Agregar servicio
+addServicio.nombre.lbl  = Nombre
+addServicio.nombre.ph   = Nombre del servicio
+addServicio.precio.lbl  = Precio
+addServicio.precio.ph   = Precio del servicio
+addServicio.mensual.lbl = ¿Es mensual?
+addServicio.submit      = Registrar
+
+ServicioController.add.success = Servicio {0} creado exitosamente
+
 # Usuarios
 #   Internos
 usuariosInternos.title       = Usuarios internos
@@ -126,3 +139,4 @@ ErrorHandler.error = Ocurrió un error. Por favor consultar la bitácora.
 # Para usar con las validaciones
 error.required = Campo obligatorio
 error.cuentaInvalida = La cuenta deben ser 20 dígitos
+error.real.precision = Número de hasta 16 dígitos y 2 decimales
