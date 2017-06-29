@@ -22,8 +22,9 @@ GET     /mascota/add/:idCliente  controllers.MascotaController.addMascotaView(id
 POST    /mascota/add/:idCliente  controllers.MascotaController.addMascota(idCliente: Long)
 
 # Servicios
-GET     /sercicio/add    controllers.ServicioController.addServicioView
-POST    /sercicio/add    controllers.ServicioController.addServicio
+GET     /servicios/add    controllers.ServicioController.addServicioView
+POST    /servicios/add    controllers.ServicioController.addServicio
+GET     /servicios        controllers.ServicioController.servicios
 
 # Usuarios
 #   Internos

@@ -1,0 +1,30 @@
+@** Vista de los servicios registrados del sistema *@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(servicios: List[Servicio])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@main("servicios.title") {
+    <h1>@messages("servicios.header")</h1>
+
+    @show.addButton(
+        routes.ServicioController.addServicio.toString,
+        messages("servicios.add"))
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-sm-8">@messages("servicios.nombre")</th>
+                <th class="col-sm-3">@messages("servicios.precio")</th>
+                <th class="col-sm-1 text-center">@messages("servicios.mensual")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(s <- servicios) {
+                <tr>
+                    <td>@s.nombre</td>
+                    <td>@s.precio</td>
+                    <td class="text-center">@if(s.mensual){@gi("ok")}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

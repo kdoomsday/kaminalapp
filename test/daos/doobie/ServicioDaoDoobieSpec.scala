@@ -8,4 +8,5 @@ object ServicioDaoDoobieSpec extends Specification with AnalysisSpec {
   val transactor = TestUtil.transactor()
 
   check(ServicioDaoDoobie.qReg("", BigDecimal(0), false))
+  check(ServicioDaoDoobie.qServicios)
 }

@@ -34,11 +34,17 @@ class ServicioController @Inject() (
         servicioDao.registrar(servicio.nombre, servicio.precio, servicio.mensual)
         eventDao.write(s"Creado servicio ${servicio.nombre} precio = ${servicio.precio} mensual = ${servicio.mensual}")
         implicit val nots = Notification.success(messagesApi("ServicioController.add.success", servicio.nombre))
-        Ok(views.html.index()) // TODO redirigir a vista de servicios
+        Redirect(routes.ServicioController.servicios)
       }
     )
 
     Future.successful(res)
+  }
+
+  def servicios = actions.roleAction("interno") { implicit req ⇒
+    Future.successful(Ok(views.html.servicio.servicios(
+      servicioDao.todos
+    )))
   }
 }
 

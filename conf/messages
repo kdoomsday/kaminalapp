@@ -20,6 +20,7 @@ navbar.logout           = Salir
 navbar.addItem          = Agregar ítem
 navbar.clientes         = Clientes
 navbar.addCliente       = Agregar cliente
+navbar.servicios        = Servicios
 navbar.addServicio      = Agregar servicio
 navbar.usuariosInternos = Usuarios internos
 
@@ -112,6 +113,13 @@ addServicio.precio.lbl  = Precio
 addServicio.precio.ph   = Precio del servicio
 addServicio.mensual.lbl = ¿Es mensual?
 addServicio.submit      = Registrar
+
+servicios.title   = Servicios
+servicios.header  = Servicios registrados
+servicios.add     = Agregar
+servicios.nombre  = Nombre
+servicios.precio  = Precio
+servicios.mensual = ¿Mensual?
 
 ServicioController.add.success = Servicio {0} creado exitosamente
 

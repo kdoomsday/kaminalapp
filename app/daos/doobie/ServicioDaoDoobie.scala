@@ -4,6 +4,7 @@ import daos.ServicioDao
 import javax.inject.Inject
 import doobie.imports._
 import daos.doobie.DoobieImports._
+import models.Servicio
 import play.api.db.Database
 import play.api.Logger
 
@@ -20,10 +21,14 @@ class ServicioDaoDoobie @Inject() (
 
     qReg(nombre, costo, mensual).run.transact(transactor).unsafePerformIO
   }
+
+  def todos: List[Servicio] = qServicios.list.transact(transactor).unsafePerformIO
 }
 
 object ServicioDaoDoobie {
   def qReg(nombre: String, precio: BigDecimal, mensual: Boolean) =
     sql"""insert into servicio(nombre, precio, mensual)
           values($nombre, $precio, $mensual)""".update
+
+  def qServicios = sql"""select id, nombre, precio, mensual from servicio""".query[Servicio]
 }
