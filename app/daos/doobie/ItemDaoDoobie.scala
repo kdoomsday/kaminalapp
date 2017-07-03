@@ -37,6 +37,14 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
 
     cliente.map(c ⇒ (c, mascotas, telefonos, data))
   }
+
+  def eliminar(idItem: Long): Boolean = {
+    Logger.debug(s"Eliminar item con id $idItem")
+    val updated = qEliminar(idItem).run.transact(transactor).unsafePerformIO
+    if (updated > 1)
+      Logger.warn("Eliminados demasiados items!")
+    return updated > 0
+  }
 }
 
 object DaoItemDoobie {
@@ -60,4 +68,6 @@ object DaoItemDoobie {
     sql"""select numero, id_cliente
           from telefonos
           where id_cliente = $idCliente""".query[Telefono]
+
+  def qEliminar(id: Long) = sql"""delete from item where id = $id""".update
 }

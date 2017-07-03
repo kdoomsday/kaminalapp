@@ -15,4 +15,11 @@ trait ItemDao {
    * especificado, si el cliente existe
    */
   def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Telefono], List[Item])]
+
+  /**
+   * Eliminar un item del sistema
+   * @param  idItem Identificador del item a eliminar
+   * @return Si un item fue, en efecto, eliminado
+   */
+  def eliminar(idItem: Long): Boolean
 }

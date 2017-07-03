@@ -6,8 +6,9 @@ POST    /login                controllers.LoginController.login
 GET     /logout               controllers.LoginController.logout
 
 # Items
-GET     /add                  controllers.ItemController.addItemView
-POST    /add                  controllers.ItemController.addItem
+GET     /item/add             controllers.ItemController.addItemView
+POST    /item/add             controllers.ItemController.addItem
+POST    /item/eliminar        controllers.ItemController.eliminar
 
 # Clientes
 GET     /addCliente            controllers.ClienteController.addClienteView

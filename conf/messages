@@ -68,12 +68,21 @@ cliente.items         = Registro
 cliente.item.desc     = Descripción
 cliente.item.monto    = Monto
 cliente.item.fecha    = Fecha
+cliente.item.eliminar = Eliminar
 cliente.mascotas            = Mascotas
 cliente.mascota.nombre      = Nombre
 cliente.mascota.raza        = Raza
 cliente.mascota.edad        = Edad (años)
 cliente.mascota.fechaInicio = Fecha de inicio
 cliente.mascota.add         = Registrar
+
+cliente.item.eliminar.title  = Eliminar item
+cliente.item.eliminar.text   = ¿Está seguro de eliminar permanentemente el elemento?
+cliente.item.eliminar.ok     = Eliminar
+cliente.item.eliminar.cancel = Cancelar
+cliente.item.eliminar.exito  = Elemento eliminado exitosamente
+cliente.item.eliminar.error  = Falló la eliminación
+
 
 addTelefono.title      = Agregar telf.
 addTelefono.header     = Agregar teléfono a {0}

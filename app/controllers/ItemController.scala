@@ -47,6 +47,25 @@ class ItemController @Inject() (
 
     Future.successful(res)
   }
+
+  /**
+   * Elimina un item por id, recibido como form.
+   * @return Ok("ok") si lo elimin&oacute;. BadRequest si no
+   */
+  def eliminar() = actions.roleAction("interno") { implicit req ⇒
+    val res = eliminarForm.bindFromRequest.fold(
+      formWithErrors ⇒ BadRequest("error"),
+      idItem ⇒ {
+        if (itemDao.eliminar(idItem)) {
+          eventDao.write(s"Eliminado item $idItem")
+          Ok("ok")
+        } else {
+          BadRequest("error")
+        }
+      }
+    )
+    Future.successful(res)
+  }
 }
 
 object ItemController {
@@ -57,5 +76,9 @@ object ItemController {
       "monto" → bigDecimal(16, 2),
       "descripcion" → text
     )
+  )
+
+  val eliminarForm: Form[Long] = Form(
+    single("id" → longNumber)
   )
 }

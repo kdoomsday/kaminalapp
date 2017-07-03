@@ -10,7 +10,7 @@
     formatter: _root_.format.DateFormatter,
     messages: Messages,
     req: AuthenticatedRequest[_])
-@main("cliente.title") {
+@main("cliente.title", scripts = Seq("javascripts/ajaxcall.js", "javascripts/items/eliminar.js")) {
     <h1>@messages("cliente.header", cliente.nombreCompleto)</h1>
 
     <div class="col-sm-12 col-md-6" >
@@ -62,21 +62,39 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>@messages("cliente.item.desc") </th>
-                        <th>@messages("cliente.item.monto") </th>
-                        <th>@messages("cliente.item.fecha") </th>
+                        <th class="col-sm-4">@messages("cliente.item.desc") </th>
+                        <th class="col-sm-3">@messages("cliente.item.monto") </th>
+                        <th class="col-sm-4">@messages("cliente.item.fecha") </th>
+                        <th class="col-sm-1 text-center">@messages("cliente.item.eliminar") </th>
                     </tr>
                 </thead>
                 <tbody>
                     @for(i ← items){
-                        <tr>
+                        <tr id="item@{i.id}">
                             <td>@i.descripcion </td>
                             <td>@i.monto </td>
                             <td>@formatter.long(i.fecha) </td>
+                            <td class="text-center">
+                                <button class="btn btn-danger btn-xs eliminarItem" data-id="@{i.id}">
+                                    @gi("trash")
+                                </button>
+                            </td>
                         </tr>
                         }
                 </tbody>
             </table>
         </div>
     </div>
+
+    <div class="eliminarItemData"
+         data-route  = "@routes.ItemController.eliminar"
+         data-title  = "@messages("cliente.item.eliminar.title")"
+         data-msg    = "@messages("cliente.item.eliminar.text")"
+         data-ok     = "@messages("cliente.item.eliminar.ok")"
+         data-cancel = "@messages("cliente.item.eliminar.cancel")"
+         data-okmsg  = "@messages("cliente.item.eliminar.exito")"
+         data-errmsg = "@messages("cliente.item.eliminar.error")"
+    > </div>
+
+    @helper.CSRF.formField
 }
