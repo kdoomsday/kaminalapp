@@ -48,16 +48,18 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
 }
 
 object DaoItemDoobie {
-  def qAdd(idCliente: Long, monto: BigDecimal, descripcion: String) =
-    sql"""Insert into item(id_cliente, monto, descripcion)
-          values ($idCliente, $monto, $descripcion)""".update
+  def qAdd(idMascota: Long, monto: BigDecimal, descripcion: String) =
+    sql"""Insert into item(id_mascota, monto, descripcion)
+          values ($idMascota, $monto, $descripcion)""".update
 
   def qCliente(id: Long) = sql"select * from clientes where id = $id".query[Cliente]
 
-  def qDatosCliente(id: Long) =
-    sql"""select *
-          from item
-          where id_cliente = $id""".query[Item]
+  def qDatosCliente(idCliente: Long) =
+    sql"""select i.*
+          from item i
+            join mascotas m on i.id_mascota = m.id
+            join clientes c on m.id_cliente = c.id
+          where c.id = $idCliente""".query[Item]
 
   def qMascotas(idcliente: Long) =
     sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente
