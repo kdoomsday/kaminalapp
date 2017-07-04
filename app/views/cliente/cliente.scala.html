@@ -10,6 +10,7 @@
     formatter: _root_.format.DateFormatter,
     messages: Messages,
     req: AuthenticatedRequest[_])
+
 @main("cliente.title", scripts = Seq("javascripts/ajaxcall.js", "javascripts/items/eliminar.js")) {
     <h1>@messages("cliente.header", cliente.nombreCompleto)</h1>
 
@@ -68,30 +69,34 @@
         <div class="col-sm-12 col-md-6">
             <h2>@messages("cliente.items")</h2>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="col-sm-4">@messages("cliente.item.desc") </th>
-                        <th class="col-sm-3">@messages("cliente.item.monto") </th>
-                        <th class="col-sm-4">@messages("cliente.item.fecha") </th>
-                        <th class="col-sm-1 text-center">@messages("cliente.item.eliminar") </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for(i ← items){
-                        <tr id="item@{i.id}">
-                            <td>@i.descripcion </td>
-                            <td>@i.monto </td>
-                            <td>@formatter.long(i.fecha) </td>
-                            <td class="text-center">
-                                <button class="btn btn-danger btn-xs eliminarItem" data-id="@{i.id}">
-                                    @gi("trash")
-                                </button>
-                            </td>
+            @defining(mascotas.map(m => (m.id, m.nombre)).toMap) { mmascotas =>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-3">@messages("cliente.item.desc") </th>
+                            <th class="col-sm-2">@messages("cliente.item.monto") </th>
+                            <th class="col-sm-3">@messages("cliente.item.mascota") </th>
+                            <th class="col-sm-3">@messages("cliente.item.fecha") </th>
+                            <th class="col-sm-1 text-center">@messages("cliente.item.eliminar") </th>
                         </tr>
-                        }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @for(i ← items){
+                            <tr id="item@{i.id}">
+                                <td>@i.descripcion </td>
+                                <td>@i.monto </td>
+                                <td>@{mmascotas(i.idMascota)} </td>
+                                <td>@formatter.long(i.fecha) </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger btn-xs eliminarItem" data-id="@{i.id}">
+                                        @gi("trash")
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
 

@@ -67,6 +67,7 @@ cliente.telefonos.add = Agregar
 cliente.items         = Registro
 cliente.item.desc     = Descripción
 cliente.item.monto    = Monto
+cliente.item.mascota  = Mascota
 cliente.item.fecha    = Fecha
 cliente.item.eliminar = Eliminar
 cliente.mascotas            = Mascotas
