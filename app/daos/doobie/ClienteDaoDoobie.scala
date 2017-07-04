@@ -44,6 +44,10 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   def addTelf(t: Telefono): Unit = {
     qAddTelefono(t.numero, t.idCliente).run.transact(transactor).unsafePerformIO
   }
+
+  def byMascota(idMascota: Long): Option[Cliente] = {
+    qByMascota(idMascota).option.transact(transactor).unsafePerformIO
+  }
 }
 
 object ClienteDaoDoobie {
@@ -58,12 +62,17 @@ object ClienteDaoDoobie {
           values($nombre, $apellido, $direccion, $email, $cuenta)""".update
 
   def qClientesSaldo() = sql"""select c.*, coalesce(sum(i.monto), 0) as saldo
-                               from item i right outer join clientes c on i.id_cliente = c.id
+                               from item i right outer join mascotas m on i.id_mascota = m.id
+                               join clientes c on m.id_cliente = c.id
                                group by c.id""".query[(Cliente, BigDecimal)]
 
   private[this] val clientesFrag = sql"select id, nombre, apellido, direccion, email, cuenta from clientes "
   def qClientes() = clientesFrag.query[Cliente]
   def qById(id: Long) = (clientesFrag ++ fr"where id = $id").query[Cliente]
+
+  def qByMascota(idMascota: Long) = sql"""select c.*
+                                          from mascotas m join clientes c on m.id_cliente = c.id
+                                          where m.id = $idMascota""".query[Cliente]
 
   def qAddTelefono(numero: String, idCliente: Long) =
     sql"""insert into telefonos(numero, id_cliente)

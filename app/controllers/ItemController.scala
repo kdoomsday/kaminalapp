@@ -24,8 +24,8 @@ class ItemController @Inject() (
   import ItemController._
 
   // Vista de agregar un item
-  def addItemView = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.items.addItem(itemForm, clienteDao.clientes())))
+  def addItemView(idMascota: Long) = actions.roleAction("interno") { implicit req ⇒
+    Future.successful(Ok(views.html.items.addItem(itemForm, idMascota)))
   }
 
   // Accion de agregar un item
@@ -33,15 +33,16 @@ class ItemController @Inject() (
     val res = itemForm.bindFromRequest.fold(
       formWithErrors ⇒ {
         Logger.debug("Error de datos agregando item")
-        BadRequest(views.html.items.addItem(formWithErrors, clienteDao.clientes()))
+        BadRequest(views.html.items.addItem(formWithErrors, formWithErrors("mascota").value.map(_.toLong).getOrElse(0L)))
       },
 
       item ⇒ {
-        val (id, monto, descripcion) = item
-        itemDao.add(id, monto, descripcion)
-        eventDao.write(s"Agregado item para cliente $id con  monto $monto")
-        implicit val nots = Notification.success(Messages("ItemController.addItem.success"))
-        Ok(views.html.items.addItem(itemForm, clienteDao.clientes()))
+        val (idMascota, monto, descripcion) = item
+        itemDao.add(idMascota, monto, descripcion)
+        val cliente = clienteDao.byMascota(idMascota).get // Si todo funciono, el cliente tiene que existir
+        eventDao.write(s"Agregado item para cliente ${cliente.nombreCompleto} (${cliente.id}), mascota $idMascota con  monto $monto")
+        // implicit val nots = Notification.success(Messages("ItemController.addItem.success"))
+        Redirect(routes.ClienteController.cliente(cliente.id)).flashing("success" → Messages("ItemController.addItem.success"))
       }
     )
 
@@ -72,7 +73,7 @@ object ItemController {
 
   val itemForm: Form[(Long, BigDecimal, String)] = Form(
     tuple(
-      "cliente" → longNumber,
+      "mascota" → longNumber,
       "monto" → bigDecimal(16, 2),
       "descripcion" → text
     )

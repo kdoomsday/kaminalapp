@@ -20,9 +20,9 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
 
   val transactor = DataSourceTransactor[IOLite](db.dataSource)
 
-  def add(idCliente: Long, monto: BigDecimal, descripcion: String): Unit = {
-    val updated = qAdd(idCliente, monto, descripcion).run.transact(transactor).unsafePerformIO
-    Logger.debug(s"Item($idCliente, $monto), updated = $updated")
+  def add(idMascota: Long, monto: BigDecimal, descripcion: String): Unit = {
+    val updated = qAdd(idMascota, monto, descripcion).run.transact(transactor).unsafePerformIO
+    Logger.debug(s"Item($idMascota, $monto), updated = $updated")
   }
 
   def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Telefono], List[Item])] = {
@@ -55,7 +55,7 @@ object DaoItemDoobie {
   def qCliente(id: Long) = sql"select * from clientes where id = $id".query[Cliente]
 
   def qDatosCliente(idCliente: Long) =
-    sql"""select i.*
+    sql"""select i.id, id_mascota, monto, descripcion, fecha
           from item i
             join mascotas m on i.id_mascota = m.id
             join clientes c on m.id_cliente = c.id

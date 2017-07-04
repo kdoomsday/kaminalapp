@@ -1,6 +1,6 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[(Long, BigDecimal, String)], clientes: List[Cliente])(
+@(form: Form[(Long, BigDecimal, String)], idMascota: Long )(
     implicit
     messages: Messages,
     req: AuthenticatedRequest[_],
@@ -10,11 +10,7 @@
     <h1>@messages("addItem.header")</h1>
 
     @show.form(action=routes.ItemController.addItem.toString) {
-        @input.dropdown(id          = "cliente",
-                        things      = clientes.map(c => (c.id.toString, c.nombre)),
-                        label       = Some(messages("addItem.cliente.label")),
-                        placeholder = Some(messages("addItem.cliente.ph")),
-                        field       = Some(form("cliente")))
+        <input type="hidden" name="mascota" value="@idMascota" >
 
         @input.text(id          = "monto",
                     label       = messages("addItem.monto.label"),

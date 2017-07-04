@@ -20,4 +20,7 @@ trait ClienteDao {
 
   /** Agregar un telefono. El telefono contiene el id del cliente */
   def addTelf(t: Telefono): Unit
+
+  /** Cliente por el id de una de sus mascotas */
+  def byMascota(idMascota: Long): Option[Cliente]
 }

@@ -12,4 +12,5 @@ object ClienteDaoDoobieSpec extends Specification with AnalysisSpec {
   check(ClienteDaoDoobie.qClientesSaldo())
   check(ClienteDaoDoobie.qById(0L))
   check(ClienteDaoDoobie.qAddTelefono("", 0L))
+  check(ClienteDaoDoobie.qByMascota(0L))
 }

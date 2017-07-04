@@ -74,6 +74,8 @@ cliente.mascota.nombre      = Nombre
 cliente.mascota.raza        = Raza
 cliente.mascota.edad        = Edad (años)
 cliente.mascota.fechaInicio = Fecha de inicio
+cliente.mascota.addItem     = Ítem
+cliente.mascota.addItem.tt  = Agregar ítem a esta mascota
 cliente.mascota.add         = Registrar
 
 cliente.item.eliminar.title  = Eliminar item

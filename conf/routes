@@ -6,7 +6,7 @@ POST    /login                controllers.LoginController.login
 GET     /logout               controllers.LoginController.logout
 
 # Items
-GET     /item/add             controllers.ItemController.addItemView
+GET     /item/add/:idMascota  controllers.ItemController.addItemView(idMascota: Long)
 POST    /item/add             controllers.ItemController.addItem
 POST    /item/eliminar        controllers.ItemController.eliminar
 
