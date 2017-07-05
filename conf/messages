@@ -128,7 +128,7 @@ addServicio.submit      = Registrar
 
 servicios.title   = Servicios
 servicios.header  = Servicios registrados
-servicios.add     = Agregar
+servicios.add     = Agregar un nuevo servicio
 servicios.nombre  = Nombre
 servicios.precio  = Precio
 servicios.mensual = ¿Mensual?

@@ -3,6 +3,7 @@ package controllers.usuarios
 import controllers.actions.Actions
 import crypto.HashService
 import daos.UserDao
+import format.DateFormatter
 import javax.inject.Inject
 import models.Notification
 import play.api.data.Form
@@ -17,9 +18,12 @@ class UsuariosInternosController @Inject() (
     actions: Actions,
     userDao: UserDao,
     hasher: HashService,
+    dateFormatter: DateFormatter,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
   import UsuariosInternosController._
+
+  implicit val dFmt = dateFormatter
 
   def usuariosInternos() = actions.roleAction("interno") { implicit req ⇒
     Future.successful(Ok(views.html.usuarios.usuariosInternos(userDao.usuariosInternos())))

@@ -3,11 +3,13 @@
 
 @(servicios: List[Servicio])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
 @main("servicios.title") {
-    <h1>@messages("servicios.header")</h1>
+    <h1>
+        @messages("servicios.header")
+        @show.addButton(
+            routes.ServicioController.addServicio.toString,
+            messages("servicios.add"))
+    </h1>
 
-    @show.addButton(
-        routes.ServicioController.addServicio.toString,
-        messages("servicios.add"))
 
     <table class="table">
         <thead>
