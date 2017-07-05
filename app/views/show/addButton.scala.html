@@ -4,11 +4,9 @@
 * texto - texto del boton          *
 ***********************************@
 @(ruta: String, texto: String)
-<div class="row">
-    <a href="@ruta"
-       class="btn btn-primary btn-sm col-sm-2 col-sm-offset-5"
-    >
-        @texto
-        @gi("plus")
-    </a>
-</div>
+<a href="@ruta"
+   class="btn btn-primary btn-xs"
+   title="@texto"
+>
+    @gi("plus")
+</a>

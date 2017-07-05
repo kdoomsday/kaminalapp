@@ -20,8 +20,10 @@
     </div>
 
     <div class="col-sm-12 col-md-6">
-        <h2>@messages("cliente.telefonos.h")</h2>
-        @show.addButton(ruta=routes.ClienteController.addTelfView(cliente.id).toString, texto=messages("cliente.telefonos.add"))
+        <h2>
+            @messages("cliente.telefonos.h")
+            @show.addButton(ruta=routes.ClienteController.addTelfView(cliente.id).toString, texto=messages("cliente.telefonos.add"))
+        </h2>
         <ul>
             @for(t <- telefonos){
                 <li>@t.numero </li>
@@ -31,10 +33,11 @@
 
     <div class="row" >
         <div class="col-sm-12 col-md-6">
-            <h2>@messages("cliente.mascotas")</h2>
-
-            @show.addButton(routes.MascotaController.addMascotaView(cliente.id).toString,
-                            messages("cliente.mascota.add"))
+            <h2>
+                @messages("cliente.mascotas")
+                @show.addButton(routes.MascotaController.addMascotaView(cliente.id).toString,
+                                messages("cliente.mascota.add"))
+            </h2>
 
             <table class="table top3">
                 <thead>
@@ -86,7 +89,7 @@
                                 <td>@i.descripcion </td>
                                 <td>@i.monto </td>
                                 <td>@{mmascotas(i.idMascota)} </td>
-                                <td>@formatter.long(i.fecha) </td>
+                                <td>@formatter.short(i.fecha) </td>
                                 <td class="text-center">
                                     <button class="btn btn-danger btn-xs eliminarItem" data-id="@{i.id}">
                                         @gi("trash")
