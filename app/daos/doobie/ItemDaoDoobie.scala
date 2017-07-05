@@ -59,7 +59,8 @@ object DaoItemDoobie {
           from item i
             join mascotas m on i.id_mascota = m.id
             join clientes c on m.id_cliente = c.id
-          where c.id = $idCliente""".query[Item]
+          where c.id = $idCliente
+          order by fecha desc""".query[Item]
 
   def qMascotas(idcliente: Long) =
     sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente
