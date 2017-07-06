@@ -1,0 +1,53 @@
+@** Plantilla para agregar mascotas *@
+
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(
+  form: Form[Mascota],
+  c: Cliente,
+  rutaAccion: String,
+  idMascota: Option[Long] = None
+)(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@main("datosMascota.title") {
+    <h1>@messages("datosMascota.header", c.nombreCompleto)</h1>
+
+    @show.form(rutaAccion) {
+        @input.text(
+            "nombre",
+            messages("datosMascota.nombre.lbl"),
+            Some(form("nombre")),
+            messages("datosMascota.nombre.ph"),
+            autofocus = true
+        )
+
+        @input.text(
+            "raza",
+            messages("datosMascota.raza.lbl"),
+            Some(form("raza")),
+            messages("datosMascota.raza.ph")
+        )
+
+        @input.text(
+            "edad",
+            messages("datosMascota.edad.lbl"),
+            Some(form("edad")),
+            messages("datosMascota.edad.ph"),
+            tipo = "number",
+            extra = "min='0'"
+        )
+
+        @input.text(
+            "fechaInicio",
+            messages("datosMascota.fechaInicio.lbl"),
+            Some(form("fechaInicio")),
+            messages("datosMascota.fechaInicio.ph")
+        )
+
+        <input type="hidden" name="idCliente" value="@{c.id}">
+        @idMascota.map{ id =>
+            <input type="hidden" name="idMascota" value="@id" >
+        }
+
+        @input.submit("datosMascota.submit")
+    }
+}

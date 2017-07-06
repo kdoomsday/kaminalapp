@@ -22,6 +22,14 @@ class MascotaDaoDoobie @Inject() (db: Database) extends MascotaDao {
       .transact(transactor)
       .unsafePerformIO
   }
+
+  def byId(idMascota: Long): Option[Mascota] = {
+    Logger.debug(s"Buscar mascota por id = $idMascota")
+    qById(idMascota)
+      .option
+      .transact(transactor)
+      .unsafePerformIO
+  }
 }
 
 object MascotaDaoDoobie {
@@ -34,4 +42,8 @@ object MascotaDaoDoobie {
   ) =
     sql"""Insert into mascotas(nombre, raza, edad, fecha_inicio, id_cliente)
           values($nombre, $raza, $edad, $fechaInicio, $idCliente)""".update
+
+  def qById(id: Long) = sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente
+                              from mascotas
+                              where id = $id""".query[Mascota]
 }

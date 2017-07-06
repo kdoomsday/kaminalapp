@@ -24,7 +24,7 @@ class MascotaController @Inject() (
   /** Ir a la vista de registro de mascotas. El cliente tiene que existir */
   def addMascotaView(idCliente: Long) = actions.roleAction("interno") { implicit req ⇒
     val res = clienteDao.byId(idCliente) match {
-      case Some(c) ⇒ Ok(views.html.mascota.addMascota(mascotaForm, c))
+      case Some(c) ⇒ Ok(views.html.mascota.datosMascota(mascotaForm, c, routes.MascotaController.addMascota(idCliente).toString))
       case None ⇒ {
         implicit val nots = Notification.warn(messagesApi("MascotaController.addMascotaView.clienteNoExiste"))
         Redirect(routes.HomeController.index())
@@ -34,6 +34,15 @@ class MascotaController @Inject() (
     Future.successful(res)
   }
 
+  // def editMascotaView(idMascota: Long) = actions.roleAction("interno") { implicit req ⇒ Future.successful(
+  //                                                                        mascotaDao.byId(idMascota) match {
+  //                                                                          case Some(mascota) ⇒
+  //                                                                            Ok(views.html.mascota.datosMascota(
+  //                                                                                 mascotaForm.fill(mascota),
+  //                                                                                 // Need to get cliente as well
+  //                                                                        }
+  //                                                                       )}
+
   /**
    * Registrar una mascota en el sistema para el cliente especificado.
    * Solo funciona si los datos del formulario son correctos y el cliente existe
@@ -42,7 +51,7 @@ class MascotaController @Inject() (
     val response = clienteDao.byId(idCliente) match {
       case Some(c) ⇒ {
         mascotaForm.bindFromRequest.fold(
-          formWithErrors ⇒ BadRequest(views.html.mascota.addMascota(formWithErrors, c)),
+          formWithErrors ⇒ BadRequest(views.html.mascota.datosMascota(formWithErrors, c, routes.MascotaController.addMascota(idCliente).toString)),
           mascota ⇒ {
             mascotaDao.guardar(mascota)
             eventos.write(s"Mascota ${mascota.nombre} (${mascota.id}) registrada para ${c.nombreCompleto} ($idCliente)")
@@ -64,7 +73,7 @@ class MascotaController @Inject() (
 object MascotaController {
   def mascotaForm = Form(
     mapping(
-      "id" → ignored(0L),
+      "id" → default(longNumber, 0L),
       "nombre" → nonEmptyText,
       "raza" → optional(nonEmptyText),
       "edad" → optional(number(min = 0)),

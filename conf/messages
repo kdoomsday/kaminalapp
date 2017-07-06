@@ -101,17 +101,17 @@ ClienteController.addTelf.exito      = Teléfono agregado
 
 
 # Mascotas
-addMascota.title           = Agregar mascota
-addMascota.header          = Agregar mascota a {0}
-addMascota.nombre.lbl      = Nombre
-addMascota.nombre.ph       = Nombre
-addMascota.raza.lbl        = Raza
-addMascota.raza.ph         = Raza
-addMascota.edad.lbl        = Edad
-addMascota.edad.ph         = Edad de la mascota
-addMascota.fechaInicio.lbl = Fecha de inicio
-addMascota.fechaInicio.ph  = Fecha en que empezó (aaaa-mm-dd)
-addMascota.submit          = Registrar
+datosMascota.title           = Datos de mascota
+datosMascota.header          = Datos de mascota de {0}
+datosMascota.nombre.lbl      = Nombre
+datosMascota.nombre.ph       = Nombre
+datosMascota.raza.lbl        = Raza
+datosMascota.raza.ph         = Raza
+datosMascota.edad.lbl        = Edad
+datosMascota.edad.ph         = Edad de la mascota
+datosMascota.fechaInicio.lbl = Fecha de inicio
+datosMascota.fechaInicio.ph  = Fecha en que empezó (aaaa-mm-dd)
+datosMascota.submit          = Guardar
 
 MascotaController.addMascotaView.clienteNoExiste = El cliente especificado no existe
 MascotaController.addMascota.exito = Se registró exitosamente a {0}

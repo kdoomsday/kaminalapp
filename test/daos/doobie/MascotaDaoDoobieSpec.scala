@@ -9,4 +9,5 @@ object MascotaDaoDoobieSpec extends Specification with AnalysisSpec {
   val transactor = TestUtil.transactor()
 
   check(MascotaDaoDoobie.qGuardarMascota("", Some(""), Some(0), Some(new DateTime()), 1L))
+  check(MascotaDaoDoobie.qById(0L))
 }
