@@ -41,6 +41,10 @@ class Actions @Inject() (
   def roleAction(rolename: String)(block: AuthenticatedRequest[_] ⇒ Future[Result]): Action[AnyContent] =
     roleActionP(rolename)(parse.default)(block)
 
+  /** roleAction from an action that directly returns a result, instead of a Future */
+  def rAction(rolename: String)(block: AuthenticatedRequest[_] ⇒ Result): Action[AnyContent] =
+    roleAction(rolename)(authRequest ⇒ Future.successful(block(authRequest)))
+
   /** Applies a session timeout check. Is used for combining into other actions */
   private[this] def timeCheck[A](req: AuthenticatedRequest[A], block: AuthenticatedRequest[A] ⇒ Future[Result]): Future[Result] =
     userDao.byLogin(req.session.get("login").get) match {
