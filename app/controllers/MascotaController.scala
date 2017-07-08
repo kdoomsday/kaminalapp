@@ -71,29 +71,37 @@ class MascotaController @Inject() (
         ))
 
       case None ⇒ {
-        implicit val nots = Notification.warn(messagesApi("MascotaController.editMascotaView.noMascota"))
+        val msg = messagesApi("MascotaController.editMascotaView.noMascota")
+        implicit val nots = Notification.warn(msg)
         Redirect(routes.HomeController.index())
+          .flashing("warn" → msg)
       }
     }
   }
 
   def editMascota(idMascota: Long): Action[AnyContent] = actions.rAction("interno") { implicit req ⇒
-    val cliente = clienteDao.byId(mascotaDao.byId(idMascota).get.idCliente).get // TODO Handle all the errors
-    mascotaForm.bindFromRequest.fold(
-      formWithErrors ⇒ BadRequest(views.html.mascota.datosMascota(
-        formWithErrors,
-        cliente,
-        routes.MascotaController.editMascota(idMascota).toString(),
-        Some(idMascota)
-      )),
-      mascota ⇒ {
-        println(s"$idMascota vs ${mascota.id}")
-        mascotaDao.editar(mascota)
-        eventos.write(s"Mascota ${mascota.nombre} (${mascota.id}) editada")
-        implicit val nots = Notification.success(messagesApi("MascotaController.editMascota.exito"))
-        Redirect(routes.ClienteController.cliente(mascota.idCliente))
+    mascotaDao.byIdConCliente(idMascota) match {
+      case Some((m, cliente)) ⇒ {
+        mascotaForm.bindFromRequest.fold(
+          formWithErrors ⇒ BadRequest(views.html.mascota.datosMascota(
+            formWithErrors,
+            cliente,
+            routes.MascotaController.editMascota(idMascota).toString(),
+            Some(idMascota)
+          )),
+          mascota ⇒ {
+            mascotaDao.editar(mascota)
+            eventos.write(s"Mascota ${mascota.nombre} (${mascota.id}) editada")
+            implicit val nots = Notification.success(messagesApi("MascotaController.editMascota.exito"))
+            Redirect(routes.ClienteController.cliente(mascota.idCliente))
+          }
+        )
       }
-    )
+      case None ⇒ {
+        Redirect(routes.HomeController.index)
+          .flashing("warn" → messagesApi("MascotaController.editMascota.noExiste"))
+      }
+    }
   }
 }
 

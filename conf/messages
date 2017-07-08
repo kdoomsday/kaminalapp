@@ -119,6 +119,7 @@ MascotaController.addMascotaView.clienteNoExiste = El cliente especificado no ex
 MascotaController.addMascota.exito = Se registró exitosamente a {0}
 MascotaController.editMascotaView.noMascota = No existe la mascota {0}
 MascotaController.editMascota.exito = Mascota {0} editada exitosamente
+MascotaController.editMascota.noExiste = No se puede conseguir la mascota con id {0}
 
 # Servicios
 addServicio.title       = Agregar servicio

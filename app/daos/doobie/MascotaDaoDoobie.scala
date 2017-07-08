@@ -2,7 +2,7 @@ package daos.doobie
 
 import daos.MascotaDao
 import javax.inject.Inject
-import models.Mascota
+import models.{ Cliente, Mascota }
 import org.joda.time.DateTime
 import doobie.imports._
 import daos.doobie.DoobieImports._
@@ -26,6 +26,14 @@ class MascotaDaoDoobie @Inject() (db: Database) extends MascotaDao {
   def byId(idMascota: Long): Option[Mascota] = {
     Logger.debug(s"Buscar mascota por id = $idMascota")
     qById(idMascota)
+      .option
+      .transact(transactor)
+      .unsafePerformIO
+  }
+
+  def byIdConCliente(idMascota: Long): Option[(Mascota, Cliente)] = {
+    Logger.debug(s"Mascota con cliente por id = $idMascota")
+    qMascotaConCliente(idMascota)
       .option
       .transact(transactor)
       .unsafePerformIO
@@ -66,4 +74,9 @@ object MascotaDaoDoobie {
                                edad   = $edad,
                                fecha_inicio = $fechaInicio
                            where id = $idMascota""".update
+
+  def qMascotaConCliente(idMascota: Long) =
+    sql"""select m.*, c.*
+          from mascotas m join clientes c on m.id_cliente = c.id
+          where m.id = $idMascota""".query[(Mascota, Cliente)]
 }
