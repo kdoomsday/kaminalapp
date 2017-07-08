@@ -9,4 +9,7 @@ trait MascotaDao {
 
   /** Buscar mascota seg&uacute;n su ID. Puede que no consiga resultado */
   def byId(idMascota: Long): Option[Mascota]
+
+  /** Guardar los datos de una mascota que ya existe */
+  def editar(m: Mascota): Unit
 }

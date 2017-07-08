@@ -8,7 +8,7 @@ import javax.inject.Inject
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, MessagesApi }
-import play.api.mvc.Controller
+import play.api.mvc.{ Action, AnyContent, Controller }
 import scala.concurrent.Future
 
 /** Controlador para las acciones relacionadas con mascotas */
@@ -34,15 +34,6 @@ class MascotaController @Inject() (
     Future.successful(res)
   }
 
-  // def editMascotaView(idMascota: Long) = actions.roleAction("interno") { implicit req ⇒ Future.successful(
-  //                                                                        mascotaDao.byId(idMascota) match {
-  //                                                                          case Some(mascota) ⇒
-  //                                                                            Ok(views.html.mascota.datosMascota(
-  //                                                                                 mascotaForm.fill(mascota),
-  //                                                                                 // Need to get cliente as well
-  //                                                                        }
-  //                                                                       )}
-
   /**
    * Registrar una mascota en el sistema para el cliente especificado.
    * Solo funciona si los datos del formulario son correctos y el cliente existe
@@ -67,6 +58,42 @@ class MascotaController @Inject() (
     }
 
     Future.successful(response)
+  }
+
+  def editMascotaView(idMascota: Long) = actions.rAction("interno") { implicit req ⇒
+    mascotaDao.byId(idMascota) match {
+      case Some(mascota) ⇒
+        Ok(views.html.mascota.datosMascota(
+          mascotaForm.fill(mascota),
+          clienteDao.byId(mascota.idCliente).get, // Asumo que hay cliente
+          routes.MascotaController.editMascota(idMascota).toString,
+          Some(idMascota)
+        ))
+
+      case None ⇒ {
+        implicit val nots = Notification.warn(messagesApi("MascotaController.editMascotaView.noMascota"))
+        Redirect(routes.HomeController.index())
+      }
+    }
+  }
+
+  def editMascota(idMascota: Long): Action[AnyContent] = actions.rAction("interno") { implicit req ⇒
+    val cliente = clienteDao.byId(mascotaDao.byId(idMascota).get.idCliente).get // TODO Handle all the errors
+    mascotaForm.bindFromRequest.fold(
+      formWithErrors ⇒ BadRequest(views.html.mascota.datosMascota(
+        formWithErrors,
+        cliente,
+        routes.MascotaController.editMascota(idMascota).toString(),
+        Some(idMascota)
+      )),
+      mascota ⇒ {
+        println(s"$idMascota vs ${mascota.id}")
+        mascotaDao.editar(mascota)
+        eventos.write(s"Mascota ${mascota.nombre} (${mascota.id}) editada")
+        implicit val nots = Notification.success(messagesApi("MascotaController.editMascota.exito"))
+        Redirect(routes.ClienteController.cliente(mascota.idCliente))
+      }
+    )
   }
 }
 

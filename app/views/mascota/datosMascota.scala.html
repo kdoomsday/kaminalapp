@@ -45,7 +45,7 @@
 
         <input type="hidden" name="idCliente" value="@{c.id}">
         @idMascota.map{ id =>
-            <input type="hidden" name="idMascota" value="@id" >
+            <input type="hidden" name="id" value="@id" >
         }
 
         @input.submit("datosMascota.submit")

@@ -75,6 +75,8 @@ cliente.mascota.nombre      = Nombre
 cliente.mascota.raza        = Raza
 cliente.mascota.edad        = Edad (años)
 cliente.mascota.fechaInicio = Fecha de inicio
+cliente.mascota.edit        = Editar
+cliente.mascota.edit.tt     = Editar datos de la mascota
 cliente.mascota.addItem     = Ítem
 cliente.mascota.addItem.tt  = Agregar ítem a esta mascota
 cliente.mascota.add         = Registrar
@@ -115,6 +117,8 @@ datosMascota.submit          = Guardar
 
 MascotaController.addMascotaView.clienteNoExiste = El cliente especificado no existe
 MascotaController.addMascota.exito = Se registró exitosamente a {0}
+MascotaController.editMascotaView.noMascota = No existe la mascota {0}
+MascotaController.editMascota.exito = Mascota {0} editada exitosamente
 
 # Servicios
 addServicio.title       = Agregar servicio

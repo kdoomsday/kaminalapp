@@ -30,6 +30,14 @@ class MascotaDaoDoobie @Inject() (db: Database) extends MascotaDao {
       .transact(transactor)
       .unsafePerformIO
   }
+
+  def editar(m: Mascota): Unit = {
+    Logger.debug(s"Editar datos de mascota ${m.nombre} (${m.id})")
+    qEditMascota(m.id, m.nombre, m.raza, m.edad, m.fechaInicio)
+      .run
+      .transact(transactor)
+      .unsafePerformIO
+  }
 }
 
 object MascotaDaoDoobie {
@@ -46,4 +54,16 @@ object MascotaDaoDoobie {
   def qById(id: Long) = sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente
                               from mascotas
                               where id = $id""".query[Mascota]
+
+  def qEditMascota(
+    idMascota: Long,
+    nombre: String,
+    raza: Option[String],
+    edad: Option[Int],
+    fechaInicio: Option[DateTime]
+  ) = sql"""update mascotas set nombre = $nombre,
+                               raza   = $raza,
+                               edad   = $edad,
+                               fecha_inicio = $fechaInicio
+                           where id = $idMascota""".update
 }
