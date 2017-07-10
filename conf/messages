@@ -77,9 +77,8 @@ cliente.mascota.nombre      = Nombre
 cliente.mascota.raza        = Raza
 cliente.mascota.edad        = Edad (años)
 cliente.mascota.fechaInicio = Fecha de inicio
-cliente.mascota.edit        = Editar
+cliente.mascota.controles   = Controles
 cliente.mascota.edit.tt     = Editar datos de la mascota
-cliente.mascota.addItem     = Ítem
 cliente.mascota.addItem.tt  = Agregar ítem a esta mascota
 cliente.mascota.add         = Registrar
 

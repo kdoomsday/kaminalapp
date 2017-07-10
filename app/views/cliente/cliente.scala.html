@@ -46,8 +46,7 @@
                         <th class="">@messages("cliente.mascota.raza") </th>
                         <th class="">@messages("cliente.mascota.edad") </th>
                         <th class="text-center">@messages("cliente.mascota.fechaInicio") </th>
-                        <th class="text-center">@messages("cliente.mascota.edit") </th>
-                        <th class="text-center">@messages("cliente.mascota.addItem") </th>
+                        <th class="text-center">@messages("cliente.mascota.controles") </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,8 +63,6 @@
                                 >
                                     @gi("pencil")
                                 </a>
-                            </td>
-                            <td class="text-center">
                                 <a href="@routes.ItemController.addItemView(m.id)"
                                    class="btn btn-default btn-xs"
                                    title="@messages("cliente.mascota.addItem.tt")"
