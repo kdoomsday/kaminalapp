@@ -16,4 +16,6 @@ object ItemDaoDoobieSpec extends Specification with AnalysisSpec {
   check(qMascotas(0L))
   check(qCliente(0L))
   check(qTelefonos(0L))
+  check(qById(0L))
+  check(qEditar(0L, BigDecimal("0"), ""))
 }

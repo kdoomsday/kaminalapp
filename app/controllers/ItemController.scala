@@ -92,6 +92,43 @@ class ItemController @Inject() (
     )
     Future.successful(res)
   }
+
+  def editItemView(idItem: Long) = actions.rAction("interno") { implicit req ⇒
+    itemDao.byId(idItem) match {
+      case Some((item, mascota, cliente)) ⇒ {
+        val form = editItemForm.fill((item.monto, item.descripcion.getOrElse("")))
+        Ok(views.html.items.editItem(form, idItem, mascota, cliente))
+      }
+
+      case None ⇒
+        Redirect(routes.HomeController.index())
+          .flashing("warn" → messagesApi("ItemController.editItem.noExiste"))
+    }
+  }
+
+  def editItem(idItem: Long) = actions.rAction("interno") { implicit req ⇒
+    itemDao.byId(idItem) match {
+      case Some((item, mascota, cliente)) ⇒ {
+        editItemForm.bindFromRequest.fold(
+          formWithErrors ⇒ {
+            BadRequest(views.html.items.editItem(formWithErrors, idItem, mascota, cliente))
+          },
+
+          datos ⇒ {
+            val (nMonto, nDescripcion) = datos
+            itemDao.actualizar(idItem, nMonto, nDescripcion)
+            eventDao.write(s"Actualizado item $idItem (monto=$nMonto, desc=$nDescripcion)")
+            Redirect(routes.ClienteController.cliente(cliente.id))
+              .flashing("exito" → messagesApi("ItemController.editItem.success", idItem))
+          }
+        )
+      }
+      case None ⇒ {
+        Redirect(routes.HomeController.index())
+          .flashing("warn" → messagesApi("ItemController.editItem.noExiste"))
+      }
+    }
+  }
 }
 
 object ItemController {
@@ -112,5 +149,12 @@ object ItemController {
 
   val eliminarForm: Form[Long] = Form(
     single("id" → longNumber)
+  )
+
+  val editItemForm: Form[(BigDecimal, String)] = Form(
+    tuple(
+      "monto" → bigDecimal(16, 2),
+      "descripcion" → text
+    )
   )
 }

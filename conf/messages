@@ -38,6 +38,12 @@ addItem.desc.ph       = Descripción
 addItem.servicio.lbl  = Servicio
 addItem.servicio.ph   = Servicio
 
+editItem.title = Editar ítem
+editItem.header = Editar los datos del ítem {0}
+editItem.info.cliente = Cliente: {0}
+editItem.info.mascota = Mascota: {0}
+editItem.submit        = Guardar
+
 addCliente.title         = Agregar cliente
 addCliente.header        = Agregar cliente
 addCliente.nombre.lbl    = Nombre
@@ -71,7 +77,7 @@ cliente.item.desc     = Descripción
 cliente.item.monto    = Monto
 cliente.item.mascota  = Mascota
 cliente.item.fecha    = Fecha
-cliente.item.eliminar = Eliminar
+cliente.item.control  = Controles
 cliente.mascotas            = Mascotas
 cliente.mascota.nombre      = Nombre
 cliente.mascota.raza        = Raza
@@ -98,6 +104,8 @@ addTelefono.submit     = Registrar
 
 ItemController.addItem.success   = Item agregado exitosamente
 ItemController.addItem.noCliente = No se consiguió el cliente
+ItemController.editItem.noExiste = No se consiguió el ítem especificado
+ItemController.editItem.success  = Ítem {0} editado exitosamente
 
 ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
 ClienteController.cliente.noExiste   = No existe el cliente especificado

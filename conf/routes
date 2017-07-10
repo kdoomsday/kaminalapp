@@ -10,6 +10,8 @@ GET     /item/add/:idMascota          controllers.ItemController.addItemView(idM
 POST    /item/add/:idMascota          controllers.ItemController.addItem(idMascota: Long)
 POST    /item/add/servicio/:idMascota controllers.ItemController.addItemServicio(idMascota: Long)
 POST    /item/eliminar                controllers.ItemController.eliminar
+GET     /item/edit/:idItem            controllers.ItemController.editItemView(idItem: Long)
+POST    /item/edit/:idItem            controllers.ItemController.editItem(idItem: Long)
 
 # Clientes
 GET     /addCliente            controllers.ClienteController.addClienteView

@@ -1,0 +1,41 @@
+@* Editar los datos de un item especifico
+ * @param form Formulario con los datos del item: monto y descripcion
+ * @param idItem ID del item que se edita
+ * @param mascota La mascota a la que se le asigno el item
+ * @param cliente El cliente al que le pertenece la mascota
+ *@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[(BigDecimal, String)], idItem: Long, mascota: Mascota, cliente: Cliente)(
+    implicit
+    messages: Messages,
+    req: AuthenticatedRequest[_],
+    notifications: Seq[Notification] = Nil)
+
+@main("editItem.title") {
+    <h1>@messages("editItem.header", idItem) </h1>
+
+    <div class="col-md-6 col-sm-12">
+        <div class="col-sm-12">
+            @messages("editItem.info.cliente", cliente.nombreCompleto)
+        </div>
+        <div class="col-sm-12">
+            @messages("editItem.info.mascota", mascota.nombre)
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+        @show.form(action=routes.ItemController.editItem(idItem).toString) {
+            @input.text(id          = "monto",
+                        label       = messages("addItem.monto.label"),
+                        placeholder = messages("addItem.monto.ph"),
+                        field       = Some(form("monto")))
+
+            @input.text(id          = "descripcion",
+                        label       = messages("addItem.desc.label"),
+                        placeholder = messages("addItem.desc.ph"),
+                        field       = Some(form("descripcion")))
+            @input.submit("editItem.submit")
+        }
+    </div>
+}

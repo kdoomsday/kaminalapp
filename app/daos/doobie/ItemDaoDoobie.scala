@@ -4,6 +4,7 @@ import doobie.imports._
 import doobie.util.transactor.DataSourceTransactor
 import javax.inject.Inject
 import models.Mascota
+import org.joda.time.DateTime
 import play.api.db.Database
 import play.api.Logger
 import scala.math.BigDecimal
@@ -53,6 +54,16 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
       Logger.warn("Eliminados demasiados items!")
     return updated > 0
   }
+
+  def byId(idItem: Long): Option[(Item, Mascota, Cliente)] = {
+    Logger.debug(s"Buscar item por id: $idItem")
+    qById(idItem).option.transact(transactor).unsafePerformIO
+  }
+
+  def actualizar(idItem: Long, monto: BigDecimal, descripcion: String) = {
+    val updated = qEditar(idItem, monto, descripcion).run.transact(transactor).unsafePerformIO
+    Logger.debug(s"Actualizar item $idItem: $monto $descripcion (actualizados = $updated)")
+  }
 }
 
 object DaoItemDoobie {
@@ -87,4 +98,17 @@ object DaoItemDoobie {
           where id_cliente = $idCliente""".query[Telefono]
 
   def qEliminar(id: Long) = sql"""delete from item where id = $id""".update
+
+  def qById(idItem: Long) =
+    sql"""select i.id, i.id_mascota, i.monto, i.descripcion, i.fecha,
+                 m.id, m.nombre, m.raza, m.edad, m.fecha_inicio, m.id_cliente,
+                 c.id, c.nombre, c.apellido, c.direccion, c.email, c.cuenta
+          from item i
+            join mascotas m on i.id_mascota = m.id
+            join clientes c on m.id_cliente = c.id
+          where i.id = $idItem""".query[(Item, Mascota, Cliente)]
+
+  def qEditar(idItem: Long, monto: BigDecimal, descripcion: String) =
+    sql"""update item set monto=$monto, descripcion=$descripcion
+          where id = $idItem""".update
 }

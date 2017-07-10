@@ -25,4 +25,20 @@ trait ItemDao {
    * @return Si un item fue, en efecto, eliminado
    */
   def eliminar(idItem: Long): Boolean
+
+  /**
+   * Item con sus datos, por id
+   * @param idItem Identificador del item que se busca
+   * @return El item, la mascota a la que esta asociado y el
+   *         cliente due&ntilde;o de la mascota
+   */
+  def byId(idItem: Long): Option[(Item, Mascota, Cliente)]
+
+  /**
+   * Actualizar los datos de un item
+   * @param idItem Identificador
+   * @param monto Nuevo monto del item
+   * @param descripcion Nueva descripcion
+   */
+  def actualizar(idItem: Long, monto: BigDecimal, descripcion: String): Unit
 }
