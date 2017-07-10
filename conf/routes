@@ -6,9 +6,10 @@ POST    /login                controllers.LoginController.login
 GET     /logout               controllers.LoginController.logout
 
 # Items
-GET     /item/add/:idMascota  controllers.ItemController.addItemView(idMascota: Long)
-POST    /item/add             controllers.ItemController.addItem
-POST    /item/eliminar        controllers.ItemController.eliminar
+GET     /item/add/:idMascota          controllers.ItemController.addItemView(idMascota: Long)
+POST    /item/add/:idMascota          controllers.ItemController.addItem(idMascota: Long)
+POST    /item/add/servicio/:idMascota controllers.ItemController.addItemServicio(idMascota: Long)
+POST    /item/eliminar                controllers.ItemController.eliminar
 
 # Clientes
 GET     /addCliente            controllers.ClienteController.addClienteView

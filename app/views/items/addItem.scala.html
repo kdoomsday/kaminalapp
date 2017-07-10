@@ -1,6 +1,6 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[(Long, BigDecimal, String)], idMascota: Long )(
+@(form: Form[(Long, BigDecimal, String)], formServicio: Form[Long], idMascota: Long, servicios: List[Servicio] )(
     implicit
     messages: Messages,
     req: AuthenticatedRequest[_],
@@ -9,18 +9,36 @@
 @main("addItem.title") {
     <h1>@messages("addItem.header")</h1>
 
-    @show.form(action=routes.ItemController.addItem.toString) {
-        <input type="hidden" name="mascota" value="@idMascota" >
+    <div class="col-md-6 col-sm-12">
+        @show.form(action=routes.ItemController.addItem(idMascota).toString) {
+            <input type="hidden" name="mascota" value="@idMascota" >
 
-        @input.text(id          = "monto",
-                    label       = messages("addItem.monto.label"),
-                    placeholder = messages("addItem.monto.ph"),
-                    field       = Some(form("monto")))
+            @input.text(id          = "monto",
+                        label       = messages("addItem.monto.label"),
+                        placeholder = messages("addItem.monto.ph"),
+                        field       = Some(form("monto")))
 
-        @input.text(id          = "descripcion",
-                    label       = messages("addItem.desc.label"),
-                    placeholder = messages("addItem.desc.ph"),
-                    field       = Some(form("descripcion")))
-        @input.submit("addItem.submit")
-    }
+            @input.text(id          = "descripcion",
+                        label       = messages("addItem.desc.label"),
+                        placeholder = messages("addItem.desc.ph"),
+                        field       = Some(form("descripcion")))
+            @input.submit("addItem.submit")
+        }
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+        @show.form(action=routes.ItemController.addItemServicio(idMascota).toString) {
+            <input type="hidden" name="mascota" value="@idMascota" >
+
+            @input.dropdown(
+                id = "servicio",
+                things = servicios.map(s => (s.id.toString, s"${s.nombre} (${s.precio})")),
+                label = Some(messages("addItem.servicio.lbl")),
+                placeholder = Some(messages("addItem.servicio.ph")),
+                Some(form("servicio"))
+            )
+
+            @input.submit("addItem.submit")
+        }
+    </div>
 }

@@ -9,6 +9,9 @@ trait ItemDao {
   /** Agregar un item */
   def add(idMascota: Long, monto: BigDecimal, descripcion: String): Unit
 
+  /** Agregar un item, dado el servicio que se asocia */
+  def addByServicio(idMascota: Long, idServicio: Long): Unit
+
   /**
    * Obtener todos los datos de un cliente seg&uacute;n su id
    * @return El cliente con todas sus mascotas, telefonos, e items

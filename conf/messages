@@ -35,6 +35,8 @@ addItem.monto.ph      = Monto a agregar
 addItem.submit        = Agregar
 addItem.desc.label    = Descripción
 addItem.desc.ph       = Descripción
+addItem.servicio.lbl  = Servicio
+addItem.servicio.ph   = Servicio
 
 addCliente.title         = Agregar cliente
 addCliente.header        = Agregar cliente
@@ -95,7 +97,8 @@ addTelefono.numero.lbl = Número
 addTelefono.numero.ph  = Número
 addTelefono.submit     = Registrar
 
-ItemController.addItem.success    = Item agregado exitosamente
+ItemController.addItem.success   = Item agregado exitosamente
+ItemController.addItem.noCliente = No se consiguió el cliente
 
 ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
 ClienteController.cliente.noExiste   = No existe el cliente especificado

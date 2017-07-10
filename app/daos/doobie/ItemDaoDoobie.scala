@@ -25,6 +25,14 @@ class ItemDaoDoobie @Inject() (db: Database) extends ItemDao {
     Logger.debug(s"Item($idMascota, $monto), updated = $updated")
   }
 
+  def addByServicio(idMascota: Long, idServicio: Long): Unit = {
+    val updated = qAddByServicio(idMascota, idServicio)
+      .run
+      .transact(transactor)
+      .unsafePerformIO
+    Logger.debug(s"Agregar servicio a mascota (mascota=$idMascota, servicio=$idServicio, updated=$updated)")
+  }
+
   def datosCliente(idCliente: Long): Option[(Cliente, List[Mascota], List[Telefono], List[Item])] = {
     val q: ConnectionIO[(Option[Cliente], List[Item], List[Mascota], List[Telefono])] = for {
       c ← qCliente(idCliente).option
@@ -51,6 +59,12 @@ object DaoItemDoobie {
   def qAdd(idMascota: Long, monto: BigDecimal, descripcion: String) =
     sql"""Insert into item(id_mascota, monto, descripcion)
           values ($idMascota, $monto, $descripcion)""".update
+
+  def qAddByServicio(idMascota: Long, idServicio: Long) =
+    sql"""insert into item(monto, descripcion, id_mascota)
+          select precio, nombre, $idMascota
+          from servicio
+          where id = $idServicio""".update
 
   def qCliente(id: Long) = sql"select * from clientes where id = $id".query[Cliente]
 

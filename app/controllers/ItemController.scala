@@ -2,7 +2,7 @@ package controllers
 
 import audits.EventDao
 import controllers.actions.Actions
-import daos.{ ItemDao, ClienteDao }
+import daos.{ ClienteDao, ItemDao, ServicioDao }
 import javax.inject.Inject
 import models.Notification
 import play.api.Logger
@@ -17,6 +17,7 @@ class ItemController @Inject() (
     actions: Actions,
     itemDao: ItemDao,
     clienteDao: ClienteDao,
+    servicioDao: ServicioDao,
     eventDao: EventDao,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
@@ -25,15 +26,15 @@ class ItemController @Inject() (
 
   // Vista de agregar un item
   def addItemView(idMascota: Long) = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.items.addItem(itemForm, idMascota)))
+    Future.successful(Ok(views.html.items.addItem(itemForm, itemServicioForm, idMascota, servicioDao.todos)))
   }
 
   // Accion de agregar un item
-  def addItem = actions.roleAction("interno") { implicit req ⇒
+  def addItem(idMascota: Long) = actions.roleAction("interno") { implicit req ⇒
     val res = itemForm.bindFromRequest.fold(
       formWithErrors ⇒ {
         Logger.debug("Error de datos agregando item")
-        BadRequest(views.html.items.addItem(formWithErrors, formWithErrors("mascota").value.map(_.toLong).getOrElse(0L)))
+        BadRequest(views.html.items.addItem(formWithErrors, itemServicioForm, idMascota, servicioDao.todos))
       },
 
       item ⇒ {
@@ -47,6 +48,30 @@ class ItemController @Inject() (
     )
 
     Future.successful(res)
+  }
+
+  def addItemServicio(idMascota: Long) = actions.rAction("interno") { implicit req ⇒
+    itemServicioForm.bindFromRequest.fold(
+      formWithErrors ⇒ {
+        for (e ← formWithErrors.errors)
+          Logger.debug(e.toString())
+        BadRequest(views.html.items.addItem(itemForm, formWithErrors, idMascota, servicioDao.todos))
+      },
+      idServicio ⇒ {
+        itemDao.addByServicio(idMascota, idServicio)
+        eventDao.write(s"Agregado servicio $idServicio a la mascota $idMascota")
+
+        clienteDao.byMascota(idMascota) match {
+          case Some(c) ⇒
+            Redirect(routes.ClienteController.cliente(c.id))
+              .flashing("exito" → messagesApi("ItemController.addItem.success"))
+
+          case None ⇒
+            Redirect(routes.ClienteController.clientes())
+              .flashing("warn" → messagesApi("ItemController.addItem.noCliente"))
+        }
+      }
+    )
   }
 
   /**
@@ -76,6 +101,12 @@ object ItemController {
       "mascota" → longNumber,
       "monto" → bigDecimal(16, 2),
       "descripcion" → text
+    )
+  )
+
+  val itemServicioForm: Form[Long] = Form(
+    single(
+      "servicio" → longNumber
     )
   )
 

@@ -11,6 +11,7 @@ object ItemDaoDoobieSpec extends Specification with AnalysisSpec {
   import DaoItemDoobie._
 
   check(qAdd(0L, BigDecimal(0), ""))
+  check(qAddByServicio(0L, 0L))
   check(qDatosCliente(0L))
   check(qMascotas(0L))
   check(qCliente(0L))
