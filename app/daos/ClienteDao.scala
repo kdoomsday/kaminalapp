@@ -30,5 +30,5 @@ trait ClienteDao {
    * @param nombre   Nuevo nombre a usar
    * @param apellido Nuevo apellido a usar
    */
-  def actualizarNombre(id: Long, nombre: String, apellido: String)
+  def actualizarNombre(id: Long, nombre: String, apellido: String): Unit
 }
