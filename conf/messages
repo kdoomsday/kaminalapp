@@ -67,8 +67,7 @@ clientes.t.saldo  = Saldo (BsF.)
 clientes.t.ver    = Detalle
 
 # Detalle de un cliente
-cliente.title  = Detalles del cliente
-cliente.header = {0}
+cliente.title         = Detalles del cliente
 cliente.saldo.h       = Saldo
 cliente.telefonos.h   = Teléfonos
 cliente.telefonos.add = Agregar

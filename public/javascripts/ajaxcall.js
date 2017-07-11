@@ -86,7 +86,7 @@ function jsonCall(selector, route, title, text, okText, cancelText, okFun, error
                 headers:  { "Csrf-Token": getCSRFToken() },
                 success: function(sentData, textStatus, jqXHR) {
                     if (sentData.ok) {
-                        okFun(sentData.data);
+                        okFun(sentData);
                     }
                     else {
                         errorFun(sentData.data);

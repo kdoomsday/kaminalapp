@@ -5,11 +5,11 @@ import controllers.actions.Actions
 import daos.{ ClienteDao, ItemDao }
 import format.DateFormatter
 import javax.inject.Inject
+import json.JsonHelpers._
 import models._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
-import play.api.libs.json._
 import play.api.mvc.Controller
 import scala.concurrent.Future
 
@@ -111,7 +111,7 @@ class ClienteController @Inject() (
         clienteDao.byId(idCliente) match {
           case Some(cliente) ⇒ {
             clienteDao.actualizarNombre(idCliente, nuevoNombre, nuevoApellido)
-            Ok(jsonOk)
+            Ok(jsonOk("nombre" → nuevoNombre, "apellido" → nuevoApellido))
           }
           case None ⇒ {
             Ok(jsonErr(messagesApi("ClienteController.edit.nombre.noCliente")))
@@ -120,11 +120,6 @@ class ClienteController @Inject() (
       }
     )
   }
-
-  private val jsonOk = Json.parse("""{ "ok": "ok" }""")
-  private def jsonErr(data: String) = Json.parse(s"""{
-    "data": "$data"
-  }""")
 }
 
 object ClienteController {

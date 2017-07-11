@@ -13,8 +13,13 @@ function modificarNombre() {
     jsonCallData(
         '.modNombre',
         '.modNombreData',
-        function() {
-            alertify.success("Ok!");
+        function(data) {
+            $('#nombreModal').modal('hide')
+            var nombreCompleto = data.nombre + ' ' + data.apellido;
+            $('#nombreCompleto').text(nombreCompleto);
+            $('#nombre').val(data.nombre);
+            $('#apellido').val(data.apellido);
+            alertify.success("Nuevo nombre: " + nombreCompleto);
         },
         function(msg) {
             alertify.error(msg);
