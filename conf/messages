@@ -95,6 +95,16 @@ cliente.item.eliminar.cancel = Cancelar
 cliente.item.eliminar.exito  = Elemento eliminado exitosamente
 cliente.item.eliminar.error  = Falló la eliminación
 
+cliente.nombre.mod.title   = Modificar nombre
+cliente.nombre.mod.lbl     = Nombre
+cliente.nombre.mod.ph      = Nuevo nombre
+cliente.apellido.mod.lbl   = Apellido
+cliente.apellido.mod.ph    = Nuevo apellido
+cliente.nombre.mod.ok      = Modificar
+cliente.nombre.mod.cancel  = Cancelar
+cliente.nombre.mod.confirm = ¿Seguro que desea modificar el nombre?
+cliente.nombre.mod.error   = Error cambiando el nombre
+
 
 addTelefono.title      = Agregar telf.
 addTelefono.header     = Agregar teléfono a {0}
@@ -110,6 +120,9 @@ ItemController.editItem.success  = Ítem {0} editado exitosamente
 ClienteController.addCliente.success = Nuevo cliente "{0}" agregado exitosamente
 ClienteController.cliente.noExiste   = No existe el cliente especificado
 ClienteController.addTelf.exito      = Teléfono agregado
+
+ClienteController.edit.nombre.formErr   = Error en datos enviados
+ClienteController.edit.nombre.noCliente = El cliente no existe
 
 
 # Mascotas
@@ -170,6 +183,12 @@ UsuariosInternosController.crear.success = Usuario {0} creado exitosamente
 
 # Error Handler
 ErrorHandler.error = Ocurrió un error. Por favor consultar la bitácora.
+
+
+# Elementos del paquete show
+show.modal.close  = Cerrar
+show.modal.cancel = Cancelar
+show.modal.ok     = Ok
 
 # Para usar con las validaciones
 error.required = Campo obligatorio

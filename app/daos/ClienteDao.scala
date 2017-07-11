@@ -23,4 +23,12 @@ trait ClienteDao {
 
   /** Cliente por el id de una de sus mascotas */
   def byMascota(idMascota: Long): Option[Cliente]
+
+  /**
+   * Actualizar el nombre de un cliente
+   * @param id       Ientificador del cliente que se modifica
+   * @param nombre   Nuevo nombre a usar
+   * @param apellido Nuevo apellido a usar
+   */
+  def actualizarNombre(id: Long, nombre: String, apellido: String)
 }

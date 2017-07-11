@@ -83,6 +83,7 @@ function jsonCall(selector, route, title, text, okText, cancelText, okFun, error
                 method: "post",
                 data: mkJson(selector),
                 dataType: "json",
+                headers:  { "Csrf-Token": getCSRFToken() },
                 success: function(sentData, textStatus, jqXHR) {
                     if (sentData.ok) {
                         okFun(sentData.data);
@@ -96,6 +97,21 @@ function jsonCall(selector, route, title, text, okText, cancelText, okFun, error
         function() { }  // Nothing on cancel
     ).set(
         'labels', {ok: okText, cancel: cancelText}
+    );
+}
+
+/** jsonCall que llena los datos a partir de un loadCallData */
+function jsonCallData(selector, dataSelector, okFun, errorFun) {
+    var data = loadCallData(dataSelector);
+    jsonCall(
+        selector,
+        data.route,
+        data.title,
+        data.okmsg,
+        data.ok,
+        data.cancel,
+        okFun,
+        errorFun
     );
 }
 
@@ -114,4 +130,15 @@ function loadCallData(selector) {
         okmsg : obj.data('okmsg'),
         errmsg: obj.data('errmsg')
     }
+}
+
+/** Build a json object from all values that match 'selector' */
+function mkJson(selector) {
+    var jsonData = {};
+
+    $(selector).each(function() {
+        jsonData[$(this).attr("name")] = $(this).val();
+    });
+
+    return jsonData;
 }

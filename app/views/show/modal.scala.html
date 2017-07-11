@@ -1,0 +1,46 @@
+@* Mostrar un modal con contenido configurable
+ * @param id Id html del modal
+ *@
+@(id: String,
+  titleKey:  String,
+  cancelKey: String = "show.modal.cancel",
+  okKey:     String = "show.modal.ok"
+)(
+  body: => Html
+)(implicit messages: Messages)
+
+<!-- Modal -->
+<div class="modal fade" id="@id" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">@messages("show.modal.close")</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    @messages(titleKey)
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                @body
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    @messages(cancelKey)
+                </button>
+                <button type="button" class="btn btn-primary ok">
+                    @messages(okKey)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

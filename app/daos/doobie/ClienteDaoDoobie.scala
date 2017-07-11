@@ -48,6 +48,14 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   def byMascota(idMascota: Long): Option[Cliente] = {
     qByMascota(idMascota).option.transact(transactor).unsafePerformIO
   }
+
+  def actualizarNombre(id: Long, nombre: String, apellido: String) = {
+    val up = qUpdateNombre(id, nombre, apellido)
+      .run
+      .transact(transactor)
+      .unsafePerformIO
+    Logger.debug(s"Actualizar cliente $id, nombre = $nombre, apellido = $apellido (updated=$up)")
+  }
 }
 
 object ClienteDaoDoobie {
@@ -77,4 +85,8 @@ object ClienteDaoDoobie {
   def qAddTelefono(numero: String, idCliente: Long) =
     sql"""insert into telefonos(numero, id_cliente)
           values($numero, $idCliente)""".update
+
+  def qUpdateNombre(id: Long, nombre: String, apellido: String) =
+    sql"""update clientes set nombre = $nombre, apellido = $apellido
+          where id = $id""".update
 }

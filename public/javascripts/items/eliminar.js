@@ -1,4 +1,6 @@
-/** Funcion que realiza un llamado para eliminar un item */
+/** Funcion que realiza un llamado para eliminar un item
+  * Depende de ajaxcall.js
+  */
 function eliminarItem(id) {
     var callData = loadCallData('.eliminarItemData');
     ajaxCall(callData.route,

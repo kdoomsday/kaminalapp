@@ -9,6 +9,7 @@ import models._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
+import play.api.libs.json._
 import play.api.mvc.Controller
 import scala.concurrent.Future
 
@@ -97,6 +98,33 @@ class ClienteController @Inject() (
 
     Future.successful(res)
   }
+
+  def editNombre = actions.rAction("interno") { implicit req ⇒
+    modNombreForm.bindFromRequest.fold(
+      formWithErrors ⇒ {
+        val msg = formWithErrors.errors.mkString(" ")
+        Ok(jsonErr(messagesApi("ClienteController.edit.nombre.formErr")))
+      },
+
+      datos ⇒ {
+        val (idCliente, nuevoNombre, nuevoApellido) = datos
+        clienteDao.byId(idCliente) match {
+          case Some(cliente) ⇒ {
+            clienteDao.actualizarNombre(idCliente, nuevoNombre, nuevoApellido)
+            Ok(jsonOk)
+          }
+          case None ⇒ {
+            Ok(jsonErr(messagesApi("ClienteController.edit.nombre.noCliente")))
+          }
+        }
+      }
+    )
+  }
+
+  private val jsonOk = Json.parse("""{ "ok": "ok" }""")
+  private def jsonErr(data: String) = Json.parse(s"""{
+    "data": "$data"
+  }""")
 }
 
 object ClienteController {
@@ -118,5 +146,13 @@ object ClienteController {
       "numero" → nonEmptyText,
       "idCliente" → longNumber
     )(Telefono.apply)(Telefono.unapply)
+  )
+
+  val modNombreForm: Form[(Long, String, String)] = Form(
+    tuple(
+      "idCliente" → longNumber,
+      "nombre" → nonEmptyText,
+      "apellido" → nonEmptyText
+    )
   )
 }

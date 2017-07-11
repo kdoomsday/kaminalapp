@@ -11,8 +11,23 @@
     messages: Messages,
     req: AuthenticatedRequest[_])
 
-@main("cliente.title", scripts = Seq("javascripts/ajaxcall.js", "javascripts/items/eliminar.js")) {
-    <h1>@messages("cliente.header", cliente.nombreCompleto)</h1>
+@main(
+    "cliente.title",
+    scripts = Seq(
+        "javascripts/ajaxcall.js",
+        "javascripts/items/eliminar.js",
+        "javascripts/cliente/cliente.js"
+    )
+) {
+    <h1>
+        @messages("cliente.header", cliente.nombreCompleto)
+        <button class="btn btn-default btn-xs"
+                data-toggle="modal"
+                data-target="#nombreModal"
+        >
+            @gi("pencil")
+        </button>
+    </h1>
 
     <div class="col-sm-12 col-md-6" >
         <h2>@messages("cliente.saldo.h", saldo)</h2>
@@ -121,6 +136,39 @@
          data-okmsg  = "@messages("cliente.item.eliminar.exito")"
          data-errmsg = "@messages("cliente.item.eliminar.error")"
     > </div>
+
+    <div class="modNombreData"
+         data-route  = "@routes.ClienteController.editNombre"
+         data-title  = "@messages("cliente.nombre.mod.title")"
+         data-msg    = "@messages("cliente.nombre.mod.lbl")"
+         data-ok     = "@messages("cliente.nombre.mod.ok")"
+         data-cancel = "@messages("cliente.nombre.mod.cancel")"
+         data-okmsg  = "@messages("cliente.nombre.mod.confirm")"
+         data-errmsg = "@messages("cliente.nombre.mod.error")"
+    > </div>
+
+    @show.modal(
+        id = "nombreModal",
+        titleKey = "cliente.nombre.mod.title",
+        okKey = "cliente.nombre.mod.ok",
+        cancelKey = "cliente.nombre.mod.cancel"
+    ){
+        <input type="hidden" name="idCliente" value="@cliente.id" class="modNombre" >
+        @input.text(
+            id="nombre",
+            label = messages("cliente.nombre.mod.lbl"),
+            placeholder = messages("cliente.nombre.mod.ph"),
+            extraClass = "modNombre",
+            value = Some(cliente.nombre)
+        )
+        @input.text(
+            id="apellido",
+            label = messages("cliente.apellido.mod.lbl"),
+            placeholder = messages("cliente.apellido.mod.ph"),
+            extraClass = "modNombre",
+            value = Some(cliente.apellido)
+        )
+    }
 
     @helper.CSRF.formField
 }
