@@ -71,7 +71,7 @@ object ClienteDaoDoobie {
 
   def qClientesSaldo() = sql"""select c.*, coalesce(sum(i.monto), 0) as saldo
                                from item i right outer join mascotas m on i.id_mascota = m.id
-                               join clientes c on m.id_cliente = c.id
+                               right outer join clientes c on m.id_cliente = c.id
                                group by c.id""".query[(Cliente, BigDecimal)]
 
   private[this] val clientesFrag = sql"select id, nombre, apellido, direccion, email, cuenta from clientes "
