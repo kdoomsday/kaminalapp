@@ -41,6 +41,7 @@ object ServicioDaoDoobie {
     sql"""insert into servicio(nombre, precio, mensual)
           values($nombre, $precio, $mensual)""".update
 
+  /** Fragmento para seleccionar un servicio sin filtro */
   private[this] def serv = fr"""select id, nombre, precio, mensual from servicio """
 
   def qServicios = serv.query[Servicio]
