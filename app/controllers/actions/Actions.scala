@@ -18,7 +18,7 @@ class Actions @Inject() (
     deadbolt: DeadboltActions,
     userDao: UserDao
 ) extends Controller {
-  val timeout = 5.minutes
+  val timeout = 10.minutes
 
   /** Add session timeout checking to an action */
   def timedAction[A](parser: BodyParser[A] = parse.default)(block: AuthenticatedRequest[A] ⇒ Future[Result]): Action[A] = {
