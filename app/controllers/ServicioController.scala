@@ -21,14 +21,14 @@ class ServicioController @Inject() (
   import ServicioController._
 
   def addServicioView = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.servicio.addServicio(servicioForm)))
+    Future.successful(Ok(views.html.servicio.dataServicio(servicioForm, routes.ServicioController.addServicio.toString)))
   }
 
   def addServicio = actions.roleAction("interno") { implicit req ⇒
     val res = servicioForm.bindFromRequest.fold(
       formWithErrors ⇒ {
         for (e ← formWithErrors.errors) println(e)
-        BadRequest(views.html.servicio.addServicio(formWithErrors))
+        BadRequest(views.html.servicio.dataServicio(formWithErrors, routes.ServicioController.addServicio.toString))
       },
       servicio ⇒ {
         servicioDao.registrar(servicio.nombre, servicio.precio, servicio.mensual)
@@ -41,6 +41,29 @@ class ServicioController @Inject() (
     Future.successful(res)
   }
 
+  def editServicioView(idServicio: Long) = actions.rAction("interno") { implicit req ⇒
+    servicioDao.byId(idServicio) match {
+      case Some(servicio) ⇒ {
+        val form = servicioForm.fill(servicio)
+        Ok(views.html.servicio.dataServicio(form, routes.ServicioController.editServicio.toString))
+      }
+      case None ⇒
+        Redirect(routes.ServicioController.servicios)
+          .flashing("warn" → messagesApi("ServicioController.edit.noExiste", idServicio))
+    }
+  }
+
+  def editServicio = actions.rAction("interno") { implicit req ⇒
+    servicioForm.bindFromRequest.fold(
+      formWithErrors ⇒ BadRequest(views.html.servicio.dataServicio(formWithErrors, routes.ServicioController.editServicio.toString)),
+      servicio ⇒ {
+        servicioDao.actualizar(servicio)
+        eventDao.write(messagesApi("ServicioController.edit.exito", servicio.id))
+        Redirect(routes.ServicioController.servicios)
+      }
+    )
+  }
+
   def servicios = actions.roleAction("interno") { implicit req ⇒
     Future.successful(Ok(views.html.servicio.servicios(
       servicioDao.todos
@@ -51,7 +74,7 @@ class ServicioController @Inject() (
 object ServicioController {
   val servicioForm: Form[Servicio] = Form(
     mapping(
-      "id" → ignored(0L),
+      "id" → default(longNumber, 0L),
       "nombre" → nonEmptyText,
       "precio" → bigDecimal(16, 2),
       "mensual" → boolean

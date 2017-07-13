@@ -9,4 +9,10 @@ trait ServicioDao {
 
   /** Todos los servicios */
   def todos: List[Servicio]
+
+  /** Obtener el servicio por id */
+  def byId(id: Long): Option[Servicio]
+
+  /** Actualizar los datos de un servicio */
+  def actualizar(servicio: Servicio): Unit
 }

@@ -23,6 +23,17 @@ class ServicioDaoDoobie @Inject() (
   }
 
   def todos: List[Servicio] = qServicios.list.transact(transactor).unsafePerformIO
+
+  def byId(id: Long): Option[Servicio] =
+    qById(id).option.transact(transactor).unsafePerformIO
+
+  def actualizar(servicio: Servicio): Unit = {
+    val updated = qActualizarServicio(servicio.id, servicio.nombre, servicio.precio, servicio.mensual)
+      .run
+      .transact(transactor)
+      .unsafePerformIO
+    Logger.debug(s"""Servicio "${servicio.nombre}" actualizado (updated = $updated)""")
+  }
 }
 
 object ServicioDaoDoobie {
@@ -30,5 +41,15 @@ object ServicioDaoDoobie {
     sql"""insert into servicio(nombre, precio, mensual)
           values($nombre, $precio, $mensual)""".update
 
-  def qServicios = sql"""select id, nombre, precio, mensual from servicio""".query[Servicio]
+  private[this] def serv = fr"""select id, nombre, precio, mensual from servicio """
+
+  def qServicios = serv.query[Servicio]
+
+  def qById(id: Long) = (serv ++ sql"""where id = $id""").query[Servicio]
+
+  def qActualizarServicio(id: Long, nombre: String, precio: BigDecimal, mensual: Boolean) =
+    sql"""update servicio set nombre  = $nombre,
+                              precio  = $precio,
+                              mensual = $mensual
+                          where id = $id""".update
 }

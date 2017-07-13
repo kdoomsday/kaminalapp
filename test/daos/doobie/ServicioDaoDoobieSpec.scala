@@ -9,4 +9,5 @@ object ServicioDaoDoobieSpec extends Specification with AnalysisSpec {
 
   check(ServicioDaoDoobie.qReg("", BigDecimal(0), false))
   check(ServicioDaoDoobie.qServicios)
+  check(ServicioDaoDoobie.qById(0L))
 }

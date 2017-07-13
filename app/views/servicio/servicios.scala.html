@@ -14,9 +14,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="col-sm-8">@messages("servicios.nombre")</th>
+                <th class="col-sm-7">@messages("servicios.nombre")</th>
                 <th class="col-sm-3">@messages("servicios.precio")</th>
                 <th class="col-sm-1 text-center">@messages("servicios.mensual")</th>
+                <th class="col-sm-1 text-center" >@messages("comun.controles")</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +25,10 @@
                 <tr>
                     <td>@s.nombre</td>
                     <td>@s.precio</td>
-                    <td class="text-center">@if(s.mensual){@gi("ok")}</td>
+                    <td class="text-center">@if(s.mensual){@gi("ok")} </td>
+                    <td class="text-center" >
+                        <a class="btn btn-default btn-xs" href="@routes.ServicioController.editServicioView(s.id)" >@gi("pencil") </a>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -30,9 +30,11 @@ GET     /mascota/edit/:idMascota controllers.MascotaController.editMascotaView(i
 POST    /mascota/edit/:idMascota controllers.MascotaController.editMascota(idMascota: Long)
 
 # Servicios
-GET     /servicios/add    controllers.ServicioController.addServicioView
-POST    /servicios/add    controllers.ServicioController.addServicio
-GET     /servicios        controllers.ServicioController.servicios
+GET     /servicios/add      controllers.ServicioController.addServicioView
+POST    /servicios/add      controllers.ServicioController.addServicio
+GET     /servicios          controllers.ServicioController.servicios
+GET     /servicios/edit/:id controllers.ServicioController.editServicioView(id: Long)
+POST    /servicios/edit/    controllers.ServicioController.editServicio
 
 # Usuarios
 #   Internos

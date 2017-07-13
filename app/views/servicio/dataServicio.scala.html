@@ -1,0 +1,41 @@
+@** Interfaz para agregar servicios *@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(
+  form: Form[Servicio],
+  rutaSubmit: String
+)(
+  implicit
+  messages: Messages,
+  req: AuthenticatedRequest[_],
+  notifications: Seq[Notification] = Nil
+)
+@main("dataServicio.title") {
+    <h1>@messages("dataServicio.header")</h1>
+
+    @show.form(action = rutaSubmit) {
+        @form("id").value.map{v =>
+          <input type="hidden" name="id" value="@v" />
+        }
+        @input.text(
+            "nombre",
+            messages("dataServicio.nombre.lbl"),
+            Some(form("nombre")),
+            messages("dataServicio.nombre.ph"),
+            autofocus = true
+        )
+
+        @input.text(
+            "precio",
+            messages("dataServicio.precio.lbl"),
+            Some(form("precio")),
+            messages("dataServicio.precio.ph"))
+
+        @input.checkbox(
+            "mensual",
+            label = messages("dataServicio.mensual.lbl"),
+            Some(form("mensual")))
+
+        @input.submit("dataServicio.submit")
+    }
+}

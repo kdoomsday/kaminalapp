@@ -144,14 +144,14 @@ MascotaController.editMascota.exito = Mascota {0} editada exitosamente
 MascotaController.editMascota.noExiste = No se puede conseguir la mascota con id {0}
 
 # Servicios
-addServicio.title       = Agregar servicio
-addServicio.header      = Agregar servicio
-addServicio.nombre.lbl  = Nombre
-addServicio.nombre.ph   = Nombre del servicio
-addServicio.precio.lbl  = Precio
-addServicio.precio.ph   = Precio del servicio
-addServicio.mensual.lbl = ¿Es mensual?
-addServicio.submit      = Registrar
+dataServicio.title       = Datos del servicio
+dataServicio.header      = Datos del servicio
+dataServicio.nombre.lbl  = Nombre
+dataServicio.nombre.ph   = Nombre del servicio
+dataServicio.precio.lbl  = Precio
+dataServicio.precio.ph   = Precio del servicio
+dataServicio.mensual.lbl = ¿Es mensual?
+dataServicio.submit      = Guardar
 
 servicios.title   = Servicios
 servicios.header  = Servicios registrados
@@ -160,7 +160,9 @@ servicios.nombre  = Nombre
 servicios.precio  = Precio
 servicios.mensual = ¿Mensual?
 
-ServicioController.add.success = Servicio {0} creado exitosamente
+ServicioController.add.success   = Servicio {0} creado exitosamente
+ServicioController.edit.noExiste = No existe servicio con id {0}
+ServicioController.edit.exito    = Servicio {0} actualizado exitosamente
 
 # Usuarios
 #   Internos
@@ -193,3 +195,6 @@ show.modal.ok     = Ok
 error.required = Campo obligatorio
 error.cuentaInvalida = La cuenta deben ser 20 dígitos
 error.real.precision = Número de hasta 16 dígitos y 2 decimales
+
+# Campos comunes
+comun.controles = Control
