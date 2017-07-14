@@ -14,5 +14,6 @@ case class User(
   salt: Int,
   roleId: Int,
   connected: Boolean,
-  lastActivity: Option[Instant]
+  lastActivity: Option[Instant],
+  cambioClave: Boolean
 )

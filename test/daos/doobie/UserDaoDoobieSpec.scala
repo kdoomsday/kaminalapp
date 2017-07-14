@@ -14,4 +14,6 @@ object UserDaoDoobieSpec extends Specification with AnalysisSpec {
 
   check(UserDaoDoobie.qUsersByRole(""))
   check(UserDaoDoobie.qCrearUsuarioInterno("", "", 0, ""))
+
+  check(UserDaoDoobie.qCambiarClave(0L, ""))
 }

@@ -11,7 +11,10 @@ import scala.util.Try
  */
 trait UserDao {
 
+  /** Buscar usuario por ID */
   def byId(id: Long): Option[User]
+
+  /** Buscar usuario por login */
   def byLogin(login: String): Option[User]
 
   /**
@@ -29,4 +32,7 @@ trait UserDao {
    * @param  salt  Salt utilizado para la clave
    */
   def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit
+
+  /** Actualizar la clave del usuario. La clave es persistida as-is */
+  def actualizarClave(idUsuario: Long, nuevaClave: String): Unit
 }

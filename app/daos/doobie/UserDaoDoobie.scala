@@ -45,6 +45,12 @@ class UserDaoDoobie @Inject() (
   def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit = {
     qCrearUsuarioInterno(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
   }
+
+  def actualizarClave(idUsuario: Long, nuevaClave: String): Unit = {
+    val up = qCambiarClave(idUsuario, nuevaClave)
+               .run.transact(transactor).unsafePerformIO
+    Logger.debug(s"Cambio de clave de usuario $idUsuario (updated=$up)")
+  }
 }
 
 /** Los queries, para poder chequearlos */
@@ -76,4 +82,7 @@ object UserDaoDoobie {
   ) =
     sql"""INSERT INTO users(login, password, role_id, salt)
           VALUES($login, $clave, (select id from roles where "name" = $rolename), $salt);""".update
+
+  def qCambiarClave(idUsuario: Long, nuevaClave: String) =
+    sql"""UPDATE users set password=$nuevaClave where id = $idUsuario""".update
 }
