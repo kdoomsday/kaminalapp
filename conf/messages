@@ -15,6 +15,7 @@ LoginController.logout.aud        = Usuario {0} salió del sistema
 index.title  = Kaminalapp
 index.header = Kaminalapp
 
+navbar.titleAlt         = K9A
 navbar.index            = Inicio
 navbar.logout           = Salir
 navbar.addItem          = Agregar ítem
