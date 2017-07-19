@@ -25,7 +25,8 @@ class TestDao @Inject() (db: Database) {
     salt = 0,
     roleId = idInterno,
     connected = false,
-    lastActivity = None
+    lastActivity = None,
+    cambioClave = false
   )
 
   /** Crear un usuario en la bd */

@@ -19,9 +19,9 @@ class SubjectDaoDoobie @Inject() (
 
   def subjectByIdentifier(identifier: String): Option[MySubject] = {
     subjectQuery(identifier).option.transact(xa()).unsafePerformIO map {
-      case (id, login, connected, lastAct, rid, rname) ⇒
+      case (id, login, connected, lastAct, cambioClave, rid, rname) ⇒
         MySubject(
-          User(id, login, "", 0, rid, connected, lastAct),
+          User(id, login, "", 0, rid, connected, lastAct, cambioClave),
           Role(rid, rname)
         )
     }
@@ -30,9 +30,9 @@ class SubjectDaoDoobie @Inject() (
 
 object SubjectDaoDoobie {
 
-  def subjectQuery(login: String): Query0[(Long, String, Boolean, Option[Instant], Int, String)] =
+  def subjectQuery(login: String): Query0[(Long, String, Boolean, Option[Instant], Boolean, Int, String)] =
     sql"""
-      Select u.id, u.login, u.connected, u.last_activity, r.id, r.name
+      Select u.id, u.login, u.connected, u.last_activity, u.cambio_clave, r.id, r.name
       from users u join roles r on u.role_id = r.id
-      where u.login = $login""".query[(Long, String, Boolean, Option[Instant], Int, String)]
+      where u.login = $login""".query[(Long, String, Boolean, Option[Instant], Boolean, Int, String)]
 }

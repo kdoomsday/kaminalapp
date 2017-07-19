@@ -91,6 +91,9 @@ function jsonCall(selector, route, title, text, okText, cancelText, okFun, error
                     else {
                         errorFun(sentData.data);
                     }
+                },
+                error: function(sentData) {
+                    errorFun(sentData.responseJSON.data);
                 }
             })
         },
@@ -100,7 +103,12 @@ function jsonCall(selector, route, title, text, okText, cancelText, okFun, error
     );
 }
 
-/** jsonCall que llena los datos a partir de un loadCallData */
+/** jsonCall que llena los datos a partir de un loadCallData
+ * @param selector Selector de lo que se va a enviar en el llamado
+ * @param dataSelector Selector del elemento que contiene los datos para loadCallData
+ * @param okFun Funcion a llamar si el llamado termina bien
+ * @param errorFun Funcion a llamar en caso de error
+ */
 function jsonCallData(selector, dataSelector, okFun, errorFun) {
     var data = loadCallData(dataSelector);
     jsonCall(

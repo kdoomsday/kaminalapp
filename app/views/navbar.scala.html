@@ -32,6 +32,11 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <a href="@controllers.usuarios.routes.UsuarioController.cambiarClave">
+                            @messages("navbar.cambioClave")
+                        </a>
+                    </li>
+                    <li>
                         <a href="@routes.LoginController.logout">
                             @messages("navbar.logout")
                             @gi("log-out")

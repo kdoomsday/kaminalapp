@@ -46,25 +46,22 @@ class UserDaoDoobie @Inject() (
     qCrearUsuarioInterno(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
   }
 
-  def actualizarClave(idUsuario: Long, nuevaClave: String): Unit = {
-    val up = qCambiarClave(idUsuario, nuevaClave)
-               .run.transact(transactor).unsafePerformIO
+  def actualizarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int): Unit = {
+    val up = qCambiarClave(idUsuario, nuevaClave, nuevoSalt)
+      .run.transact(xa()).unsafePerformIO
     Logger.debug(s"Cambio de clave de usuario $idUsuario (updated=$up)")
   }
 }
 
 /** Los queries, para poder chequearlos */
 object UserDaoDoobie {
+  private lazy val userFrag = fr"Select id, login, password, salt, role_id, connected, last_activity, cambio_clave "
   // Query para conseguir Option[User] por id
   def userIdQuery(id: Long): Query0[User] =
-    sql"""Select id, login, password, salt, role_id, connected, last_activity
-        from users where id=$id
-     """.query[User]
+    (userFrag ++ fr""" from users where id=$id """).query[User]
 
   def userLoginQuery(login: String): Query0[User] =
-    sql"""Select id, login, password, salt, role_id, connected, last_activity
-          from users where login=$login
-       """.query[User]
+    (userFrag ++ fr""" from users where login=$login """).query[User]
 
   def setConnected(login: String): Update0 =
     sql"""update users set connected=true, last_activity=now()
@@ -83,6 +80,6 @@ object UserDaoDoobie {
     sql"""INSERT INTO users(login, password, role_id, salt)
           VALUES($login, $clave, (select id from roles where "name" = $rolename), $salt);""".update
 
-  def qCambiarClave(idUsuario: Long, nuevaClave: String) =
-    sql"""UPDATE users set password=$nuevaClave where id = $idUsuario""".update
+  def qCambiarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int) =
+    sql"""UPDATE users set password=$nuevaClave, salt=$nuevoSalt where id = $idUsuario""".update
 }

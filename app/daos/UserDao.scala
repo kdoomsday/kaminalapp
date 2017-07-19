@@ -34,5 +34,5 @@ trait UserDao {
   def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit
 
   /** Actualizar la clave del usuario. La clave es persistida as-is */
-  def actualizarClave(idUsuario: Long, nuevaClave: String): Unit
+  def actualizarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int): Unit
 }

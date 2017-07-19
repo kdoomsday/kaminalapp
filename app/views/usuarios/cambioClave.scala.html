@@ -1,0 +1,43 @@
+@* Vista para cambiar la clave de un usuario *@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(idUsuario: Long)(
+  implicit
+  messages     : Messages,
+  req          : AuthenticatedRequest[_],
+  notifications: Seq[Notification] = Nil
+)
+
+@main("cambioClave.title", scripts = List("javascripts/ajaxcall.js", "javascripts/usuario/cambioClave.js")) {
+    <h1>@messages("cambioClave.header") </h1>
+
+    @show.form(action="#", id=Some("formCambioClave")) {
+        @input.text(
+            id = "nuevaClave",
+            label = messages("cambioClave.clave.label"),
+            placeholder = messages("cambioClave.clave.ph"),
+            autofocus = true,
+            extraClass = "datosClave",
+            tipo = "password"
+        )
+
+        <input type="hidden" name="id" class="datosClave" value="@idUsuario" >
+    }
+    <div class="row" >
+        <button class="btn btn-primary col-sm-2 col-sm-offset-5 top5" id="go" >
+            @messages("cambioClave.btn.text")
+        </button>
+    </div>
+
+
+    <div class="datosClaveData"
+         data-route  = "@_root_.controllers.usuarios.routes.UsuarioController.cambiarClave"
+         data-title  = "@messages("cambioClave.go.title")"
+         data-msg    = "@messages("cambioClave.go.text")"
+         data-ok     = "@messages("cambioClave.go.ok")"
+         data-cancel = "@messages("cambioClave.go.cancel")"
+         data-okmsg  = "@messages("cambioClave.go.exito")"
+         data-errmsg = "@messages("cambioClave.go.error")"
+    > </div>
+
+}

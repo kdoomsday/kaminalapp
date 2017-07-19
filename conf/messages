@@ -24,6 +24,7 @@ navbar.addCliente       = Agregar cliente
 navbar.servicios        = Servicios
 navbar.addServicio      = Agregar servicio
 navbar.usuariosInternos = Usuarios internos
+navbar.cambioClave      = Cambiar clave
 
 
 # Items + clientes
@@ -124,6 +125,7 @@ ClienteController.addTelf.exito      = Teléfono agregado
 ClienteController.edit.nombre.formErr   = Error en datos enviados
 ClienteController.edit.nombre.noCliente = El cliente no existe
 
+UsuarioController.cambioClave.bindError = La clave no cumple con los requisitos mínimos
 
 # Mascotas
 datosMascota.title           = Datos de mascota
@@ -179,6 +181,18 @@ crearUsuarios.login.label = Login
 crearUsuarios.clave.label = Clave
 crearUsuarios.submit      = Crear
 
+cambioClave.title       = Cambio de clave
+cambioClave.header      = Cambio de clave
+cambioClave.clave.label = Clave
+cambioClave.clave.ph    = Nueva clave del usuario
+cambioClave.btn.text    = Cambiar clave
+
+cambioClave.go.title  = Cambio de clave
+cambioClave.go.text   = ¿Está seguro de la clave introducida?
+cambioClave.go.ok     = Cambiar
+cambioClave.go.cancel = Cancelar
+cambioClave.go.exito  = Cambio de clave exitoso
+cambioClave.go.error  = Error en cambio de clave
 
 UsuariosInternosController.crear.error   = Error creando el usuario
 UsuariosInternosController.crear.success = Usuario {0} creado exitosamente
