@@ -1,10 +1,10 @@
 package daos
 
-import models.{ Cliente, Telefono }
+import models.{ Cliente, Mascota, Telefono }
 
 trait ClienteDao {
-  /** Agregar un nuevo cliente */
-  def addCliente(cliente: Cliente): Unit
+  /** Agregar un nuevo cliente con su mascota */
+  def addCliente(cliente: Cliente, mascota: Mascota): Unit
 
   /** Todos los clientes */
   def clientes(): List[Cliente]

@@ -48,6 +48,7 @@ editItem.submit        = Guardar
 
 addCliente.title         = Agregar cliente
 addCliente.header        = Agregar cliente
+addCliente.cliente.h     = Datos del cliente
 addCliente.nombre.lbl    = Nombre
 addCliente.nombre.ph     = Nombre
 addCliente.apellido.lbl  = Apellido
@@ -59,6 +60,7 @@ addCliente.email.ph      = Email del cliente
 addCliente.cuenta.lbl    = Cuenta
 addCliente.cuenta.ph     = Cuenta del cliente
 addCliente.submit        = Crear cliente
+addCliente.mascota.h     = Datos de la mascota
 
 
 # Listado de clientes

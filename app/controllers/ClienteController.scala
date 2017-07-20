@@ -7,6 +7,7 @@ import format.DateFormatter
 import javax.inject.Inject
 import json.JsonHelpers._
 import models._
+import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
@@ -35,13 +36,31 @@ class ClienteController @Inject() (
 
   // Accion de agregar el cliente nuevo
   def addCliente = actions.roleAction("interno") { implicit req ⇒
-    val result = clienteForm.bindFromRequest.fold(
-      formWithErrors ⇒ BadRequest(views.html.cliente.addCliente(formWithErrors)),
+    val cform = clienteForm.bindFromRequest
+    val mform = mascotaForm.bindFromRequest
+
+    val result = cform.fold(
+      formWithErrors ⇒ {
+        Logger.debug(s"Error en datos del cliente")
+        BadRequest(views.html.cliente.addCliente(formWithErrors, mform))
+      },
       cliente ⇒ {
-        clienteDao.addCliente(cliente)
-        eventDao.write(s"Cliente ${cliente.nombre} ${cliente.apellido} agregado")
-        implicit val notifications = Notification.success(Messages("ClienteController.addCliente.success", s"${cliente.nombre} ${cliente.apellido}"))
-        Ok(views.html.cliente.addCliente(clienteForm))
+        mform.fold(
+          formWithErrorsMascota ⇒ {
+            Logger.debug("Error en datos de la mascota")
+            BadRequest(views.html.cliente.addCliente(cform, formWithErrorsMascota))
+          },
+
+          mascota ⇒ {
+            Logger.debug(mascota.toString())
+            //TODO agregar la mascota asociada al cliente
+
+            clienteDao.addCliente(cliente, mascota)
+            eventDao.write(s"Cliente ${cliente.nombre} ${cliente.apellido} agregado")
+            implicit val notifications = Notification.success(Messages("ClienteController.addCliente.success", s"${cliente.nombre} ${cliente.apellido}"))
+            Redirect(routes.ClienteController.clientes)
+          }
+        )
       }
     )
 
@@ -50,7 +69,7 @@ class ClienteController @Inject() (
 
   // Vista de agregar un cliente
   def addClienteView = actions.roleAction("interno") { implicit req ⇒
-    Future.successful(Ok(views.html.cliente.addCliente(clienteForm)))
+    Future.successful(Ok(views.html.cliente.addCliente(clienteForm, mascotaForm)))
   }
 
   // Detalles de un cliente segun su id, como deben ser vistos por un usuario interno
@@ -149,5 +168,16 @@ object ClienteController {
       "nombre" → nonEmptyText,
       "apellido" → nonEmptyText
     )
+  )
+
+  def mascotaForm = Form(
+    mapping(
+      "id" → default(longNumber, 0L),
+      "nombreMascota" → nonEmptyText,
+      "raza" → optional(nonEmptyText),
+      "edad" → optional(number(min = 0)),
+      "fechaInicio" → optional(jodaDate(pattern = "yyyy-MM-dd")),
+      "idCliente" → default(longNumber, 0L)
+    )(Mascota.apply)(Mascota.unapply)
   )
 }

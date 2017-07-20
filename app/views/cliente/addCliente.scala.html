@@ -2,7 +2,7 @@
 
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[models.Cliente])(
+@(form: Form[models.Cliente], formMascota: Form[Mascota])(
   implicit
   messages: Messages,
   req: AuthenticatedRequest[_],
@@ -13,6 +13,7 @@
 
     @show.form(routes.ClienteController.addCliente.toString, clazz=Some("top5")) {
         <div class="input-group col-sm-12">
+            <h2>@messages("addCliente.cliente.h")</h2>
             @input.text(
                 "nombre",
                 messages("addCliente.nombre.lbl"),
@@ -45,7 +46,13 @@
                 Some(form("cuenta")),
                 messages("addCliente.cuenta.ph"))
 
-            @input.submit("addCliente.submit")
         </div>
+
+        <div class="input-group col-sm-12">
+            <h2>@messages("addCliente.mascota.h")</h2>
+            @mascota.formMascota(formMascota)
+        </div>
+
+        @input.submit("addCliente.submit")
     }
 }

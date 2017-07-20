@@ -4,22 +4,32 @@ import daos.ClienteDao
 import javax.inject.Inject
 import play.api.db.Database
 import doobie.imports._
-import models.{ Cliente, Telefono }
+import models.{ Cliente, Mascota, Telefono }
 import play.api.Logger
 import daos.doobie.DoobieImports._
 
 // Implementacion de ClienteDao usando Doobie
 class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   import ClienteDaoDoobie._
+  import MascotaDaoDoobie.qGuardarMascota
 
   val transactor = DataSourceTransactor[IOLite](db.dataSource)
 
-  def addCliente(c: Cliente): Unit = {
+  def addCliente(c: Cliente, m: Mascota): Unit = {
     Logger.debug(s"Agregar nuevo cliente: ${c.nombre} ${c.apellido}")
-    qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta)
-      .run
-      .transact(transactor)
-      .unsafePerformIO
+
+    val query = (for {
+      idCliente ← qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta).withUniqueGeneratedKeys[Long]("id")
+      q ← qGuardarMascota(m.nombre, m.raza, m.edad, m.fechaInicio, idCliente).run
+    } yield q)
+
+    val updated = query.transact(transactor).unsafePerformIO
+    Logger.debug(s"Cliente insertado (updated = $updated)")
+
+    //qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta)
+    //  .run
+    //  .transact(transactor)
+    //  .unsafePerformIO
   }
 
   def clientes(): List[Cliente] = {

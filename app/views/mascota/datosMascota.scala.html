@@ -3,7 +3,7 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
 @(
-  form: Form[Mascota],
+form: Form[Mascota],
   c: Cliente,
   rutaAccion: String,
   idMascota: Option[Long] = None
@@ -12,38 +12,10 @@
     <h1>@messages("datosMascota.header", c.nombreCompleto)</h1>
 
     @show.form(rutaAccion) {
-        @input.text(
-            "nombre",
-            messages("datosMascota.nombre.lbl"),
-            Some(form("nombre")),
-            messages("datosMascota.nombre.ph"),
-            autofocus = true
-        )
-
-        @input.text(
-            "raza",
-            messages("datosMascota.raza.lbl"),
-            Some(form("raza")),
-            messages("datosMascota.raza.ph")
-        )
-
-        @input.text(
-            "edad",
-            messages("datosMascota.edad.lbl"),
-            Some(form("edad")),
-            messages("datosMascota.edad.ph"),
-            tipo = "number",
-            extra = "min='0'"
-        )
-
-        @input.text(
-            "fechaInicio",
-            messages("datosMascota.fechaInicio.lbl"),
-            Some(form("fechaInicio")),
-            messages("datosMascota.fechaInicio.ph")
-        )
+        @formMascota(form)
 
         <input type="hidden" name="idCliente" value="@{c.id}">
+
         @idMascota.map{ id =>
             <input type="hidden" name="id" value="@id" >
         }

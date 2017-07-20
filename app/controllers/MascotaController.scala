@@ -109,7 +109,7 @@ object MascotaController {
   def mascotaForm = Form(
     mapping(
       "id" → default(longNumber, 0L),
-      "nombre" → nonEmptyText,
+      "nombreMascota" → nonEmptyText,
       "raza" → optional(nonEmptyText),
       "edad" → optional(number(min = 0)),
       "fechaInicio" → optional(jodaDate(pattern = "yyyy-MM-dd")),
