@@ -130,7 +130,7 @@ object ClienteController {
       "nombre" → nonEmptyText,
       "apellido" → nonEmptyText,
       "direccion" → optional(text),
-      "email" → optional(email),
+      "email" → email,
       "cuenta" → optional(cuenta)
     )(Cliente.apply)(Cliente.unapply)
   )

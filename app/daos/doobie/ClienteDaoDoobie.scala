@@ -63,7 +63,7 @@ object ClienteDaoDoobie {
     nombre: String,
     apellido: String,
     direccion: Option[String],
-    email: Option[String],
+    email: String,
     cuenta: Option[String]
   ) =
     sql"""Insert into clientes(nombre, apellido, direccion, email, cuenta)

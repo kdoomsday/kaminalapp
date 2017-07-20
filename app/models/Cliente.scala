@@ -6,7 +6,7 @@ case class Cliente(
     nombre: String,
     apellido: String,
     direccion: Option[String],
-    email: Option[String],
+    email: String,
     cuenta: Option[String]
 ) {
   def nombreCompleto = s"$nombre $apellido"
