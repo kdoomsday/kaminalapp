@@ -31,7 +31,7 @@ trait UserDao {
    * @param  clave Clave del usuario ya procesada con salt y demas.
    * @param  salt  Salt utilizado para la clave
    */
-  def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit
+  def crearUsuario(login: String, clave: String, salt: Int): Unit
 
   /** Actualizar la clave del usuario. La clave es persistida as-is */
   def actualizarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int): Unit

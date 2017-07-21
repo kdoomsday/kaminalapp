@@ -46,7 +46,7 @@ class UsuariosInternosController @Inject() (
         val (login, clave) = usuario
         val claveHashed = hasher.hashString(clave, salt)
         Logger.info(s"Creando usuario interno $login")
-        userDao.crearUsuarioInterno(login, claveHashed, salt)
+        userDao.crearUsuario(login, claveHashed, salt)
 
         implicit val nots = Notification.success(messagesApi("UsuariosInternosController.crear.success", login))
         Redirect(routes.UsuariosInternosController.usuariosInternos())

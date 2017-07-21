@@ -13,7 +13,7 @@ object UserDaoDoobieSpec extends Specification with AnalysisSpec {
   check(UserDaoDoobie.setConnected(""))
 
   check(UserDaoDoobie.qUsersByRole(""))
-  check(UserDaoDoobie.qCrearUsuarioInterno("", "", 0, ""))
+  check(UserDaoDoobie.qCrearUsuario("", "", 0, ""))
 
   check(UserDaoDoobie.qCambiarClave(0L, "", 0))
 }

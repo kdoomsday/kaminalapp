@@ -2,6 +2,7 @@ package controllers
 
 import audits.EventDao
 import controllers.actions.Actions
+import crypto.HashService
 import daos.{ ClienteDao, ItemDao }
 import format.DateFormatter
 import javax.inject.Inject
@@ -23,6 +24,7 @@ class ClienteController @Inject() (
     itemDao: ItemDao,
     eventDao: EventDao,
     dateFormatter: DateFormatter,
+    hashService: HashService,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
   import ClienteController._
@@ -52,10 +54,8 @@ class ClienteController @Inject() (
           },
 
           mascota ⇒ {
-            Logger.debug(mascota.toString())
-            //TODO agregar la mascota asociada al cliente
-
-            clienteDao.addCliente(cliente, mascota)
+            val (clave, salt) = hashService.saltAndHashString(mascota.nombre)
+            clienteDao.addCliente(cliente, mascota, clave, salt)
             eventDao.write(s"Cliente ${cliente.nombre} ${cliente.apellido} agregado")
             implicit val notifications = Notification.success(Messages("ClienteController.addCliente.success", s"${cliente.nombre} ${cliente.apellido}"))
             Redirect(routes.ClienteController.clientes)

@@ -12,46 +12,43 @@ import daos.doobie.DoobieImports._
 class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   import ClienteDaoDoobie._
   import MascotaDaoDoobie.qGuardarMascota
+  import UserDaoDoobie.qCrearUsuario
 
   val transactor = DataSourceTransactor[IOLite](db.dataSource)
 
-  def addCliente(c: Cliente, m: Mascota): Unit = {
+  override def addCliente(c: Cliente, m: Mascota, clave: String, salt: Int): Unit = {
     Logger.debug(s"Agregar nuevo cliente: ${c.nombre} ${c.apellido}")
 
     val query = (for {
       idCliente ← qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta).withUniqueGeneratedKeys[Long]("id")
-      q ← qGuardarMascota(m.nombre, m.raza, m.edad, m.fechaInicio, idCliente).run
+      _ = qGuardarMascota(m.nombre, m.raza, m.edad, m.fechaInicio, idCliente)
+      q ← qCrearUsuario(c.email, clave, salt, "usuario").run
     } yield q)
 
     val updated = query.transact(transactor).unsafePerformIO
     Logger.debug(s"Cliente insertado (updated = $updated)")
-
-    //qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta)
-    //  .run
-    //  .transact(transactor)
-    //  .unsafePerformIO
   }
 
-  def clientes(): List[Cliente] = {
+  override def clientes(): List[Cliente] = {
     Logger.debug("Consulta de listado de clientes")
     qClientes().list.transact(transactor).unsafePerformIO
   }
 
-  def clientesSaldo(): List[(Cliente, BigDecimal)] = {
+  override def clientesSaldo(): List[(Cliente, BigDecimal)] = {
     Logger.debug("Consulta de saldo de los clientes")
     qClientesSaldo().list.transact(transactor).unsafePerformIO
   }
 
-  def byId(id: Long): Option[Cliente] = {
+  override def byId(id: Long): Option[Cliente] = {
     Logger.debug(s"Consulta de cliente por id ({$id})")
     qById(id).option.transact(transactor).unsafePerformIO
   }
 
-  def unsafeById(id: Long): Cliente = {
+  override def unsafeById(id: Long): Cliente = {
     qById(id).unique.transact(transactor).unsafePerformIO
   }
 
-  def addTelf(t: Telefono): Unit = {
+  override def addTelf(t: Telefono): Unit = {
     qAddTelefono(t.numero, t.idCliente).run.transact(transactor).unsafePerformIO
   }
 

@@ -42,8 +42,8 @@ class UserDaoDoobie @Inject() (
     usuarios
   }
 
-  def crearUsuarioInterno(login: String, clave: String, salt: Int): Unit = {
-    qCrearUsuarioInterno(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
+  def crearUsuario(login: String, clave: String, salt: Int): Unit = {
+    qCrearUsuario(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
   }
 
   def actualizarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int): Unit = {
@@ -71,7 +71,7 @@ object UserDaoDoobie {
                                              from users u join roles r on u.role_id = r.id
                                              where r.name = $rolename""".query[User]
 
-  def qCrearUsuarioInterno(
+  def qCrearUsuario(
     login: String,
     clave: String,
     salt: Int,
