@@ -15,4 +15,7 @@ trait MascotaDao {
 
   /** Guardar los datos de una mascota que ya existe */
   def editar(m: Mascota): Unit
+
+  /** Todas las mascotas de un cliente, según su login */
+  def mascotasCliente(login: String): List[Mascota]
 }

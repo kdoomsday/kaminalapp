@@ -1,0 +1,15 @@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@* Pagina de inicio para los usuarios externos *@
+@(mascotas: List[Mascota])(
+    implicit
+    formatter: _root_.format.DateFormatter,
+    messages: Messages,
+    req: AuthenticatedRequest[_]
+)
+
+@mainex("externo.home.title") {
+    <h1>@messages("externo.home.header") </h1>
+
+    @mascota.tablaMascotas(mascotas)
+}

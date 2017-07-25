@@ -46,9 +46,16 @@ class MascotaDaoDoobie @Inject() (db: Database) extends MascotaDao {
       .transact(transactor)
       .unsafePerformIO
   }
+
+  def mascotasCliente(login: String): List[Mascota] = {
+    Logger.debug(s"Listado de mascotas de un cliente según su login")
+    qByLoginCliente(login).list.transact(transactor).unsafePerformIO
+  }
 }
 
 object MascotaDaoDoobie {
+  private[this] val selMascota = fr"select m.id, m.nombre, m.raza, m.edad, m.fecha_inicio, m.id_cliente from mascotas m "
+
   def qGuardarMascota(
     nombre: String,
     raza: Option[String],
@@ -59,9 +66,7 @@ object MascotaDaoDoobie {
     sql"""Insert into mascotas(nombre, raza, edad, fecha_inicio, id_cliente)
           values($nombre, $raza, $edad, $fechaInicio, $idCliente)""".update
 
-  def qById(id: Long) = sql"""select id, nombre, raza, edad, fecha_inicio, id_cliente
-                              from mascotas
-                              where id = $id""".query[Mascota]
+  def qById(id: Long) = (selMascota ++ fr"""where m.id = $id""").query[Mascota]
 
   def qEditMascota(
     idMascota: Long,
@@ -79,4 +84,7 @@ object MascotaDaoDoobie {
     sql"""select m.*, c.*
           from mascotas m join clientes c on m.id_cliente = c.id
           where m.id = $idMascota""".query[(Mascota, Cliente)]
+
+  def qByLoginCliente(login: String) = (selMascota ++ fr"""join clientes c on m.id_cliente = c.id
+                                                           where c.email = $login""").query[Mascota]
 }

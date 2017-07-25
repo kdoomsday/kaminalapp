@@ -1,6 +1,6 @@
 package daos
 
-import models.User
+import models.{ Role, User }
 import scala.util.Try
 
 /**
@@ -16,6 +16,9 @@ trait UserDao {
 
   /** Buscar usuario por login */
   def byLogin(login: String): Option[User]
+
+  /** Buscar el usuario por login, trayendo también el rol que le corresponde */
+  def byLoginWithRole(login: String): Option[(User, Role)]
 
   /**
    * Update the user's last connected time (also marks it connected)

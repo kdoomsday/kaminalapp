@@ -213,5 +213,9 @@ error.required = Campo obligatorio
 error.cuentaInvalida = La cuenta deben ser 20 dígitos
 error.real.precision = Número de hasta 16 dígitos y 2 decimales
 
+# Pantallas externas
+externo.home.title  = Inicio
+externo.home.header = Mascotas
+
 # Campos comunes
 comun.controles = Control

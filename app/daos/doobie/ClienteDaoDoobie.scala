@@ -21,7 +21,7 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
 
     val query = (for {
       idCliente ← qAddCliente(c.nombre, c.apellido, c.direccion, c.email, c.cuenta).withUniqueGeneratedKeys[Long]("id")
-      _ = qGuardarMascota(m.nombre, m.raza, m.edad, m.fechaInicio, idCliente)
+      _ ← qGuardarMascota(m.nombre, m.raza, m.edad, m.fechaInicio, idCliente).run
       q ← qCrearUsuario(c.email, clave, salt, "usuario").run
     } yield q)
 

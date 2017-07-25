@@ -54,41 +54,7 @@
                                 messages("cliente.mascota.add"))
             </h2>
 
-            <table class="table top3">
-                <thead>
-                    <tr>
-                        <th class="">@messages("cliente.mascota.nombre") </th>
-                        <th class="">@messages("cliente.mascota.raza") </th>
-                        <th class="">@messages("cliente.mascota.edad") </th>
-                        <th class="text-center">@messages("cliente.mascota.fechaInicio") </th>
-                        <th class="text-center">@messages("cliente.mascota.controles") </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for(m <- mascotas) {
-                        <tr>
-                            <td>@m.nombre </td>
-                            <td>@m.raza </td>
-                            <td>@m.edad </td>
-                            <td class="text-center" >@formatter.short(m.fechaInicio) </td>
-                            <td class="text-center" >
-                                <a href="@routes.MascotaController.editMascotaView(m.id)"
-                                   class="btn btn-default btn-xs"
-                                   title="@messages("cliente.mascota.edit.tt")"
-                                >
-                                    @gi("pencil")
-                                </a>
-                                <a href="@routes.ItemController.addItemView(m.id)"
-                                   class="btn btn-default btn-xs"
-                                   title="@messages("cliente.mascota.addItem.tt")"
-                                >
-                                    @gi("plus")
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @mascota.tablaMascotas(mascotas)
         </div>
         <div class="col-sm-12 col-md-6">
             <h2>@messages("cliente.items")</h2>

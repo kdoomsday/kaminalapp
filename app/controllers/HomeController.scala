@@ -1,6 +1,8 @@
 package controllers
 
 import controllers.actions.Actions
+import daos.{ MascotaDao, UserDao }
+import format.DateFormatter
 import javax.inject._
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.api.mvc._
@@ -12,9 +14,14 @@ import scala.concurrent.Future
  */
 @Singleton
 class HomeController @Inject() (
+    userDao: UserDao,
+    mascotaDao: MascotaDao,
+    dateFormatter: DateFormatter,
     val actions: Actions,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
+
+  implicit val dFmt = dateFormatter
 
   /**
    * Create an Action to render an HTML page.
@@ -24,6 +31,13 @@ class HomeController @Inject() (
    * a path of `/`.
    */
   def index = actions.timedAction { implicit request ⇒
-    Future.successful(Ok(views.html.index()))
+    val res = userDao.byLoginWithRole(request.session("login")) match {
+      case Some((user, rol)) ⇒ if (rol.name == "interno") Ok(views.html.index())
+      else Ok(views.html.externo.home(mascotaDao.mascotasCliente(user.login)))
+
+      case None ⇒ actions.notLoggedIn
+    }
+
+    Future.successful(res)
   }
 }

@@ -78,7 +78,7 @@ class Actions @Inject() (
       u.lastActivity.fold(false)(_ + timeout >= Instant.now())
 
   /** What to do if not logged in */
-  private[this] lazy val notLoggedIn: Result =
+  lazy val notLoggedIn: Result =
     Redirect(controllers.routes.LoginController.loginPage)
 
   /** Qué hacer si requiere cambio de contraseña */

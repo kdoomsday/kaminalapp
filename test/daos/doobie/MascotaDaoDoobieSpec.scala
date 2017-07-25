@@ -12,4 +12,5 @@ object MascotaDaoDoobieSpec extends Specification with AnalysisSpec {
   check(MascotaDaoDoobie.qById(0L))
   check(MascotaDaoDoobie.qEditMascota(0L, "", Some(""), Some(0), Some(new DateTime())))
   check(MascotaDaoDoobie.qMascotaConCliente(0L))
+  check(MascotaDaoDoobie.qByLoginCliente(""))
 }

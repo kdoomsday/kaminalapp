@@ -2,7 +2,7 @@ package daos.doobie
 
 import daos.UserDao
 import javax.inject.Inject
-import models.User
+import models.{ Role, User }
 import doobie.imports._
 import play.api.db.Database
 import play.api.Logger
@@ -51,6 +51,11 @@ class UserDaoDoobie @Inject() (
       .run.transact(xa()).unsafePerformIO
     Logger.debug(s"Cambio de clave de usuario $idUsuario (updated=$up)")
   }
+
+  def byLoginWithRole(login: String): Option[(User, Role)] = {
+    Logger.debug(s"Consulta de usuario y rol por login $login")
+    qUserRole(login).option.transact(xa()).unsafePerformIO
+  }
 }
 
 /** Los queries, para poder chequearlos */
@@ -82,4 +87,9 @@ object UserDaoDoobie {
 
   def qCambiarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int) =
     sql"""UPDATE users set password=$nuevaClave, salt=$nuevoSalt where id = $idUsuario""".update
+
+  def qUserRole(login: String) = sql"""select u.id, u.login, u.password, u.salt, u.role_id, u.connected, u.last_activity, u.cambio_clave,
+                                              r.id, r.name
+                                       from users u join roles r on u.role_id = r.id
+                                       where login = $login""".query[(User, Role)]
 }
