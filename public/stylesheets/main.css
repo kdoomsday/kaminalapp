@@ -7,3 +7,10 @@
 h1 {
     text-align: center;
 }
+
+.banner {
+    height: 140px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}

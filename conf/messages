@@ -1,9 +1,9 @@
 # https://www.playframework.com/documentation/latest/ScalaI18N
 login.title          = Login
-login.header         = Inicio de sesión
 login.login.label    = Usuario
 login.password.label = Clave
 login.submit.label   = Ingresar
+login.banner.alt     = Kaminalapp
 
 LoginController.login.info        = Logging in...
 LoginController.login.aud.success = Login exitoso para el usuario {0}

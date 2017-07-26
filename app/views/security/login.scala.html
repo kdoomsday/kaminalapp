@@ -15,7 +15,12 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="col-sm-12 text-center">@messages("login.header")</h1>
+      <div class="col-sm-12">
+          <img src="@routes.Assets.versioned("images/knlogo.png")"
+               alt="@messages("login.banner.alt")"
+               class="banner"
+          >
+      </div>
 
     <div class="jumbotron">
       <form action="/login" method="post" role="form">
