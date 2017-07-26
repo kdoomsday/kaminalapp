@@ -6,6 +6,7 @@ import crypto.{ HashService, MessageDigestHashService }
 import daos._
 import daos.doobie._
 import format._
+import resources._
 
 // import audits.EventDao
 
@@ -25,6 +26,7 @@ class DefaultBindings extends AbstractModule {
     bind(classOf[MascotaDao]) to classOf[MascotaDaoDoobie]
     bind(classOf[DateFormatter]) to classOf[YMDFormatter]
     bind(classOf[ServicioDao]) to classOf[ServicioDaoDoobie]
+    bind(classOf[ImageBlockLoader]) to classOf[RandomImageBlockLoader]
 
     bind(classOf[HashService]) toInstance MessageDigestHashService.Sha256HashService
   }

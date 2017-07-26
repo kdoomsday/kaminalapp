@@ -9,6 +9,7 @@ import play.api.i18n.{ I18nSupport, MessagesApi }
 
 import daos.SubjectDao
 import controllers.LoginController
+import resources.ImageBlockLoader
 import views.html.security.{ denied, login }
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -16,6 +17,7 @@ import scala.concurrent.Future
 
 class MyDeadboltHandler @Inject() (
     val subjectDao: SubjectDao,
+    val imageLoader: ImageBlockLoader,
     val messagesApi: MessagesApi
 ) extends DeadboltHandler with I18nSupport {
 
@@ -37,7 +39,7 @@ class MyDeadboltHandler @Inject() (
     implicit val req = request
     def toContent(maybeSubject: Option[Subject]): (Boolean, HtmlFormat.Appendable) =
       maybeSubject.map(subject ⇒ (true, denied(Some(subject))(messagesApi.preferred(request), request)))
-        .getOrElse { (false, login(LoginController.loginForm, getRedirectUri(request))) }
+        .getOrElse { (false, login(LoginController.loginForm, imageLoader.load(), getRedirectUri(request))) }
 
     getSubject(request).map(maybeSubject ⇒ toContent(maybeSubject))
       .map(subjectPresentAndContent ⇒

@@ -24,7 +24,6 @@ class Actions @Inject() (
   def timedAction[A](parser: BodyParser[A] = parse.default)(block: AuthenticatedRequest[A] ⇒ Future[Result]): Action[A] = {
     deadbolt.SubjectPresent()(parser) { authRequest ⇒
       userChecks(authRequest, validators, block(authRequest))
-      // timeCheck(authRequest, block)
     }
   }
 

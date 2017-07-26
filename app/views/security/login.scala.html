@@ -1,4 +1,4 @@
-@(form: Form[(String, String)], redirectUri: String = "")(
+@(form: Form[(String, String)], images: ImageBlock, redirectUri: String = "")(
     implicit
     notifications: Seq[Notification] = Nil,
     messages     : Messages,
@@ -46,6 +46,14 @@
       </form>
 
     </div>
+
+    <div class="row" >
+        <div class="hidden-xs">
+            <div class="col-sm-4"><img class="img-responsive imagedisplay" src="@images.first" ></div>
+            <div class="col-sm-4"><img class="img-responsive imagedisplay" src="@images.second" ></div>
+            <div class="col-sm-4"><img class="img-responsive imagedisplay" src="@images.third" ></div>
+        </divdd>
+    </divd>
   </div>
 
   <script type="text/javascript" src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.js")"></script>

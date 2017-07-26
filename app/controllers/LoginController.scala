@@ -15,6 +15,7 @@ import daos.UserDao
 import audits.EventDao
 import actions.Actions
 import crypto.HashService
+import resources.ImageBlockLoader
 
 /**
  * User: Eduardo Barrientos
@@ -27,6 +28,7 @@ class LoginController @Inject() (
     val eventDao: EventDao,
     val actions: Actions,
     val hashService: HashService,
+    val imageLoader: ImageBlockLoader,
     val messagesApi: MessagesApi
 ) extends Controller with I18nSupport {
 
@@ -36,7 +38,7 @@ class LoginController @Inject() (
   def loginPage = Action.async { implicit req ⇒
     isLoggedIn(req).map(_ match {
       case true  ⇒ Redirect(routes.HomeController.index)
-      case false ⇒ Ok(views.html.security.login(loginForm))
+      case false ⇒ Ok(views.html.security.login(loginForm, imageLoader.load()))
     })
   }
 
@@ -54,7 +56,7 @@ class LoginController @Inject() (
   def login = Action.async { implicit request ⇒
     Logger.info(messagesApi("LoginController.login.info"))
     loginForm.bindFromRequest.fold(
-      formWithErrors ⇒ Future(BadRequest(views.html.security.login(formWithErrors))),
+      formWithErrors ⇒ Future(BadRequest(views.html.security.login(formWithErrors, imageLoader.load()))),
 
       userData ⇒ {
         val (login, pwd) = userData
@@ -67,7 +69,7 @@ class LoginController @Inject() (
           } else {
             eventDao.write(messagesApi("LoginController.login.aud.error", login))
             implicit val errors = Notification.error(messagesApi("LoginController.login.authError", login))
-            Future.successful(BadRequest(views.html.security.login(loginForm)))
+            Future.successful(BadRequest(views.html.security.login(loginForm, imageLoader.load())))
           })
       }
     )

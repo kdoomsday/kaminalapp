@@ -14,3 +14,7 @@ h1 {
     display: block;
     margin: 0 auto;
 }
+
+.imagedisplay {
+    max-height: 250px;
+}
