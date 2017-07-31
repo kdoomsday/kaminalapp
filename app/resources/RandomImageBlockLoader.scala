@@ -3,19 +3,47 @@ package resources
 import models.ImageBlock
 import scala.collection.JavaConversions._
 import java.io.File
+import java.nio.file.{ Files, Path, Paths }
 
 /** Carga el imageBlock aleatoriamente de entre los archivos de una ruta */
-class RandomImageBlockLoader extends ImageBlockLoader {
+class RandomImageBlockLoader(
+    basePath: String,
+    baseLoad: String
+) extends ImageBlockLoader {
 
-  // Ruta base de las imagenes
-  private[this] lazy val basePath = "public/images/display/"
-  private[this] lazy val baseLoad = "assets/images/display/"
+  // El constructor de zero args usa los valores por defecto
+  def this() = this("public/images/display/", "external_assets/display/")
 
   def load(): ImageBlock = {
-    val path = new File(basePath)
-    val files = scala.util.Random.shuffle(path.list().toList).take(3)
+    // Cargar todos los archivos
+    def loadBasic(): List[String] = {
+      val path = Paths.get(basePath)
+      Files.walk(path)
+        .iterator()
+        .filter(f ⇒ !Files.isDirectory(f))
+        .map(_.getFileName.toString)
+        .toList
+    }
 
-    ImageBlock(files map (f ⇒ baseLoad + f))
+    // Seleccionar los archivos que queremos
+    def select(init: List[String]): List[String] =
+      scala.util.Random.shuffle(init).take(3)
+
+    // Que usar si faltan imágenes
+    def defaultImage = baseLoad + "assets/images/knlogo.png"
+
+    // Rellenar en caso de que no hayan suficientes imágenes
+    def fill(have: List[String], n: Int): List[String] = {
+      if (have.size >= n) have
+      else {
+        val amnt = n - have.size
+        val base = defaultImage
+        have ++ (List.fill(amnt)(base))
+      }
+    }
+
+    val files = select(loadBasic()).map(baseLoad + _)
+    ImageBlock(fill(files, 3))
   }
 
 }
