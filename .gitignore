@@ -14,5 +14,8 @@ server.pid
 /dist/
 .cache
 
+# No tomar en cuenta las imágenes de muestra
+public/images/display/*
+
 .ensime*
 notes.org*
