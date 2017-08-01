@@ -16,7 +16,7 @@ class RandomImageBlockLoaderSpec extends Specification {
       val dirFile = new java.io.File(dir)
       val block = loader.load()
 
-      dirFile.list.size < 3 &&
+      dirFile.list.size < 4 &&
         block.first != null
     }
   }

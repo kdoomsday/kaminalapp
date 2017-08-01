@@ -4,16 +4,18 @@ package models
 case class ImageBlock(
   first: String,
   second: String,
-  third: String
+  third: String,
+  fourth: String
 )
 
 object ImageBlock {
   def apply(l: List[String]): ImageBlock = {
-    require(l.size >= 3)
+    require(l.size >= 4)
     ImageBlock(
       l(0),
       l(1),
-      l(2)
+      l(2),
+      l(3)
     )
   }
 }

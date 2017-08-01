@@ -11,6 +11,8 @@ class RandomImageBlockLoader(
     baseLoad: String
 ) extends ImageBlockLoader {
 
+  private[this] val imgsPerBlock = 4
+
   // El constructor de zero args usa los valores por defecto
   def this() = this("public/images/display/", "external_assets/display/")
 
@@ -27,7 +29,7 @@ class RandomImageBlockLoader(
 
     // Seleccionar los archivos que queremos
     def select(init: List[String]): List[String] =
-      scala.util.Random.shuffle(init).take(3)
+      scala.util.Random.shuffle(init).take(imgsPerBlock)
 
     // Que usar si faltan imágenes
     def defaultImage = baseLoad + "assets/images/knlogo.png"
@@ -43,7 +45,7 @@ class RandomImageBlockLoader(
     }
 
     val files = select(loadBasic()).map(baseLoad + _)
-    ImageBlock(fill(files, 3))
+    ImageBlock(fill(files, imgsPerBlock))
   }
 
 }
