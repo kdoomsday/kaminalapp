@@ -1,0 +1,24 @@
+@* Render una forma de registrar pago pendiente *@
+@(form: Form[PagoPendiente], mascotas: List[Mascota])
+
+@show.form(action="#") {
+    @if(form("id").value.isDefined){
+        <input type="hidden" id="id" value="@{form("id").value.get}">
+    }
+
+    @input.dropdown(
+          id = "idMascota",
+          mascotas.map(m => (m.id, m.nombre)),
+          label = Some(messages("pagoPendienteForm.mascota.lbl")),
+          placeholder = Some(messages("pagoPendienteForm.mascota.ph")),
+          field = form("idMascota")
+    )
+
+    @input.text(
+          id = "monto",
+          label = Some(messages("pagoPendienteForm.monto.lbl")),
+          placeholder = Some(messages("pagoPendienteForm.monto.ph")),
+          field = form("monto")
+    )
+
+}

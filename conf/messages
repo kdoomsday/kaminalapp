@@ -217,5 +217,11 @@ error.real.precision = Número de hasta 16 dígitos y 2 decimales
 externo.home.title  = Inicio
 externo.home.header = Mascotas
 
+# Forma de registro de pago pendiente
+pagoPendienteForm.mascota.lbl = Mascota
+pagoPendienteForm.mascota.ph  = Mascota a la que se registra el cargo
+pagoPendienteForm.monto.lbl   = Monto
+pagoPendienteForm.monto.ph    = Monto
+
 # Campos comunes
 comun.controles = Control
