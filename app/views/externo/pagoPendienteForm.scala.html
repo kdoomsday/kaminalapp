@@ -1,5 +1,13 @@
 @* Render una forma de registrar pago pendiente *@
-@(form: Form[PagoPendiente], mascotas: List[Mascota])
+
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[PagoPendiente], mascotas: List[Mascota])(
+  implicit
+  messages: Messages,
+  req: AuthenticatedRequest[_]
+)
+
 
 @show.form(action="#") {
     @if(form("id").value.isDefined){
@@ -8,17 +16,25 @@
 
     @input.dropdown(
           id = "idMascota",
-          mascotas.map(m => (m.id, m.nombre)),
+          mascotas.map(m => (m.id.toString, m.nombre)),
           label = Some(messages("pagoPendienteForm.mascota.lbl")),
           placeholder = Some(messages("pagoPendienteForm.mascota.ph")),
-          field = form("idMascota")
+          field = Some(form("idMascota"))
     )
 
     @input.text(
           id = "monto",
-          label = Some(messages("pagoPendienteForm.monto.lbl")),
-          placeholder = Some(messages("pagoPendienteForm.monto.ph")),
-          field = form("monto")
+          label = messages("pagoPendienteForm.monto.lbl"),
+          placeholder = messages("pagoPendienteForm.monto.ph"),
+          field = Some(form("monto"))
     )
 
+    @input.text(
+          id = "confirmacion",
+          label = messages("pagoPendienteForm.confirmacion.lbl"),
+          placeholder = messages("pagoPendienteForm.confirmacion.ph"),
+          field = Some(form("monto"))
+    )
+
+    @* La parte de imagen la dejo para despues *@
 }

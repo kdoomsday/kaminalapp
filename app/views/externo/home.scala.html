@@ -11,5 +11,13 @@
 @mainex("externo.home.title") {
     <h1>@messages("externo.home.header") </h1>
 
+    <div class="row" >
+        <a href="@controllers.externo.routes.ExternoController.agregarPagoView"
+           class="btn btn-default col-sm-2 col-sm-offset-5"
+        >
+            @messages("externo.home.addPago.text")
+        </a>
+    </div>
+
     @mascota.tablaMascotas(mascotas)
 }

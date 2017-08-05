@@ -1,0 +1,15 @@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(form: Form[PagoPendiente], mascotas: List[Mascota])(
+    implicit
+    messages     : Messages,
+    request      : AuthenticatedRequest[_],
+    notifications: Seq[Notification] = Nil,
+    flash        : Flash = null
+)
+
+@mainex("externo.pago.title") {
+    <h1>@messages("externo.pago.header")</h1>
+
+    @pagoPendienteForm(form, mascotas)
+}

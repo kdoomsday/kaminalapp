@@ -45,6 +45,10 @@ POST    /usuariosInternos/add controllers.usuarios.UsuariosInternosController.cr
 GET     /usuario/cambioClave  controllers.usuarios.UsuarioController.cambiarClaveView()
 POST    /usuario/cambioClave  controllers.usuarios.UsuarioController.cambiarClave
 
+
+# Externo
+GET     /externo/pago/add     controllers.externo.ExternoController.agregarPagoView
+
 # Recursos no manejados directamente por Play
 GET     /external_assets/*file         controllers.ExternalAssetsController.at(file)
 

@@ -214,14 +214,20 @@ error.cuentaInvalida = La cuenta deben ser 20 dígitos
 error.real.precision = Número de hasta 16 dígitos y 2 decimales
 
 # Pantallas externas
-externo.home.title  = Inicio
-externo.home.header = Mascotas
+externo.home.title        = Inicio
+externo.home.header       = Mascotas
+externo.home.addPago.text = Agregar pago
+
+externo.pago.title  = Agregar pago
+externo.pago.header = Agregar un pago
 
 # Forma de registro de pago pendiente
-pagoPendienteForm.mascota.lbl = Mascota
-pagoPendienteForm.mascota.ph  = Mascota a la que se registra el cargo
-pagoPendienteForm.monto.lbl   = Monto
-pagoPendienteForm.monto.ph    = Monto
+pagoPendienteForm.mascota.lbl      = Mascota
+pagoPendienteForm.mascota.ph       = Mascota a la que se registra el cargo
+pagoPendienteForm.monto.lbl        = Monto
+pagoPendienteForm.monto.ph         = Monto
+pagoPendienteForm.confirmacion.lbl = # Confirmación
+pagoPendienteForm.confirmacion.ph  = Número de confirmación del pago
 
 # Campos comunes
 comun.controles = Control
