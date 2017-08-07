@@ -228,6 +228,9 @@ pagoPendienteForm.monto.lbl        = Monto
 pagoPendienteForm.monto.ph         = Monto
 pagoPendienteForm.confirmacion.lbl = # Confirmación
 pagoPendienteForm.confirmacion.ph  = Número de confirmación del pago
+pagoPendienteForm.submit.lbl       = Registrar pago
+
+ExternoController.addPago.success = Pago registrado exitosamente
 
 # Campos comunes
 comun.controles = Control
