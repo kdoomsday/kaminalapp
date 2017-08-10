@@ -1,6 +1,6 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(pagos: List[PagoPendiente])(
+@(pagos: List[(PagoPendiente, Mascota, Cliente)])(
     implicit
     messages: Messages,
     req: AuthenticatedRequest[_],
@@ -12,15 +12,21 @@
     <table class="top5 table">
         <thead>
             <tr>
-                <th class="col-sm-6">@messages("items.pagosPendientes.p.mascota")</th>
-                <th class="col-sm-3">@messages("items.pagosPendientes.p.monto")</th>
-                <th class="col-sm-3">@messages("items.pagosPendientes.p.conf")</th>
+                <th class="col-sm-4">@messages("items.pagosPendientes.p.cliente")</th>
+                <th class="col-sm-4">@messages("items.pagosPendientes.p.mascota")</th>
+                <th class="col-sm-2">@messages("items.pagosPendientes.p.monto")</th>
+                <th class="col-sm-2">@messages("items.pagosPendientes.p.conf")</th>
             </tr>
         </thead>
         <tbody>
-            @for(p <- pagos) {
+            @for((p, m, c) <- pagos) {
                 <tr>
-                    <td>@{p.idMascota} </td>
+                    <td>
+                        <a href="@routes.ClienteController.cliente(c.id)">
+                            @{c.nombre}
+                        </a>
+                    </td>
+                    <td>@{m.nombre} </td>
                     <td>@p.monto</td>
                     <td>@p.confirmacion.getOrElse("")</td>
                 </tr>

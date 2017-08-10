@@ -49,6 +49,7 @@ editItem.submit        = Guardar
 
 items.pagosPendientes.title     = Pagos Pendientes
 items.pagosPendientes.header    = Pagos Pendientes por verificar
+items.pagosPendientes.p.cliente = Cliente
 items.pagosPendientes.p.mascota = Mascota
 items.pagosPendientes.p.monto   = Monto
 items.pagosPendientes.p.conf    = # confirmación
