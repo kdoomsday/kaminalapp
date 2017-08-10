@@ -1,0 +1,30 @@
+@import be.objectify.deadbolt.scala.AuthenticatedRequest
+
+@(pagos: List[PagoPendiente])(
+    implicit
+    messages: Messages,
+    req: AuthenticatedRequest[_],
+    notifications: Seq[Notification] = Nil)
+)
+@main("items.pagosPendientes.title") {
+    <h1>@messages("items.pagosPendientes.header") </h1>
+
+    <table class="top5 table">
+        <thead>
+            <tr>
+                <th class="col-sm-6">@messages("items.pagosPendientes.p.mascota")</th>
+                <th class="col-sm-3">@messages("items.pagosPendientes.p.monto")</th>
+                <th class="col-sm-3">@messages("items.pagosPendientes.p.conf")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(p <- pagos) {
+                <tr>
+                    <td>@{p.idMascota} </td>
+                    <td>@p.monto</td>
+                    <td>@p.confirmacion.getOrElse("")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

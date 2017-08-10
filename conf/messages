@@ -23,6 +23,7 @@ navbar.clientes         = Clientes
 navbar.addCliente       = Agregar cliente
 navbar.servicios        = Servicios
 navbar.addServicio      = Agregar servicio
+navbar.pagosPendientes  = Pagos Pendientes
 navbar.usuariosInternos = Usuarios internos
 navbar.cambioClave      = Cambiar clave
 
@@ -45,6 +46,12 @@ editItem.header = Editar los datos del ítem {0}
 editItem.info.cliente = Cliente: {0}
 editItem.info.mascota = Mascota: {0}
 editItem.submit        = Guardar
+
+items.pagosPendientes.title     = Pagos Pendientes
+items.pagosPendientes.header    = Pagos Pendientes por verificar
+items.pagosPendientes.p.mascota = Mascota
+items.pagosPendientes.p.monto   = Monto
+items.pagosPendientes.p.conf    = # confirmación
 
 addCliente.title         = Agregar cliente
 addCliente.header        = Agregar cliente

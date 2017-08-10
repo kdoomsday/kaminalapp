@@ -13,6 +13,8 @@ POST    /item/eliminar                controllers.ItemController.eliminar
 GET     /item/edit/:idItem            controllers.ItemController.editItemView(idItem: Long)
 POST    /item/edit/:idItem            controllers.ItemController.editItem(idItem: Long)
 
+GET     /item/pendientes              controllers.PagosPendientes.verPagosPendientes
+
 # Clientes
 GET     /addCliente            controllers.ClienteController.addClienteView
 POST    /addCliente            controllers.ClienteController.addCliente

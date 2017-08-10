@@ -55,7 +55,7 @@ object ExternoController {
     mapping(
       "id" → default(longNumber, 0L),
       "idMascota" → longNumber,
-      "monto" → bigDecimal(16, 2),
+      "monto" → bigDecimal(16, 2).verifying("Monto debe ser positivo", m ⇒ m > 0),
       "confirmacion" → optional(nonEmptyText),
       "imagen" → optional(nonEmptyText)
     )(PagoPendiente.apply)(PagoPendiente.unapply)
