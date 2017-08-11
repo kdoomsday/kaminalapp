@@ -53,6 +53,7 @@ items.pagosPendientes.p.cliente = Cliente
 items.pagosPendientes.p.mascota = Mascota
 items.pagosPendientes.p.monto   = Monto
 items.pagosPendientes.p.conf    = # confirmación
+items.pagosPendientes.p.ok      = Confirmar pago
 
 addCliente.title         = Agregar cliente
 addCliente.header        = Agregar cliente

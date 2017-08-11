@@ -12,10 +12,11 @@
     <table class="top5 table">
         <thead>
             <tr>
-                <th class="col-sm-4">@messages("items.pagosPendientes.p.cliente")</th>
-                <th class="col-sm-4">@messages("items.pagosPendientes.p.mascota")</th>
+                <th class="col-sm-3">@messages("items.pagosPendientes.p.cliente")</th>
+                <th class="col-sm-3">@messages("items.pagosPendientes.p.mascota")</th>
                 <th class="col-sm-2">@messages("items.pagosPendientes.p.monto")</th>
                 <th class="col-sm-2">@messages("items.pagosPendientes.p.conf")</th>
+                <th class="col-sm-2">@messages("comun.controles")</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,14 @@
                     <td>@{m.nombre} </td>
                     <td>@p.monto</td>
                     <td>@p.confirmacion.getOrElse("")</td>
+                    <td>
+                        <a href="#"
+                           class="btn btn-default"
+                           title='@messages("items.pagosPendientes.p.ok")'
+                        >
+                           @gi("ok")
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>
