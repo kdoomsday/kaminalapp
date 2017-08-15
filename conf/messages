@@ -241,5 +241,8 @@ pagoPendienteForm.submit.lbl       = Registrar pago
 
 ExternoController.addPago.success = Pago registrado exitosamente
 
+PagosPendientes.confirmarPago.err = Datos incorrectos
+PagosPendientes.confirmarPago.ok  = Pago confirmado exitosamente
+
 # Campos comunes
 comun.controles = Control

@@ -1,6 +1,6 @@
 package daos
 
-import models.{ Cliente, Mascota, PagoPendiente }
+import models.{ Cliente, Item, Mascota, PagoPendiente }
 
 /** Dao para los pagos y pagos pendientes */
 trait PagosDao {
@@ -11,4 +11,11 @@ trait PagosDao {
    * dueño de la mascota
    */
   def verPendientes(): List[(PagoPendiente, Mascota, Cliente)]
+
+  /**
+   * Confirmar un pago como listo. Lo elimina de la lista de los pendientes
+   * y lo agrega a items
+   * @return El item creado
+   */
+  def confirmarPago(idPago: Long): Item
 }

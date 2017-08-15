@@ -6,7 +6,13 @@
     req: AuthenticatedRequest[_],
     notifications: Seq[Notification] = Nil)
 )
-@main("items.pagosPendientes.title") {
+@main(
+    "items.pagosPendientes.title",
+    scripts = Seq(
+        "javascripts/pagosPendientes/pagosPendientes.js",
+        "javascripts/ajaxcall.js"
+    )
+) {
     <h1>@messages("items.pagosPendientes.header") </h1>
 
     <table class="top5 table">
@@ -21,7 +27,7 @@
         </thead>
         <tbody>
             @for((p, m, c) <- pagos) {
-                <tr>
+                <tr id="pago@{p.id}">
                     <td>
                         <a href="@routes.ClienteController.cliente(c.id)">
                             @{c.nombre}
@@ -32,7 +38,8 @@
                     <td>@p.confirmacion.getOrElse("")</td>
                     <td>
                         <a href="#"
-                           class="btn btn-default"
+                           class="btn btn-default confirmar"
+                           data-id="@p.id"
                            title='@messages("items.pagosPendientes.p.ok")'
                         >
                            @gi("ok")
@@ -42,4 +49,5 @@
             }
         </tbody>
     </table>
+    @helper.CSRF.formField
 }
