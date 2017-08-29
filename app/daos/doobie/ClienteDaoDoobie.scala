@@ -49,7 +49,8 @@ class ClienteDaoDoobie @Inject() (db: Database) extends ClienteDao {
   }
 
   override def addTelf(t: Telefono): Unit = {
-    qAddTelefono(t.numero, t.idCliente).run.transact(transactor).unsafePerformIO
+    val updated = qAddTelefono(t.numero, t.idCliente).run.transact(transactor).unsafePerformIO
+    Logger.debug(s"Agregar teléfono: $updated actualizados")
   }
 
   def byMascota(idMascota: Long): Option[Cliente] = {

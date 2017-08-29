@@ -1,9 +1,10 @@
 package resources
 
-import models.ImageBlock
+import java.nio.file.{ Files, Paths }
+
 import scala.collection.JavaConversions._
-import java.io.File
-import java.nio.file.{ Files, Path, Paths }
+
+import models.ImageBlock
 
 /** Carga el imageBlock aleatoriamente de entre los archivos de una ruta */
 class RandomImageBlockLoader(
@@ -20,11 +21,14 @@ class RandomImageBlockLoader(
     // Cargar todos los archivos
     def loadBasic(): List[String] = {
       val path = Paths.get(basePath)
-      Files.walk(path)
-        .iterator()
-        .filter(f ⇒ !Files.isDirectory(f))
-        .map(_.getFileName.toString)
-        .toList
+      if (Files.exists(path)) {
+        Files.walk(path)
+          .iterator()
+          .filter(f ⇒ !Files.isDirectory(f))
+          .map(_.getFileName.toString)
+          .toList
+      } else
+        Nil
     }
 
     // Seleccionar los archivos que queremos
