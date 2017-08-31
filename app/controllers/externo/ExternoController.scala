@@ -11,9 +11,17 @@ import play.api.data.Form
 import play.api.data.Forms._
 import javax.inject._
 import scala.concurrent.Future
+import models.User
+import be.objectify.deadbolt.scala.AuthenticatedRequest
+import daos.UserDao
+import daos.ClienteDao
+import daos.ItemDao
 
 /** Controlador base de los usuario externos */
 class ExternoController @Inject() (
+    clienteDao: ClienteDao,
+    itemDao: ItemDao,
+    userDao: UserDao,
     eventDao: EventDao,
     mascotaDao: MascotaDao,
     pagosDao: PagosDao,
@@ -26,7 +34,9 @@ class ExternoController @Inject() (
   implicit val dFmt = dateFormatter
 
   def index = actions.rAction("usuario") { implicit request ⇒
-    Ok(views.html.externo.home(mascotaDao.mascotasCliente(request.session("login"))))
+    userDao.byLogin(request.session("login"))
+      .map { usuario ⇒ goToExterno(usuario) }
+      .getOrElse(actions.notLoggedIn)
   }
 
   def addPagoView = actions.rAction("usuario") { implicit request ⇒
@@ -47,6 +57,19 @@ class ExternoController @Inject() (
           .flashing("exito" → messagesApi("ExternoController.addPago.success"))
       }
     )
+  }
+
+  /** Resultado para ir a la vista del cliente externo */
+  private[this] def goToExterno(clienteUser: User)(implicit req: AuthenticatedRequest[_]): Result = {
+    val mascotas = mascotaDao.mascotasCliente(clienteUser.login)
+    val idMascota = mascotas.head.id // Deberia haber mascotas porque es obligatorio el registro TODO
+
+    clienteDao.byMascota(idMascota).flatMap { cliente ⇒
+      itemDao.datosCliente(cliente.id).map {
+        case (_, _, _, items) ⇒
+          Ok(views.html.externo.home(mascotas, items))
+      }
+    }.getOrElse(actions.notLoggedIn)
   }
 }
 

@@ -226,6 +226,7 @@ error.real.precision = Número de hasta 16 dígitos y 2 decimales
 externo.home.title        = Inicio
 externo.home.header       = Mascotas
 externo.home.addPago.text = Agregar pago
+externo.items             = Items registrados
 
 externo.pago.title  = Agregar pago
 externo.pago.header = Agregar un pago

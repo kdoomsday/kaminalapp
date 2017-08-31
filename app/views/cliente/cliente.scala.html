@@ -5,7 +5,7 @@
   mascotas: List[Mascota],
   telefonos: List[Telefono],
   saldo: BigDecimal,
-  items: List[Item])(
+  itemsCliente: List[Item])(
     implicit
     formatter: _root_.format.DateFormatter,
     messages: Messages,
@@ -58,38 +58,7 @@
         </div>
         <div class="col-sm-12 col-md-6">
             <h2>@messages("cliente.items")</h2>
-
-            @defining(mascotas.map(m => (m.id, m.nombre)).toMap) { mmascotas =>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="col-sm-3">@messages("cliente.item.desc") </th>
-                            <th class="col-sm-2">@messages("cliente.item.monto") </th>
-                            <th class="col-sm-3">@messages("cliente.item.mascota") </th>
-                            <th class="col-sm-3">@messages("cliente.item.fecha") </th>
-                            <th class="col-sm-1 text-center">@messages("cliente.item.control") </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for(i ← items){
-                            <tr id="item@{i.id}" >
-                                <td>@i.descripcion </td>
-                                <td>@i.monto </td>
-                                <td>@{mmascotas(i.idMascota)} </td>
-                                <td>@formatter.short(i.fecha) </td>
-                                <td class="text-center">
-                                    <a class="btn btn-default btn-xs" href="@routes.ItemController.editItem(i.id)" >
-                                        @gi("pencil")
-                                    </a>
-                                    <button class="btn btn-danger btn-xs eliminarItem" data-id="@{i.id}" >
-                                        @gi("trash")
-                                    </button>
-                                </td>
-                            </tr>
-                            }
-                    </tbody>
-                </table>
-            }
+            @items.clienteItems(mascotas, itemsCliente)
         </div>
     </div>
 

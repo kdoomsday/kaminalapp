@@ -1,7 +1,7 @@
 package controllers
 
 import controllers.actions.Actions
-import daos.{ MascotaDao, UserDao }
+import daos.UserDao
 import format.DateFormatter
 import javax.inject._
 import play.api.i18n.{ I18nSupport, MessagesApi }
@@ -15,7 +15,6 @@ import scala.concurrent.Future
 @Singleton
 class HomeController @Inject() (
     userDao: UserDao,
-    mascotaDao: MascotaDao,
     dateFormatter: DateFormatter,
     val actions: Actions,
     val messagesApi: MessagesApi
@@ -33,11 +32,12 @@ class HomeController @Inject() (
   def index = actions.timedAction { implicit request ⇒
     val res = userDao.byLoginWithRole(request.session("login")) match {
       case Some((user, rol)) ⇒ if (rol.name == "interno") Ok(views.html.index())
-      else Ok(views.html.externo.home(mascotaDao.mascotasCliente(user.login)))
+      else Redirect(controllers.externo.routes.ExternoController.index)
 
       case None ⇒ actions.notLoggedIn
     }
 
     Future.successful(res)
   }
+
 }
