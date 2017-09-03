@@ -62,13 +62,15 @@ class ItemController @Inject() (
         eventDao.write(s"Agregado servicio $idServicio a la mascota $idMascota")
 
         clienteDao.byMascota(idMascota) match {
-          case Some(c) ⇒
+          case Some(c) ⇒ {
+            Logger.debug(s"Redirigiendo al cliente ${c.nombreCompleto}")
             Redirect(routes.ClienteController.cliente(c.id))
-              .flashing("exito" → messagesApi("ItemController.addItem.success"))
+              .flashing("success" → messagesApi("ItemController.addItem.success"))
+          }
 
           case None ⇒
             Redirect(routes.ClienteController.clientes())
-              .flashing("warn" → messagesApi("ItemController.addItem.noCliente"))
+              .flashing("warning" → messagesApi("ItemController.addItem.noCliente"))
         }
       }
     )

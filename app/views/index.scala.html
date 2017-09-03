@@ -1,6 +1,6 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@()(implicit messages: Messages, req: AuthenticatedRequest[_])
+@()(implicit messages: Messages, req: AuthenticatedRequest[_], flash: Flash)
 
 @main("index.title") {
   <h1 class="col-sm-12">@messages("index.header")</h1>

@@ -6,8 +6,8 @@
     implicit
     messages     : Messages,
     request      : AuthenticatedRequest[_],
-    notifications: Seq[Notification] = Nil,
-    flash        : Flash = null
+    flash        : Flash,
+    notifications: Seq[Notification] = Nil
 )
 
 @notify(level: String) = {
@@ -46,6 +46,7 @@
             @content
         </div>
 
+        @flashNots()
 
         <script type="text/javascript" src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.js")"></script>
         <script type="text/javascript" src="@routes.Assets.versioned("lib/alertifyjs/build/alertify.js")"></script>
@@ -57,6 +58,5 @@
         @for(n <- notifications){
           @show.notification(n.message, n.level)
         }
-        @flashNots()
     </body>
 </html>

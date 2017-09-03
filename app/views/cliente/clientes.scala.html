@@ -1,5 +1,10 @@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
-@(clientes: List[(Cliente, BigDecimal)])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@(clientes: List[(Cliente, BigDecimal)])(
+    implicit
+    messages: Messages,
+    req: AuthenticatedRequest[_],
+    flash        : Flash,
+    notifications: Seq[Notification] = Nil)
 @main("clientes.title") {
     <h1>@messages("clientes.header")</h1>
     <table class="top5 table">

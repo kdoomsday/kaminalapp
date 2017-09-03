@@ -1,7 +1,12 @@
 @** Vista de los servicios registrados del sistema *@
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(servicios: List[Servicio])(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@(servicios: List[Servicio])(
+    implicit
+    messages: Messages,
+    req: AuthenticatedRequest[_],
+    flash: Flash,
+    notifications: Seq[Notification] = Nil)
 @main("servicios.title") {
     <h1>
         @messages("servicios.header")

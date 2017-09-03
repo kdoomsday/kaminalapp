@@ -4,7 +4,13 @@
 
 @import be.objectify.deadbolt.scala.AuthenticatedRequest
 
-@(form: Form[Telefono], c: Cliente)(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+@(form: Form[Telefono], c: Cliente)(
+    implicit
+    messages: Messages,
+    req: AuthenticatedRequest[_],
+    flash        : Flash,
+    notifications: Seq[Notification] = Nil
+)
 @main("addTelefono.title") {
     <h1>@messages("addTelefono.header", c.nombreCompleto)</h1>
 

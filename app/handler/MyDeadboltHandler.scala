@@ -14,6 +14,7 @@ import views.html.security.{ denied, login }
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import play.api.mvc.Flash
 
 class MyDeadboltHandler @Inject() (
     val subjectDao: SubjectDao,
@@ -38,7 +39,7 @@ class MyDeadboltHandler @Inject() (
   override def onAuthFailure[A](request: AuthenticatedRequest[A]): Future[Result] = {
     implicit val req = request
     def toContent(maybeSubject: Option[Subject]): (Boolean, HtmlFormat.Appendable) =
-      maybeSubject.map(subject ⇒ (true, denied(Some(subject))(messagesApi.preferred(request), request)))
+      maybeSubject.map(subject ⇒ (true, denied(Some(subject))(messagesApi.preferred(request), Flash.emptyCookie, request)))
         .getOrElse { (false, login(LoginController.loginForm, imageLoader.load(), getRedirectUri(request))) }
 
     getSubject(request).map(maybeSubject ⇒ toContent(maybeSubject))

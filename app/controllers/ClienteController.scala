@@ -74,9 +74,8 @@ class ClienteController @Inject() (
 
   // Detalles de un cliente segun su id, como deben ser vistos por un usuario interno
   def cliente(id: Long) = actions.roleAction("interno") { implicit req ⇒
-    val oDatos = itemDao.datosCliente(id)
     Future.successful(
-      oDatos.fold {
+      itemDao.datosCliente(id).fold {
         implicit val nots =
           Notification.warn(Messages("ClienteController.cliente.noExiste"))
         Ok(views.html.index())

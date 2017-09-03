@@ -7,7 +7,12 @@ form: Form[Mascota],
   c: Cliente,
   rutaAccion: String,
   idMascota: Option[Long] = None
-)(implicit messages: Messages, req: AuthenticatedRequest[_], notifications: Seq[Notification] = Nil)
+)(
+    implicit
+    messages: Messages,
+    req: AuthenticatedRequest[_],
+    flash: Flash,
+    notifications: Seq[Notification] = Nil)
 @main("datosMascota.title") {
     <h1>@messages("datosMascota.header", c.nombreCompleto)</h1>
 

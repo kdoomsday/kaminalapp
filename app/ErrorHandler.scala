@@ -33,7 +33,7 @@ class ErrorHandler @Inject() (
     implicit val authReq: AuthenticatedRequest[_] = AuthenticatedRequest(req, subject)
     implicit val nots = Notification.error(messagesApi("ErrorHandler.error"))
     Future.successful(
-      Ok(views.html.index())
+      Redirect(controllers.routes.HomeController.index)
     )
   }
 }
