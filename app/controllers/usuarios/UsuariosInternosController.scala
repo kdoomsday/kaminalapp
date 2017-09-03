@@ -39,7 +39,7 @@ class UsuariosInternosController @Inject() (
     val res = formNuevoUsuario.bindFromRequest.fold(
       formWithErrors ⇒ {
         Logger.debug("Error en datos de creacion de usuarios")
-        implicit val nots = Notification.error(messagesApi("UsuariosInternosController.crear.error"))
+        implicit val _ = Notification.error(messagesApi("UsuariosInternosController.crear.error"))
         BadRequest(views.html.usuarios.crearUsuario(formWithErrors, "interno"))
       },
       usuario ⇒ {

@@ -1,8 +1,8 @@
 @(form: Form[(String, String)], images: ImageBlock, redirectUri: String = "")(
     implicit
-    notifications: Seq[Notification] = Nil,
     messages     : Messages,
-    reqHeader    : RequestHeader
+    reqHeader    : RequestHeader,
+    notifications: Seq[Notification] = Nil
 )
 
 <head>
@@ -60,6 +60,7 @@
 
   <script type="text/javascript" src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.js")"></script>
   <script type="text/javascript" src="@routes.Assets.versioned("lib/alertifyjs/build/alertify.js")"></script>
+  <script type="text/javascript" src="@routes.Assets.versioned("javascripts/notifier.js")"></script>
 
   @for(n <- notifications){
     @show.notification(n.message, n.level)

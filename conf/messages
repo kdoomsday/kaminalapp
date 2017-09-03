@@ -7,6 +7,7 @@ login.banner.alt     = Kaminalapp
 
 LoginController.login.info        = Logging in...
 LoginController.login.aud.success = Login exitoso para el usuario {0}
+LoginController.login.authError   = Error autenticando el usuario
 LoginController.logout.aud        = Usuario {0} salió del sistema
 
 

@@ -33,7 +33,7 @@ class ServicioController @Inject() (
       servicio ⇒ {
         servicioDao.registrar(servicio.nombre, servicio.precio, servicio.mensual)
         eventDao.write(s"Creado servicio ${servicio.nombre} precio = ${servicio.precio} mensual = ${servicio.mensual}")
-        implicit val nots = Notification.success(messagesApi("ServicioController.add.success", servicio.nombre))
+        implicit val _ = Notification.success(messagesApi("ServicioController.add.success", servicio.nombre))
         Redirect(routes.ServicioController.servicios)
       }
     )

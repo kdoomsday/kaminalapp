@@ -4,7 +4,6 @@ import audits.EventDao
 import controllers.actions.Actions
 import daos.{ ClienteDao, ItemDao, ServicioDao }
 import javax.inject.Inject
-import models.Notification
 import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
@@ -42,7 +41,6 @@ class ItemController @Inject() (
         itemDao.add(idMascota, monto, descripcion)
         val cliente = clienteDao.byMascota(idMascota).get // Si todo funciono, el cliente tiene que existir
         eventDao.write(s"Agregado item para cliente ${cliente.nombreCompleto} (${cliente.id}), mascota $idMascota con  monto $monto")
-        // implicit val nots = Notification.success(Messages("ItemController.addItem.success"))
         Redirect(routes.ClienteController.cliente(cliente.id)).flashing("success" → Messages("ItemController.addItem.success"))
       }
     )

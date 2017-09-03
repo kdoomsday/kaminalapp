@@ -68,7 +68,7 @@ class LoginController @Inject() (
             Future.successful(Redirect(routes.HomeController.index).withSession("login" → login))
           } else {
             eventDao.write(messagesApi("LoginController.login.aud.error", login))
-            implicit val errors = Notification.error(messagesApi("LoginController.login.authError", login))
+            implicit val _ = Notification.error(messagesApi("LoginController.login.authError", login))
             Future.successful(BadRequest(views.html.security.login(loginForm, imageLoader.load())))
           })
       }
