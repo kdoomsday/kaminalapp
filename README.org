@@ -1,2 +1,2 @@
 * Kaminalapp
-  Aplicación de registro de pagos
+  Aplicación de registro de pagos de servicios de mascotas

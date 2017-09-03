@@ -43,7 +43,8 @@ class UserDaoDoobie @Inject() (
   }
 
   def crearUsuario(login: String, clave: String, salt: Int): Unit = {
-    qCrearUsuario(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
+    val updated = qCrearUsuario(login, clave, salt, "interno").run.transact(xa()).unsafePerformIO
+    Logger.debug(s"Crear usuario $login (updated=$updated)")
   }
 
   def actualizarClave(idUsuario: Long, nuevaClave: String, nuevoSalt: Int): Unit = {
