@@ -12,11 +12,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="col-sm-3">@messages("cliente.item.desc") </th>
-                <th class="col-sm-2">@messages("cliente.item.monto") </th>
-                <th class="col-sm-3">@messages("cliente.item.mascota") </th>
-                <th class="col-sm-3">@messages("cliente.item.fecha") </th>
-                <th class="col-sm-1 text-center">@messages("cliente.item.control") </th>
+                <th class="">@messages("cliente.item.desc") </th>
+                <th class="">@messages("cliente.item.monto") </th>
+                <th class="">@messages("cliente.item.mascota") </th>
+                <th class="">@messages("cliente.item.fecha") </th>
+                @restrict(roles = List(Array("interno"))) {
+                    <th class="text-center">@messages("cliente.item.control") </th>
+                }
             </tr>
         </thead>
         <tbody>
