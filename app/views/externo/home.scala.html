@@ -13,16 +13,18 @@
 
     <div class="row" >
         <a href="@controllers.externo.routes.ExternoController.addPagoView"
-           class="btn btn-default col-sm-2 col-sm-offset-5"
+           class="btn btn-success col-sm-2 col-sm-offset-5"
         >
             @messages("externo.home.addPago.text")
         </a>
     </div>
 
-    @mascota.tablaMascotas(mascotas)
+    <div class="row col-sm-12" >@mascota.tablaMascotas(mascotas) </div>
 
-    <div class="col-sm-12">
-    	<h2>@messages("externo.items")</h2>
-    	@items.clienteItems(mascotas, itemsCliente)
+    <div class="row" >
+        <div class="col-sm-12">
+    	      <h2>@messages("externo.items")</h2>
+    	      @items.clienteItems(mascotas, itemsCliente)
+        </div>
     </div>
-}
+    }
